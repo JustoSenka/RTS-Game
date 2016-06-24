@@ -101,23 +101,13 @@ public class SelectRectangle : MonoBehaviour
                 IterateAllSelectable((GameObject go) =>
                 {
 					Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-					RaycastHit raycastHit;
+						RaycastHit raycastHit = new RaycastHit();
 
-					if (Physics.Raycast(Camera.main.transform.position, ray.direction, out raycastHit, 100, LayerMask.NameToLayer("Selectable"), QueryTriggerInteraction.Ignore)){
-						Debug.Log("wooog");
+						if (Physics.Raycast(ray, out raycastHit, 100f)){
+							if (raycastHit.collider.transform.gameObject.Equals(go)){
+								MarkObjectAsSelected(go);
+							}
 					}
-
-							/*
-						if ( Input.GetMouseButtonDown(0)){
-							var hit : RaycastHit;
-							var ray : Ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-							var select = GameObject.FindWithTag("select").transform;
-							if (Physics.Raycast (ray, hit, 100.0)){
-								select.tag = "none";
-								hit.collider.transform.tag = "select";*/
-                   
-                    //MarkObjectAsSelected(go);
-                    
                 });
             }
         }
@@ -128,7 +118,6 @@ public class SelectRectangle : MonoBehaviour
                 return;
 
             Rect rect = ConstructSelectionRect();
-
             IterateAllSelectable((GameObject go) =>
             {
                 Vector3 pos = Camera.main.WorldToScreenPoint(go.transform.position);
@@ -138,6 +127,9 @@ public class SelectRectangle : MonoBehaviour
                 {
                     MarkObjectAsSelected(go);
                 }
+					else if (!Input.GetKey(multiSelectKey)){
+						DeselectObject(go);
+					}
             });
         }
     }
