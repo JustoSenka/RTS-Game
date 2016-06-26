@@ -10,6 +10,11 @@ public class Unit : MonoBehaviour
     public float runSpeed;
     public float attackSpeed;
 
+    public ParticleSystemPlayer Skill0;
+    public ParticleSystemPlayer Skill1;
+    public ParticleSystemPlayer Skill2;
+    public ParticleSystemPlayer Skill3;
+
     protected NavMeshAgent agent;
     protected Animator animator;
     protected bool isHold = false;

@@ -35,7 +35,13 @@ public class UnitSkeleton : Unit
         {
             case Command.Skill0:
                 isRunning = true;
-                this.RunAfter(6f, () => isRunning = false);
+                Skill0.Play();
+
+                this.RunAfter(6f, () =>
+                {
+                    isRunning = false;
+                    Skill0.Stop();
+                });
 
                 break;
             case Command.Skill1:
