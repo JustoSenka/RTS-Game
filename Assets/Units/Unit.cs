@@ -2,35 +2,49 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Unit : MonoBehaviour {
+public class Unit : MonoBehaviour
+{
+    public int hp;
+    public int mp;
+    public float walkSpeed;
+    public float runSpeed;
+    public float attackSpeed;
 
-    private NavMeshAgent agent;
-    private bool isHold = false;
+    protected NavMeshAgent agent;
+    protected Animator animator;
+    protected bool isHold = false;
+    protected bool isRunning = false;
 
-	void Start () {
+    protected virtual void Start()
+    {
         agent = GetComponent<NavMeshAgent>();
-	}
-	
-	void Update () {
-	
-	}
+        animator = GetComponent<Animator>();
+    }
 
-    public bool IsWaypointNecessary(Command command)
+    void FixedUpdate()
+    {
+        agent.speed = (isRunning) ? runSpeed : walkSpeed;
+
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", agent.velocity.magnitude);
+        }
+    }
+
+    public virtual bool IsWaypointNecessary(Command command)
     {
         bool ret = false;
         switch (command)
         {
             case Command.Move:
             case Command.Attack:
-            case Command.Skill0:
-            case Command.Skill1:
                 ret = true;
                 break;
         }
         return ret;
     }
 
-    public void PerformCommand(Command command, Vector3 target = default(Vector3), bool onSpecificUnit = false, Unit unit = null)
+    public virtual void PerformCommand(Command command, Vector3 target = default(Vector3), bool onSpecificUnit = false, Unit unit = null)
     {
         Debug.Log(command);
 
@@ -55,13 +69,7 @@ public class Unit : MonoBehaviour {
     }
 }
 
-public static class ExtensionMethods
+public enum Command
 {
-    public static void PerformCommand(this List<Unit> units, Command command, Vector3 target = default(Vector3), bool onSpecificUnit = false, Unit unit = null)
-    {
-        foreach (var u in units)
-        {
-            u.PerformCommand(command, target, onSpecificUnit, unit);
-        }
-    }
+    Skill0, Skill1, Skill2, Skill3, Attack, Hold, Stop, Move, None
 }

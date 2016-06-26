@@ -9,6 +9,7 @@ public class SelectRectangle : MonoBehaviour
     public MouseButton mouseButton = MouseButton.left;
     public KeyCode multiSelectKey = KeyCode.LeftShift;
     public bool scaleToObject = true;
+    public bool scaleToBiggerAxis = true;
     public Color rectangleColor = new Color(190f / 255f, 190f / 255f, 1.0f, 0.2f);
     public Color rectangleBorderColor = new Color(0.5f, 0.5f, 1.0f, 0.9f);
     public GameObject onSelectUnit;
@@ -194,7 +195,8 @@ public class SelectRectangle : MonoBehaviour
             if (scaleToObject)
             {
                 var size = GetObjectSize(go);
-                prj.orthographicSize = Mathf.Max(go.transform.localScale.x * size.x, go.transform.localScale.z * size.z);
+                if (scaleToBiggerAxis) prj.orthographicSize = Mathf.Max(go.transform.localScale.x * size.x, go.transform.localScale.z * size.z);
+                else prj.orthographicSize = Mathf.Min(go.transform.localScale.x * size.x, go.transform.localScale.z * size.z);
             }
             else
             {

@@ -95,9 +95,4 @@ public class InputControlTool : MonoBehaviour
     }
 }
 
-public enum Command
-{
-    Attack, Hold, Stop, Move, Skill0, Skill1, Skill2, Skill3, None
-}
-
 
