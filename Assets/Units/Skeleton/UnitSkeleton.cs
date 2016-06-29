@@ -7,7 +7,7 @@ public class UnitSkeleton : Unit
     protected override void Start()
     {
         base.Start();
-        walkSpeed = 1.2f;
+        walkSpeed = 1f;
         runSpeed = 4f;
     }
 

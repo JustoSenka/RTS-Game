@@ -194,7 +194,7 @@ public class SelectRectangle : MonoBehaviour
 
             if (scaleToObject)
             {
-                var size = GetObjectSize(go);
+				var size = go.GetObjectSize();
                 if (scaleToBiggerAxis) prj.orthographicSize = Mathf.Max(go.transform.localScale.x * size.x, go.transform.localScale.z * size.z);
                 else prj.orthographicSize = Mathf.Min(go.transform.localScale.x * size.x, go.transform.localScale.z * size.z);
             }
@@ -204,7 +204,7 @@ public class SelectRectangle : MonoBehaviour
             }
 
             slc.transform.parent = go.transform;
-            slc.transform.localPosition = new Vector3(0f, 0.1f, 0f);
+            slc.transform.localPosition = new Vector3(0f, 0.3f, 0f);
             slc.transform.rotation = go.transform.rotation;
 
             //Send message if needed
@@ -213,37 +213,6 @@ public class SelectRectangle : MonoBehaviour
                 onSelectUnit.SendMessage("OnSelectUnit", go);
             }
         }
-    }
-
-    private Vector3 GetObjectSize(GameObject go)
-    {
-        Vector3 size = new Vector3(1, 1, 1);
-        //First look for SkinnedMeshRenderer
-        SkinnedMeshRenderer[] meshes = go.GetComponentsInChildren<SkinnedMeshRenderer>();
-        if (meshes.Length > 0)
-        {
-            Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);
-            foreach (SkinnedMeshRenderer r in meshes)
-            {
-                bounds.Encapsulate(r.sharedMesh.bounds);
-            }
-            size = bounds.size;
-        }
-        //If no skinned, look for mesh filters
-        else
-        {
-            MeshFilter[] meshesf = go.GetComponentsInChildren<MeshFilter>();
-            if (meshesf.Length > 0)
-            {
-                Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);
-                foreach (MeshFilter r in meshesf)
-                {
-                    bounds.Encapsulate(r.mesh.bounds);
-                }
-                size = bounds.size;
-            }
-        }
-        return size;
     }
 
     //Draws the select rectangle on screen
