@@ -8,7 +8,7 @@ public class InputControlTool : MonoBehaviour
 {
     public LayerMask groundLayer;
 
-    private IEnumerable<Command> allCommands = Enum.GetValues(typeof(Command)).Cast<Command>();
+    private IEnumerable<CommandType> allCommands = Enum.GetValues(typeof(CommandType)).Cast<CommandType>();
 
     private bool skillPhase = false;
     private Command currentCommand;
@@ -22,6 +22,11 @@ public class InputControlTool : MonoBehaviour
         moveCross = gameObject.GetComponentInChildren<TargetMoveAnimation>();
     }
 
+    void FixedUpdate()
+    {
+
+    }
+
     void Update()
     {
         if (selectRectangle.GetSelectedUnits().Count > 0)
@@ -30,10 +35,10 @@ public class InputControlTool : MonoBehaviour
             if (!skillPhase)
             {
                 currentCommand = GetCurrentCommandAccordingToInput();
-                skillPhase = !currentCommand.Equals(Command.None);
+                skillPhase = !currentCommand.type.Equals(CommandType.None);
                 SetSelectionEnabled(!skillPhase);
 
-                if (!currentCommand.Equals(Command.None) && !selectRectangle.GetSelectedUnits()[0].IsWaypointNecessary(currentCommand))
+                if (!currentCommand.type.Equals(CommandType.None) && !selectRectangle.GetSelectedUnits()[0].IsWaypointNecessary(currentCommand))
                 {
                     selectRectangle.GetSelectedUnits().PerformCommand(currentCommand);
                     skillPhase = false;
@@ -46,18 +51,20 @@ public class InputControlTool : MonoBehaviour
                 SetSelectionEnabled(true);
                 skillPhase = false;
 
-                moveCross.ShowAt(GetWorldMousePoint(), !currentCommand.Equals(Command.Move));
-                selectRectangle.GetSelectedUnits().PerformCommand(currentCommand, GetWorldMousePoint());
+                moveCross.ShowAt(GetWorldMousePoint(), !currentCommand.type.Equals(CommandType.Move));
+                currentCommand.pos = GetWorldMousePoint();
+                selectRectangle.GetSelectedUnits().PerformCommand(currentCommand);
             }
             else if (skillPhase && Input.GetMouseButtonDown(1))
             {
                 SetSelectionEnabled(true);
+                currentCommand = new Command(CommandType.None);
                 skillPhase = false;
             }
             else if (!skillPhase && Input.GetMouseButtonDown(1))
             {
                 moveCross.ShowAt(GetWorldMousePoint());
-                selectRectangle.GetSelectedUnits().PerformCommand(Command.Move, GetWorldMousePoint());
+                selectRectangle.GetSelectedUnits().PerformCommand(new Command(CommandType.Move, GetWorldMousePoint()));
             }
         }
     }
@@ -78,12 +85,12 @@ public class InputControlTool : MonoBehaviour
     {
         foreach (var c in allCommands)
         {
-            if (!c.Equals(Command.None) && Input.GetButtonDown(c.ToString()))
+            if (!c.Equals(CommandType.None) && !c.Equals(CommandType.Busy) && Input.GetButtonDown(c.ToString()))
             {
-                return c;
+                return new Command(c);
             }
         }
-        return Command.None;
+        return new Command(CommandType.None);
     }
 
     public void SetSelectionEnabled(bool enabled)

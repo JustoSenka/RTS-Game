@@ -158,7 +158,1339 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: attack_1
+      takeName: attack_1
+      firstFrame: 0
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/initial_bone
+        weight: 1
+      - path: Armature/initial_bone/body_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1/cloth_back_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1/cloth_front_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/forehead
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/jaw
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/upperlip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L/index_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L/middle_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L/ring_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L/thumb_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R/index_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R/middle_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R/ring_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R/thumb_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L/toes_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R/toes_R
+        weight: 1
+      - path: Armature/weapon
+        weight: 1
+      - path: Cyclop
+        weight: 1
+      - path: Weapon
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: attack_2
+      takeName: attack_2
+      firstFrame: 0
+      lastFrame: 46
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/initial_bone
+        weight: 1
+      - path: Armature/initial_bone/body_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1/cloth_back_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1/cloth_front_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/forehead
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/jaw
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/upperlip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L/index_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L/middle_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L/ring_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L/thumb_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R/index_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R/middle_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R/ring_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R/thumb_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L/toes_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R/toes_R
+        weight: 1
+      - path: Armature/weapon
+        weight: 1
+      - path: Cyclop
+        weight: 1
+      - path: Weapon
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: death
+      takeName: death
+      firstFrame: 0
+      lastFrame: 51
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/initial_bone
+        weight: 1
+      - path: Armature/initial_bone/body_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1/cloth_back_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1/cloth_front_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/forehead
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/jaw
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/upperlip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L/index_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L/middle_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L/ring_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L/thumb_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R/index_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R/middle_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R/ring_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R/thumb_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L/toes_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R/toes_R
+        weight: 1
+      - path: Armature/weapon
+        weight: 1
+      - path: Cyclop
+        weight: 1
+      - path: Weapon
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: hit
+      takeName: hit
+      firstFrame: 0
+      lastFrame: 21
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/initial_bone
+        weight: 1
+      - path: Armature/initial_bone/body_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1/cloth_back_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1/cloth_front_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/forehead
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/jaw
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/upperlip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L/index_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L/middle_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L/ring_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L/thumb_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R/index_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R/middle_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R/ring_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R/thumb_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L/toes_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R/toes_R
+        weight: 1
+      - path: Armature/weapon
+        weight: 1
+      - path: Cyclop
+        weight: 1
+      - path: Weapon
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: idle
+      takeName: idle
+      firstFrame: 0
+      lastFrame: 34
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/initial_bone
+        weight: 1
+      - path: Armature/initial_bone/body_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1/cloth_back_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1/cloth_front_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/forehead
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/jaw
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/upperlip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L/index_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L/middle_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L/ring_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L/thumb_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R/index_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R/middle_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R/ring_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R/thumb_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L/toes_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R/toes_R
+        weight: 1
+      - path: Armature/weapon
+        weight: 1
+      - path: Cyclop
+        weight: 1
+      - path: Weapon
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: run
+      takeName: run
+      firstFrame: 0
+      lastFrame: 22
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/initial_bone
+        weight: 1
+      - path: Armature/initial_bone/body_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1/cloth_back_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1/cloth_front_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/forehead
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/jaw
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/upperlip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L/index_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L/middle_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L/ring_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L/thumb_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R/index_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R/middle_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R/ring_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R/thumb_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L/toes_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R/toes_R
+        weight: 1
+      - path: Armature/weapon
+        weight: 1
+      - path: Cyclop
+        weight: 1
+      - path: Weapon
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: stunned_idle
+      takeName: stunned_idle
+      firstFrame: 0
+      lastFrame: 28
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/initial_bone
+        weight: 1
+      - path: Armature/initial_bone/body_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1/cloth_back_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1/cloth_front_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/forehead
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/jaw
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/upperlip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L/index_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L/middle_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L/ring_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L/thumb_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R/index_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R/middle_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R/ring_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R/thumb_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L/toes_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R/toes_R
+        weight: 1
+      - path: Armature/weapon
+        weight: 1
+      - path: Cyclop
+        weight: 1
+      - path: Weapon
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: stunned_idle_hit
+      takeName: stunned_idle_hit
+      firstFrame: 0
+      lastFrame: 18
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/initial_bone
+        weight: 1
+      - path: Armature/initial_bone/body_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1/cloth_back_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1/cloth_front_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/forehead
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/jaw
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/upperlip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L/index_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L/middle_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L/ring_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L/thumb_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R/index_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R/middle_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R/ring_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R/thumb_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L/toes_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R/toes_R
+        weight: 1
+      - path: Armature/weapon
+        weight: 1
+      - path: Cyclop
+        weight: 1
+      - path: Weapon
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: walk
+      takeName: walk
+      firstFrame: 0
+      lastFrame: 29
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/initial_bone
+        weight: 1
+      - path: Armature/initial_bone/body_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_back_1/cloth_back_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/cloth_front_1/cloth_front_2
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/cheek_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/forehead
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/jaw
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/neck/head/upperlip
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/index_1_L/index_2_L/index_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/middle_1_L/middle_2_L/middle_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/ring_1_L/ring_2_L/ring_3_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_L/upperarm_L/forearm_L/hand_L/thumb_1_L/thumb_2_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/index_1_R/index_2_R/index_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/middle_1_R/middle_2_R/middle_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/ring_1_R/ring_2_R/ring_3_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/spine/chest/shoulder_R/upperarm_R/forearm_R/hand_R/thumb_1_R/thumb_2_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_L/shin_L/foot_L/toes_L
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R
+        weight: 1
+      - path: Armature/initial_bone/body_motion/hip_motion/hip/thigh_R/shin_R/foot_R/toes_R
+        weight: 1
+      - path: Armature/weapon
+        weight: 1
+      - path: Cyclop
+        weight: 1
+      - path: Weapon
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

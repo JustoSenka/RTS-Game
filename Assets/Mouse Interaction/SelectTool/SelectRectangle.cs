@@ -5,17 +5,21 @@ using System.Collections.Generic;
 
 public class SelectRectangle : MonoBehaviour
 {
-    public enum MouseButton { left, right, middle }
+    public Team team = Team.T1;
+
+    [Header("Mouse Buttons:")]
     public MouseButton mouseButton = MouseButton.left;
     public KeyCode multiSelectKey = KeyCode.LeftShift;
+    [Space(5)]
+
+    [Header("Selection Circle Options:")]
     public bool scaleToObject = true;
     public bool scaleToBiggerAxis = true;
     public Color rectangleColor = new Color(190f / 255f, 190f / 255f, 1.0f, 0.2f);
     public Color rectangleBorderColor = new Color(0.5f, 0.5f, 1.0f, 0.9f);
-    public GameObject onSelectUnit;
-    public GameObject onDeselectUnit;
-    public GameObject onStartSelect;
-    public GameObject onEndSelect;
+    [Space(5)]
+
+    [Header("Selector Prefab Reference")]
     public GameObject projectorPrefab;
 
     private List<Unit> selectedUnits { get; set; }
@@ -42,11 +46,6 @@ public class SelectRectangle : MonoBehaviour
             GameObject prnt = prj.transform.parent.gameObject;
             Destroy(prnt);
             selectedUnits.Remove(go.GetComponent<Unit>());
-            //Send message if needed
-            if (onDeselectUnit != null)
-            {
-                onSelectUnit.SendMessage("OnDeselectUnit", go);
-            }
         }
     }
 
@@ -65,11 +64,6 @@ public class SelectRectangle : MonoBehaviour
             Projector projector = selectedUnits[i].GetComponentsInChildren<Projector>()[0];
             GameObject parent = projector.transform.parent.gameObject;
             Destroy(parent);
-            //Send messages if needed
-            if (onDeselectUnit != null)
-            {
-                onSelectUnit.SendMessage("OnDeselectUnit", selectedUnits[i]);
-            }
         }
         selectedUnits.Clear();
     }
@@ -80,10 +74,6 @@ public class SelectRectangle : MonoBehaviour
         {
             isDragging = true;
             startPoint = Input.mousePosition;
-            if (onStartSelect != null)
-            {
-                onSelectUnit.SendMessage("OnStartSelect", selectedUnits);
-            }
             if (!Input.GetKey(multiSelectKey))
             {
                 DeselectAllObjects();
@@ -93,10 +83,6 @@ public class SelectRectangle : MonoBehaviour
         if (Input.GetMouseButtonUp(mouseButton.GetHashCode()) && isDragging)
         {
             isDragging = false;
-            if (onEndSelect != null && selectedUnits.Count > 0)
-            {
-                onSelectUnit.SendMessage("OnEndSelect", selectedUnits);
-            }
             if (Vector2.Distance(startPoint, Input.mousePosition) < 8)
             {
                 if (!Input.GetKey(multiSelectKey))
@@ -186,6 +172,9 @@ public class SelectRectangle : MonoBehaviour
 
     private void MarkObjectAsSelected(GameObject go)
     {
+        if (!go.GetComponent<Unit>().team.Equals(team))
+            return;
+
         if (go.GetComponentsInChildren<Projector>().Length == 0)
         {
             selectedUnits.Add(go.GetComponent<Unit>());
@@ -206,12 +195,6 @@ public class SelectRectangle : MonoBehaviour
             slc.transform.parent = go.transform;
             slc.transform.localPosition = new Vector3(0f, 0.3f, 0f);
             slc.transform.rotation = go.transform.rotation;
-
-            //Send message if needed
-            if (onSelectUnit != null)
-            {
-                onSelectUnit.SendMessage("OnSelectUnit", go);
-            }
         }
     }
 
@@ -246,4 +229,9 @@ public class SelectRectangle : MonoBehaviour
         result.Apply();
         return result;
     }
+}
+
+public enum MouseButton
+{
+    left, right, middle
 }

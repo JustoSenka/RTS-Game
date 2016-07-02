@@ -12,7 +12,7 @@ public class Common {
 
 public static class ExtensionMethods
 {
-    public static void PerformCommand(this List<Unit> units, Command command, Vector3 target = default(Vector3), bool onSpecificUnit = false, Unit unit = null)
+    public static void PerformCommand(this List<Unit> units, Command command)
     {/*
 		if (units.Count > 1 && (command.Equals(Command.Move) || (command.Equals(Command.Attack) && unit == null)))
 		{
@@ -24,7 +24,7 @@ public static class ExtensionMethods
 		{*/
 			foreach (var u in units)
 			{
-				u.PerformCommand(command, target, onSpecificUnit, unit);
+				u.PerformCommand(command);
 			}
 		//}
     }

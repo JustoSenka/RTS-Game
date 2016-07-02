@@ -15,23 +15,23 @@ public class UnitSkeleton : Unit
 
         if (base.IsWaypointNecessary(command)) return true;
 
-        switch (command)
+        switch (command.type)
         {
-            case Command.Skill2:
-            case Command.Skill3:
+            case CommandType.Skill2:
+            case CommandType.Skill3:
                 ret = true;
                 break;
         }
         return ret;
     }
 
-    public override void PerformCommand(Command command, Vector3 target = default(Vector3), bool onSpecificUnit = false, Unit unit = null)
+    public override void PerformCommand(Command command)
     {
-        base.PerformCommand(command, target, onSpecificUnit, unit);
+        base.PerformCommand(command);
 
-        switch (command)
+        switch (command.type)
         {
-            case Command.Skill0:
+            case CommandType.Skill0:
                 isRunning = true;
                 Skill0.Play();
 
@@ -42,13 +42,13 @@ public class UnitSkeleton : Unit
                 });
 
                 break;
-            case Command.Skill1:
+            case CommandType.Skill1:
 
                 break;
-            case Command.Skill2:
+            case CommandType.Skill2:
 
                 break;
-            case Command.Skill3:
+            case CommandType.Skill3:
 
                 break;
         }
