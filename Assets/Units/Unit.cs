@@ -51,7 +51,8 @@ public class Unit : MonoBehaviour
 		timeUntilCheck -= Time.fixedDeltaTime;
 		if (timeUntilCheck < 0)
 		{
-			if (Vector3.Distance(lastPos, transform.position) < aiStoppingConstant * agent.speed * aiCheckingInterval && agent.remainingDistance <= aiDistanceCloseToDestination)
+			if (Vector3.Distance(lastPos, transform.position) < aiStoppingConstant * agent.speed * aiCheckingInterval
+                && agent.remainingDistance <= aiDistanceCloseToDestination)
 			{
 				agent.destination = transform.position;
 			}

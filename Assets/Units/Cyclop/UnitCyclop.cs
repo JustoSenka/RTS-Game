@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class UnitSkeleton : Unit
+public class UnitCyclop : Unit
 {
     protected override void Start()
     {
