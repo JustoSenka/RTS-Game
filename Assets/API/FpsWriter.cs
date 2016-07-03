@@ -3,17 +3,18 @@ using UnityEngine.UI;
 using System.Collections;
 
 [RequireComponent(typeof(Text))]
-public class FpsWriter : MonoBehaviour {
-
+public class FpsWriter : MonoBehaviour
+{
     private Text text;
     private long frameCount = 0;
     private float timePassed = 0;
     private float fps = 0;
     private float updateRate = 3;
 
-	void Start () {
-	    text = GetComponent<Text>();
-	}
+    void Start()
+    {
+        text = GetComponent<Text>();
+    }
 
     void Update()
     {
@@ -28,7 +29,7 @@ public class FpsWriter : MonoBehaviour {
 
         if (text != null)
         {
-            text.text = "FPS: " + (int) fps;
+            text.text = "FPS: " + (int)fps;
         }
     }
 }

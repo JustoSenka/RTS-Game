@@ -22,11 +22,6 @@ public class InputControlTool : MonoBehaviour
         moveCross = gameObject.GetComponentInChildren<TargetMoveAnimation>();
     }
 
-    void FixedUpdate()
-    {
-
-    }
-
     void Update()
     {
         if (selectRectangle.GetSelectedUnits().Count > 0)
@@ -46,39 +41,51 @@ public class InputControlTool : MonoBehaviour
             }
 
             // Perform actions
-            if (skillPhase && Input.GetMouseButtonDown(0))
+            if (skillPhase && Input.GetMouseButtonDown(MouseButton.Left.GetHashCode()))
             {
                 SetSelectionEnabled(true);
                 skillPhase = false;
 
-                moveCross.ShowAt(GetWorldMousePoint(), !currentCommand.type.Equals(CommandType.Move));
-                currentCommand.pos = GetWorldMousePoint();
-                selectRectangle.GetSelectedUnits().PerformCommand(currentCommand);
+                // Attack or skill on any unit
+                var unitClickedOn = Common.GetObjectUnderMouse().GetComponent<Unit>();
+                if (unitClickedOn != null && !currentCommand.type.Equals(CommandType.Move))
+                {
+                    selectRectangle.GetSelectedUnits().PerformCommand(new Command(currentCommand.type, unitClickedOn.transform.position, unitClickedOn, true));
+                    moveCross.ShowAt(unitClickedOn.transform.position, true);
+                }
+                // Attack or skill on ground
+                else
+                {
+                    var mousePos = Common.GetWorldMousePoint(groundLayer);
+                    moveCross.ShowAt(mousePos, !currentCommand.type.Equals(CommandType.Move));
+                    currentCommand.pos = mousePos;
+                    selectRectangle.GetSelectedUnits().PerformCommand(currentCommand);
+                }
             }
-            else if (skillPhase && Input.GetMouseButtonDown(1))
+            else if (skillPhase && Input.GetMouseButtonDown(MouseButton.Right.GetHashCode()))
             {
                 SetSelectionEnabled(true);
                 currentCommand = new Command(CommandType.None);
                 skillPhase = false;
             }
-            else if (!skillPhase && Input.GetMouseButtonDown(1))
+            else if (!skillPhase && Input.GetMouseButtonDown(MouseButton.Right.GetHashCode()))
             {
-                moveCross.ShowAt(GetWorldMousePoint());
-                selectRectangle.GetSelectedUnits().PerformCommand(new Command(CommandType.Move, GetWorldMousePoint()));
+                // Right click on enemy unit
+                var unitClickedOn = Common.GetObjectUnderMouse().GetComponent<Unit>();
+                if (unitClickedOn != null && !unitClickedOn.team.Equals(selectRectangle.team))
+                {
+                    selectRectangle.GetSelectedUnits().PerformCommand(new Command(CommandType.Attack, unitClickedOn.transform.position, unitClickedOn, true));
+                    moveCross.ShowAt(unitClickedOn.transform.position, true);
+                }
+                // Right click on ground or anywhere else
+                else
+                {
+                    var mousePos = Common.GetWorldMousePoint(groundLayer);
+                    moveCross.ShowAt(mousePos);
+                    selectRectangle.GetSelectedUnits().PerformCommand(new Command(CommandType.Move, mousePos));
+                }
             }
         }
-    }
-
-    private Vector3 GetWorldMousePoint()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100f, groundLayer))
-        {
-            return hit.point;
-        }
-
-        Debug.LogWarning("Did not clicked on the ground layer.");
-        return Vector3.zero;
     }
 
     private Command GetCurrentCommandAccordingToInput()
@@ -100,6 +107,8 @@ public class InputControlTool : MonoBehaviour
             selectRectangle.enabled = enabled;
         }
     }
+
+    private enum MouseButton { Left, Right, Midle }
 }
 
 

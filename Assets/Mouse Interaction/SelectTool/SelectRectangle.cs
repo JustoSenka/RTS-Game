@@ -122,19 +122,11 @@ public class SelectRectangle : MonoBehaviour
 
     private void PerformMouseClick()
     {
-        IterateAllSelectable((GameObject go) =>
+        var unit = Common.GetObjectUnderMouse().GetComponent<Unit>();
+        if (unit != null && unit.team.Equals(team))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit raycastHit = new RaycastHit();
-
-            if (Physics.Raycast(ray, out raycastHit, 100f))
-            {
-                if (raycastHit.collider.transform.gameObject.Equals(go))
-                {
-                    MarkObjectAsSelected(go);
-                }
-            }
-        });
+            MarkObjectAsSelected(unit.gameObject);
+        }
     }
 
     private void IterateAllSelectable(Action<GameObject> action)
@@ -183,7 +175,7 @@ public class SelectRectangle : MonoBehaviour
 
             if (scaleToObject)
             {
-				var size = go.GetObjectSize();
+                var size = go.GetObjectSize();
                 if (scaleToBiggerAxis) prj.orthographicSize = Mathf.Max(go.transform.localScale.x * size.x, go.transform.localScale.z * size.z);
                 else prj.orthographicSize = Mathf.Min(go.transform.localScale.x * size.x, go.transform.localScale.z * size.z);
             }

@@ -17,10 +17,10 @@ public class AI : MonoBehaviour
 
     private readonly float aiCheckingInterval = 0.1f;
     private readonly float aiStoppingConstant = 0.5f;
-    private readonly float aiAnimationIgnoreSpeed = 0.5f;
+    //private readonly float aiAnimationIgnoreSpeed = 0.5f;
     private readonly float aiDistanceCloseToDestination = 5f;
     private readonly float aiAttackRangeInaccuracy = 0.5f;
-    
+
     void Start()
     {
         unit = GetComponent<Unit>();
@@ -46,7 +46,7 @@ public class AI : MonoBehaviour
         {
             if (Vector3.Distance(command.pos, transform.position) <= agent.stoppingDistance)
             {
-                if (command.type.Equals(CommandType.Attack) && command.unit != null)
+                if (command.type.Equals(CommandType.Attack) && command.unitToAttack != null)
                 {
                     Debug.Log("Finished, now attacking");
                     command.type = CommandType.Busy;
@@ -58,6 +58,11 @@ public class AI : MonoBehaviour
                     StopAgentFromDoingCurrentCommand();
                 }
             }
+        }
+
+        if (!command.type.Equals(CommandType.Busy))
+        {
+            isAttacking = false;
         }
     }
 
@@ -71,15 +76,30 @@ public class AI : MonoBehaviour
         command = new Command(CommandType.None);
     }
 
-    private void AttackSpecificUnit(Unit unit)
+    private void AttackUnit(Unit unitToAttack, bool strictAttack = false)
     {
-        isAttacking = false;
-        command.type = CommandType.Attack;
-        command.unit = unit;
-        command.pos = unit.transform.position;
-        agent.stoppingDistance = unit.attackRange;
+        if (!unit.IsHold())
+        {
+            isAttacking = false;
+            command.type = CommandType.Attack;
+            command.unitToAttack = unitToAttack;
+            command.pos = unitToAttack.transform.position;
+            command.strictAttack = strictAttack;
+            agent.stoppingDistance = GetAttackRangeOnUnit(unitToAttack);
+        }
+        else if (Vector3.Distance(unitToAttack.transform.position, transform.position) <= GetAttackRangeOnUnit(unitToAttack))
+        {
+            command.type = CommandType.Busy;
+            command.unitToAttack = unitToAttack;
+            command.pos = unitToAttack.transform.position;
+            isAttacking = true;
+        }
     }
 
+    private float GetAttackRangeOnUnit(Unit unitToAttack)
+    {
+        return unit.attackRange + unit.radius + unitToAttack.radius;
+    }
 
     // ------- AI UPDATE START -----------------------------------------------------------------------------------------------------------
 
@@ -90,7 +110,8 @@ public class AI : MonoBehaviour
         {
             StopIfAgentIsStuck();
             CheckIfEnemyNearby();
-            PerformLongTermCommand();
+            FollowTargetedUnit();
+            CheckIfEnemyInRangeWhenAttacking();
 
             aiTimeUntilCheck = aiCheckingInterval;
         }
@@ -99,8 +120,9 @@ public class AI : MonoBehaviour
     private void StopIfAgentIsStuck()
     {
         if (Vector3.Distance(lastPos, transform.position) < aiStoppingConstant * agent.speed * aiCheckingInterval
-            && agent.remainingDistance <= aiDistanceCloseToDestination && (command.type.Equals(CommandType.Move) ||
-            command.type.Equals(CommandType.Attack) && command.unit == null))
+            && agent.remainingDistance <= aiDistanceCloseToDestination &&
+            (command.type.Equals(CommandType.Move) ||
+            command.type.Equals(CommandType.Attack) && command.unitToAttack == null))
         {
             Debug.Log("Stuck");
             agent.destination = transform.position;
@@ -111,8 +133,8 @@ public class AI : MonoBehaviour
 
     private void CheckIfEnemyNearby()
     {
-        if (command.type.Equals(CommandType.Move) || 
-            command.type.Equals(CommandType.Busy))
+        if (command.type.Equals(CommandType.Move) || command.type.Equals(CommandType.Busy) ||
+            (command.type.Equals(CommandType.Attack) && command.strictAttack))
             return;
 
         Unit closestUnit = null;
@@ -132,25 +154,35 @@ public class AI : MonoBehaviour
 
         if (closestUnit != null)
         {
-            AttackSpecificUnit(closestUnit);
+            AttackUnit(closestUnit);
         }
     }
 
-    private void PerformLongTermCommand()
+    private void FollowTargetedUnit()
     {
-        // Follow specific unit if it is targeted
-        if (command.type.Equals(CommandType.Attack) && command.unit != null)
+        if (command.type.Equals(CommandType.Attack) && command.unitToAttack != null)
         {
-            agent.destination = command.unit.transform.position;
-            command.pos = command.unit.transform.position;
+            agent.destination = command.unitToAttack.transform.position;
+            command.pos = command.unitToAttack.transform.position;
         }
-        // When attacking, check if not too far away and look at it
+    }
+
+    private void CheckIfEnemyInRangeWhenAttacking()
+    {
         if (command.type.Equals(CommandType.Busy) && isAttacking)
         {
-            transform.LookAt(new Vector3(command.unit.transform.position.x, transform.position.y, command.unit.transform.position.z));
-            if (Vector3.Distance(command.unit.transform.position, transform.position) > unit.attackRange + aiAttackRangeInaccuracy)
+            transform.LookAt(new Vector3(command.unitToAttack.transform.position.x, transform.position.y, command.unitToAttack.transform.position.z));
+            if (Vector3.Distance(command.unitToAttack.transform.position, transform.position) > GetAttackRangeOnUnit(command.unitToAttack) + aiAttackRangeInaccuracy)
             {
-                AttackSpecificUnit(command.unit);
+                if (!unit.IsHold())
+                {
+                    AttackUnit(command.unitToAttack, command.strictAttack);
+                }
+                else
+                {
+                    command.type = CommandType.Hold;
+                    isAttacking = false;
+                }
             }
         }
     }

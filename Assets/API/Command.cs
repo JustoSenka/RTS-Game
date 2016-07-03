@@ -6,20 +6,15 @@ public struct Command {
 
     public CommandType type;
     public Vector3 pos;
-    public Unit unit;
+    public Unit unitToAttack;
+    public bool strictAttack;
 
-    public Command(CommandType type, Vector3 pos = default(Vector3), Unit unit = null)
+    public Command(CommandType type, Vector3 pos = default(Vector3), Unit unitToAttack = null, bool strictAttack = false)
     {
         this.type = type;
         this.pos = pos;
-        this.unit = unit;
-    }
-
-    public Command(Command command)
-    {
-        type = command.type;
-        pos = command.pos;
-        unit = command.unit;
+        this.unitToAttack = unitToAttack;
+        this.strictAttack = strictAttack;
     }
 }
 
