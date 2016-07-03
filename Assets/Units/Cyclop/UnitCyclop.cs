@@ -9,14 +9,9 @@ public class UnitCyclop : Unit
         base.Start();
     }
 
-    protected override void FixedUpdate()
+    protected void UpdateRandomAttack()
     {
-        base.FixedUpdate();
-
-        if (isAttacking)
-        {
-            animator.SetInteger("RandomAttack", Random.Range(1, 2));
-        }
+        animator.SetFloat("RandomAttack", (animator.GetFloat("RandomAttack") + 1) % 2);
     }
 
     public override bool IsWaypointNecessary(Command command)

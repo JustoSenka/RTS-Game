@@ -182,7 +182,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: UpdateRandomAttack
+        data: 
+        objectReferenceParameter: {fileID: 1000010092074644, guid: 9d4234d4dc9bf5b40a081db2022643be,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -330,7 +338,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: UpdateRandomAttack
+        data: 
+        objectReferenceParameter: {fileID: 1000010092074644, guid: 9d4234d4dc9bf5b40a081db2022643be,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

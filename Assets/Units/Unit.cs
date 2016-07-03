@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class Unit : MonoBehaviour
 {
     [Header("Unit Stats:")]
@@ -38,136 +39,27 @@ public class Unit : MonoBehaviour
 
     public Command command = new Command(CommandType.None);
 
-    // AI
-	private Vector3 lastPos;
-	private float aiTimeUntilCheck = 1;
-    
-	private readonly float aiCheckingInterval = 0.1f;
-	private readonly float aiStoppingConstant = 0.5f;
-	private readonly float aiAnimationIgnoreSpeed = 0.5f;
-	private readonly float aiDistanceCloseToDestination = 5f;
-    private readonly float aiAttackRangeInaccuracy = 0.5f;
+    private AI ai;
 
     protected virtual void Start()
 	{
 		agent = GetComponent<NavMeshAgent>();
 		animator = GetComponent<Animator>();
+        ai = GetComponent<AI>();
 
         command.type = CommandType.None;
         agent.radius = radius;
-        lastPos = transform.position;
 	}
 
     protected virtual void FixedUpdate()
 	{
 		agent.speed = (isRunning) ? runSpeed : walkSpeed;
 
-        CheckIfAgentFinishedCommand();
-
-        AiUpdate();
-
 		SetAnimatorSpeedIfAgentIsMovingProperly();
 
         animator.SetBool("Attack", isAttacking);
     }
-
-    private void CheckIfAgentFinishedCommand()
-    {
-        if (command.type.Equals(CommandType.Move) || command.type.Equals(CommandType.Attack))
-        {
-            if (Vector3.Distance(command.pos, transform.position) <= agent.stoppingDistance)
-            {
-                if (command.type.Equals(CommandType.Attack) && command.unit != null)
-                {
-                    Debug.Log("Finished, now attacking");
-                    command.type = CommandType.Busy;
-                    isAttacking = true;
-                }
-                else
-                {
-                    Debug.Log("Finished and will do Stop");
-                    StopAgentFromDoingCurrentCommand();
-                }
-            }
-        }
-    }
-
-    private void AiUpdate()
-    {
-        aiTimeUntilCheck -= Time.fixedDeltaTime;
-        if (aiTimeUntilCheck < 0)
-        {
-            StopIfAgentIsStuck();
-            CheckIfEnemyNearby();
-            PerformLongTermCommand();
-
-            aiTimeUntilCheck = aiCheckingInterval;
-        }
-    }
-
-    // ------- AI UPDATE START -----------------------------------------------------------------------------------------------------------
-
-    private void StopIfAgentIsStuck()
-	{
-		if (Vector3.Distance(lastPos, transform.position) < aiStoppingConstant * agent.speed * aiCheckingInterval
-            && agent.remainingDistance <= aiDistanceCloseToDestination && (command.type.Equals(CommandType.Move) || 
-            command.type.Equals(CommandType.Attack) && command.unit == null))
-        {
-            Debug.Log("Stuck");
-            agent.destination = transform.position;
-            StopAgentFromDoingCurrentCommand();
-        }
-        lastPos = transform.position;
-	}
-
-    private void CheckIfEnemyNearby()
-    {
-        if (command.type.Equals(CommandType.Move) || /*(command.type.Equals(CommandType.Attack) && command.unit != null) ||*/
-            command.type.Equals(CommandType.Busy))
-            return;
-
-        Unit closestUnit = null;
-        float closestDistance = float.MaxValue;
-        var allUnits = FindObjectsOfType<Unit>();
-        foreach (var enemyUnit in allUnits)
-        {
-            if (!enemyUnit.team.Equals(team) && Vector3.Distance(transform.position, enemyUnit.transform.position) <= sight)
-            {
-                if (closestUnit == null || Vector3.Distance(enemyUnit.transform.position, transform.position) < closestDistance)
-                {
-                    closestUnit = enemyUnit;
-                    closestDistance = Vector3.Distance(closestUnit.transform.position, transform.position);
-                }
-            }
-        }
-
-        if (closestUnit != null)
-        {
-            AttackSpecificUnit(closestUnit);
-        }
-    }
-
-    private void PerformLongTermCommand()
-    {
-        // Follow specific unit if it is targeted
-        if (command.type.Equals(CommandType.Attack) && command.unit != null)
-        {
-            agent.destination = command.unit.transform.position;
-            command.pos = command.unit.transform.position;
-        }
-        // When attacking, check if not too far away and look at it
-        if (command.type.Equals(CommandType.Busy) && isAttacking)
-        {
-            transform.LookAt(new Vector3(command.unit.transform.position.x, transform.position.y, command.unit.transform.position.z));
-            if (Vector3.Distance(command.unit.transform.position, transform.position) > attackRange + aiAttackRangeInaccuracy)
-            {
-                AttackSpecificUnit(command.unit);
-            }
-        }
-    }
-
-    // ------- AI UPDATE END ---------------------------------------------------------------------------------------------------------------
-
+ 
     private void SetAnimatorSpeedIfAgentIsMovingProperly()
 	{
 		if (animator != null)
@@ -183,24 +75,9 @@ public class Unit : MonoBehaviour
 		}
 	}
 
-    private void StopAgentFromDoingCurrentCommand()
-    {
-        if (command.type.Equals(CommandType.Busy) && isAttacking) Debug.LogWarning("What could have stopped unit from attacking ?");
-        Debug.Log("Stop");
-
-        isAttacking = false;
-        agent.stoppingDistance = 0;
-        command = new Command(CommandType.None);
-    }
-
-    private void AttackSpecificUnit(Unit unit)
-    {
-        isAttacking = false;
-        command.type = CommandType.Attack;
-        command.unit = unit;
-        command.pos = unit.transform.position;
-        agent.stoppingDistance = attackRange;
-    }
+    public Command GetCommand(){ return command; }
+    public void SetCommand(Command command) { this.command = command; }
+    public void SetAttacking(bool isAttacking) { this.isAttacking = isAttacking; }
 
     public virtual bool IsWaypointNecessary(Command command)
 	{
@@ -234,29 +111,17 @@ public class Unit : MonoBehaviour
 			case CommandType.Move:
                 this.command = command;
                 isHold = false;
-				aiTimeUntilCheck = aiCheckingInterval * 5;
+				if (ai != null) ai.setAiTimeUntilCheck(5);
 				agent.SetDestination(command.pos);
 				break;
 			case CommandType.Attack:
                 this.command = command;
                 isHold = false;
-				aiTimeUntilCheck = aiCheckingInterval * 5;
-				agent.SetDestination(command.pos);
+                if (ai != null) ai.setAiTimeUntilCheck(5);
+                agent.SetDestination(command.pos);
 				break;
 		}
 	}
-
-	/*
-	void OnTriggerEnter(Collider other)
-	{
-
-	}
-
-	public void OnTriggerExit(Collider other)
-	{
-
-	}
-	*/
 }
 
 public enum Team
