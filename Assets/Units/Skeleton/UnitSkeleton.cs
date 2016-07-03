@@ -27,6 +27,9 @@ public class UnitSkeleton : Unit
 
     public override void PerformCommand(Command command)
     {
+        if (isDead)
+            return;
+
         base.PerformCommand(command);
 
         switch (command.type)

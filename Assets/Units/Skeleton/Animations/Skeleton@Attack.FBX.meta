@@ -133,7 +133,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.37873557
+        functionName: AttackAnimationCallback
+        data: 
+        objectReferenceParameter: {fileID: 1000013538516714, guid: d09e8e5aadbfb8043bafa7af90ca023d,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

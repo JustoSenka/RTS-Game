@@ -9,7 +9,7 @@ public class UnitCyclop : Unit
         base.Start();
     }
 
-    protected void UpdateRandomAttack()
+    public void UpdateRandomAttack()
     {
         animator.SetFloat("RandomAttack", (animator.GetFloat("RandomAttack") + 1) % 2);
     }
@@ -32,6 +32,9 @@ public class UnitCyclop : Unit
 
     public override void PerformCommand(Command command)
     {
+        if (isDead)
+            return;
+
         base.PerformCommand(command);
 
         switch (command.type)

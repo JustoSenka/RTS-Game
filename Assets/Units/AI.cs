@@ -34,6 +34,9 @@ public class AI : MonoBehaviour
         command = unit.GetCommand();
 
         CheckIfAgentFinishedCommand();
+        CheckIfTargetedEnemyStillAlive();
+        CheckIfEnemyStillInRangeWhenAttacking();
+
         AiUpdate();
 
         unit.SetAttacking(isAttacking);
@@ -65,6 +68,38 @@ public class AI : MonoBehaviour
             isAttacking = false;
         }
     }
+
+    private void CheckIfTargetedEnemyStillAlive()
+    {
+        if (command.unitToAttack != null && command.unitToAttack.IsDead() &&
+            (command.type.Equals(CommandType.Busy) && isAttacking || command.type.Equals(CommandType.Attack)))
+        {
+            isAttacking = false;
+            StopAgentFromDoingCurrentCommand();
+        }
+    }
+
+    private void CheckIfEnemyStillInRangeWhenAttacking()
+    {
+        if (command.type.Equals(CommandType.Busy) && isAttacking)
+        {
+            transform.LookAt(new Vector3(command.unitToAttack.transform.position.x, transform.position.y, command.unitToAttack.transform.position.z));
+            if (Vector3.Distance(command.unitToAttack.transform.position, transform.position) > GetAttackRangeOnUnit(command.unitToAttack) + aiAttackRangeInaccuracy)
+            {
+                if (!unit.IsHold())
+                {
+                    AttackUnit(command.unitToAttack, command.strictAttack);
+                }
+                else
+                {
+                    command.type = CommandType.Hold;
+                    isAttacking = false;
+                }
+            }
+        }
+    }
+
+    // -- Update ENDS -------------------------------------------------------------------------------------------------------------
 
     private void StopAgentFromDoingCurrentCommand()
     {
@@ -109,9 +144,9 @@ public class AI : MonoBehaviour
         if (aiTimeUntilCheck < 0)
         {
             StopIfAgentIsStuck();
-            CheckIfEnemyNearby();
+            CheckAllEnemyNearby();
             FollowTargetedUnit();
-            CheckIfEnemyInRangeWhenAttacking();
+
 
             aiTimeUntilCheck = aiCheckingInterval;
         }
@@ -131,7 +166,7 @@ public class AI : MonoBehaviour
         lastPos = transform.position;
     }
 
-    private void CheckIfEnemyNearby()
+    private void CheckAllEnemyNearby()
     {
         if (command.type.Equals(CommandType.Move) || command.type.Equals(CommandType.Busy) ||
             (command.type.Equals(CommandType.Attack) && command.strictAttack))
@@ -142,7 +177,7 @@ public class AI : MonoBehaviour
         var allUnits = FindObjectsOfType<Unit>();
         foreach (var enemyUnit in allUnits)
         {
-            if (!enemyUnit.team.Equals(unit.team) && Vector3.Distance(transform.position, enemyUnit.transform.position) <= unit.sight)
+            if (!enemyUnit.team.Equals(unit.team) && !enemyUnit.IsDead() && Vector3.Distance(transform.position, enemyUnit.transform.position) <= unit.sight)
             {
                 if (closestUnit == null || Vector3.Distance(enemyUnit.transform.position, transform.position) < closestDistance)
                 {
@@ -164,26 +199,6 @@ public class AI : MonoBehaviour
         {
             agent.destination = command.unitToAttack.transform.position;
             command.pos = command.unitToAttack.transform.position;
-        }
-    }
-
-    private void CheckIfEnemyInRangeWhenAttacking()
-    {
-        if (command.type.Equals(CommandType.Busy) && isAttacking)
-        {
-            transform.LookAt(new Vector3(command.unitToAttack.transform.position.x, transform.position.y, command.unitToAttack.transform.position.z));
-            if (Vector3.Distance(command.unitToAttack.transform.position, transform.position) > GetAttackRangeOnUnit(command.unitToAttack) + aiAttackRangeInaccuracy)
-            {
-                if (!unit.IsHold())
-                {
-                    AttackUnit(command.unitToAttack, command.strictAttack);
-                }
-                else
-                {
-                    command.type = CommandType.Hold;
-                    isAttacking = false;
-                }
-            }
         }
     }
 

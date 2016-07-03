@@ -14,6 +14,7 @@ public class Common
             return hit.collider.gameObject;
         }
 
+        Debug.LogWarning("There is no object under the mouse.");
         return null;
     }
 

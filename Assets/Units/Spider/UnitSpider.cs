@@ -9,6 +9,11 @@ public class UnitSpider : Unit
         base.Start();
     }
 
+    public void UpdateRandomAttack()
+    {
+        animator.SetFloat("RandomAttack", (animator.GetFloat("RandomAttack") + 1) % 3);
+    }
+
     public override bool IsWaypointNecessary(Command command)
     {
         bool ret = false;
@@ -27,6 +32,9 @@ public class UnitSpider : Unit
 
     public override void PerformCommand(Command command)
     {
+        if (isDead)
+            return;
+
         base.PerformCommand(command);
 
         switch (command.type)

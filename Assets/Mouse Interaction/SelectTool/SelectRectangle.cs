@@ -38,6 +38,11 @@ public class SelectRectangle : MonoBehaviour
             return selectedUnits;
     }
 
+    public void DeathCallback(GameObject unit)
+    {
+        DeselectObject(unit);
+    }
+
     public void DeselectObject(GameObject go)
     {
         if (go.GetComponentsInChildren<Projector>().Length > 0)
@@ -122,7 +127,8 @@ public class SelectRectangle : MonoBehaviour
 
     private void PerformMouseClick()
     {
-        var unit = Common.GetObjectUnderMouse().GetComponent<Unit>();
+        var go = Common.GetObjectUnderMouse();
+        var unit = (go != null) ? go.GetComponent<Unit>() : null;
         if (unit != null && unit.team.Equals(team))
         {
             MarkObjectAsSelected(unit.gameObject);
@@ -164,7 +170,8 @@ public class SelectRectangle : MonoBehaviour
 
     private void MarkObjectAsSelected(GameObject go)
     {
-        if (!go.GetComponent<Unit>().team.Equals(team))
+        var unit = go.GetComponent<Unit>();
+        if (!unit.team.Equals(team) || unit.IsDead())
             return;
 
         if (go.GetComponentsInChildren<Projector>().Length == 0)

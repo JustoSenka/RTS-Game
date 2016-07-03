@@ -122,6 +122,8 @@ ModelImporter:
     7400010: Idle
     7400012: Run
     7400014: Walk
+    7400016: Spider_Attak_Right
+    7400018: Spider_Attak
     9500000: //RootNode
     11100000: //RootNode
     13700000: Mesh
@@ -147,7 +149,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Attack
+      name: Spider_Attak
       takeName: Spider_Attak
       firstFrame: 0
       lastFrame: 35
@@ -169,7 +171,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.58431375
+        functionName: AttackAnimationCallback
+        data: 
+        objectReferenceParameter: {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0
+        functionName: UpdateRandomAttack
+        data: 
+        objectReferenceParameter: {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
@@ -185,7 +203,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -197,7 +215,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.5254902
+        functionName: AttackAnimationCallback
+        data: 
+        objectReferenceParameter: {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0
+        functionName: UpdateRandomAttack
+        data: 
+        objectReferenceParameter: {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
@@ -213,7 +247,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -225,7 +259,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: UpdateRandomAttack
+        data: 
+        objectReferenceParameter: {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.5260529
+        functionName: AttackAnimationCallback
+        data: 
+        objectReferenceParameter: {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
@@ -253,7 +303,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.99607843
+        functionName: Destroy
+        data: 
+        objectReferenceParameter: {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}

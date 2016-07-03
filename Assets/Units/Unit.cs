@@ -6,9 +6,12 @@ using System;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Unit : MonoBehaviour
 {
+    public Team team = Team.T1;
+    [Space(5)]
+
     [Header("Unit Stats:")]
-    public int hp;
-    public int mp;
+    public float hp;
+    public float mp;
     public float walkSpeed;
     public float runSpeed;
     public float attackSpeed;
@@ -28,11 +31,11 @@ public class Unit : MonoBehaviour
     public ParticleSystemPlayer Skill3;
     [Space(5)]
 
-    [Header("Team:")]
-    public Team team = Team.T1;
+    public GameObject DeathCallback;
 
     protected NavMeshAgent agent;
     protected Animator animator;
+    protected bool isDead = false;
     protected bool isHold = false;
     protected bool isRunning = false;
     protected bool isAttacking = false;
@@ -54,9 +57,7 @@ public class Unit : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         agent.speed = (isRunning) ? runSpeed : walkSpeed;
-
         SetAnimatorSpeedIfAgentIsMovingProperly();
-
         animator.SetBool("Attack", isAttacking);
     }
 
@@ -65,20 +66,42 @@ public class Unit : MonoBehaviour
         if (animator != null)
         {
             if (!command.type.Equals(CommandType.None) && !command.type.Equals(CommandType.Hold) && !command.type.Equals(CommandType.Busy))
-            {
                 animator.SetFloat("Speed", agent.velocity.magnitude);
-            }
             else
-            {
                 animator.SetFloat("Speed", 0);
-            }
         }
     }
 
-    public Command GetCommand() { return command; }
-    public void SetCommand(Command command) { this.command = command; }
-    public void SetAttacking(bool isAttacking) { this.isAttacking = isAttacking; }
-    public bool IsHold() { return isHold; }
+    public bool DealDamage(float damageIncome)
+    {
+        hp -= (damageIncome > defense) ? damageIncome - defense : 0;
+        if (hp <= 0)
+        {
+            animator.SetBool("Death", isDead = true);
+            if (ai != null) ai.enabled = false;
+            agent.enabled = false;
+            if (DeathCallback != null)
+            {
+                DeathCallback.SendMessage("DeathCallback", gameObject);
+            }
+        }
+        return hp <= 0;
+    }
+
+    public void AttackAnimationCallback()
+    {
+        if (command.unitToAttack != null)
+        {
+            command.unitToAttack.DealDamage(damage);
+        }
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
+
+    // Virtual methods: ------------------------------------------------------------------------------------
 
     public virtual bool IsWaypointNecessary(Command command)
     {
@@ -95,6 +118,9 @@ public class Unit : MonoBehaviour
 
     public virtual void PerformCommand(Command command)
     {
+        if (isDead)
+            return;
+
         if (command.type.Equals(CommandType.Busy)) Debug.LogWarning("Perform Command BUSY ????");
         agent.stoppingDistance = 0;
 
@@ -125,6 +151,12 @@ public class Unit : MonoBehaviour
                 break;
         }
     }
+
+    public Command GetCommand() { return command; }
+    public void SetCommand(Command command) { this.command = command; }
+    public void SetAttacking(bool isAttacking) { this.isAttacking = isAttacking; }
+    public bool IsHold() { return isHold; }
+    public bool IsDead() { return isDead; }
 }
 
 public enum Team
