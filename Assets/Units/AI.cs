@@ -168,21 +168,25 @@ public class AI : MonoBehaviour
 
     private void CheckAllEnemyNearby()
     {
-        if (command.type.Equals(CommandType.Move) || command.type.Equals(CommandType.Busy) ||
-            (command.type.Equals(CommandType.Attack) && command.strictAttack))
+        if (command.type.Equals(CommandType.Move) || command.type.Equals(CommandType.Busy) || command.strictAttack)
             return;
 
         Unit closestUnit = null;
-        float closestDistance = float.MaxValue;
-        var allUnits = FindObjectsOfType<Unit>();
+        var myPos = transform.position;
+        var closestDistance = float.MaxValue;
+        var allUnits = Data.GetInstance().GetAllUnits();
         foreach (var enemyUnit in allUnits)
         {
-            if (!enemyUnit.team.Equals(unit.team) && !enemyUnit.IsDead() && Vector3.Distance(transform.position, enemyUnit.transform.position) <= unit.sight)
+            var distance = Vector3.Distance(enemyUnit.transform.position, myPos);
+            if (distance <= unit.sight)
             {
-                if (closestUnit == null || Vector3.Distance(enemyUnit.transform.position, transform.position) < closestDistance)
+                if (!enemyUnit.team.Equals(unit.team))
                 {
-                    closestUnit = enemyUnit;
-                    closestDistance = Vector3.Distance(closestUnit.transform.position, transform.position);
+                    if ((closestUnit == null || distance < closestDistance) && !enemyUnit.IsDead())
+                    {
+                        closestUnit = enemyUnit;
+                        closestDistance = distance;
+                    }
                 }
             }
         }
