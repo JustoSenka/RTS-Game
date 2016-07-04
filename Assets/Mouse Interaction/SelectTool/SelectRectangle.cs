@@ -38,9 +38,9 @@ public class SelectRectangle : MonoBehaviour
             return selectedUnits;
     }
 
-    public void DeathCallback(GameObject unit)
+    public void DeathCallback(GameObject unitGO)
     {
-        DeselectObject(unit);
+        DeselectObject(unitGO);
     }
 
     public void DeselectObject(GameObject go)
@@ -66,6 +66,7 @@ public class SelectRectangle : MonoBehaviour
     {
         for (int i = 0; i < selectedUnits.Count; i++)
         {
+            // TODO: This one is slow, doing on all minions selected every frame, 3.5 ms when dragging
             Projector projector = selectedUnits[i].GetComponentsInChildren<Projector>()[0];
             GameObject parent = projector.transform.parent.gameObject;
             Destroy(parent);

@@ -29,6 +29,13 @@ public class Common
         Debug.LogWarning("Did not clicked on the layer.");
         return Vector3.zero;
     }
+
+    public static float GetRawDistance2D(Vector3 vec, Vector3 other)
+    {
+        var x = vec.x - other.x;
+        var z = vec.z - other.z;
+        return x * x + z * z;
+    }
 }
 
 

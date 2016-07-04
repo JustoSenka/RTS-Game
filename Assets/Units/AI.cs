@@ -172,13 +172,14 @@ public class AI : MonoBehaviour
             return;
 
         Unit closestUnit = null;
-        var myPos = transform.position;
+        var sightSquared = unit.sight * unit.sight;
+        var myPos = unit.pos;
         var closestDistance = float.MaxValue;
         var allUnits = Data.GetInstance().GetAllUnits();
         foreach (var enemyUnit in allUnits)
         {
-            var distance = Vector3.Distance(enemyUnit.transform.position, myPos);
-            if (distance <= unit.sight)
+            var distance = Common.GetRawDistance2D(enemyUnit.pos, myPos);
+            if (distance <= sightSquared)
             {
                 if (!enemyUnit.team.Equals(unit.team))
                 {

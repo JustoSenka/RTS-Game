@@ -42,6 +42,9 @@ public class Unit : MonoBehaviour
 
     public Command command = new Command(CommandType.None);
 
+    [NonSerialized]
+    public Vector3 pos;
+
     private AI ai;
 
     protected virtual void Start()
@@ -49,6 +52,7 @@ public class Unit : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         ai = GetComponent<AI>();
+        DeathCallback = GameObject.FindGameObjectWithTag("GameController");
 
         command.type = CommandType.None;
         agent.radius = radius;
@@ -56,6 +60,8 @@ public class Unit : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
+        pos = transform.position;
+
         agent.speed = (isRunning) ? runSpeed : walkSpeed;
         SetAnimatorSpeedIfAgentIsMovingProperly();
         animator.SetBool("Attack", isAttacking);
@@ -77,13 +83,13 @@ public class Unit : MonoBehaviour
         hp -= (damageIncome > defense) ? damageIncome - defense : 0;
         if (hp <= 0)
         {
-            animator.SetBool("Death", isDead = true);
-            if (ai != null) ai.enabled = false;
-            agent.enabled = false;
             if (DeathCallback != null)
             {
                 DeathCallback.SendMessage("DeathCallback", gameObject);
             }
+            animator.SetBool("Death", isDead = true);
+            agent.enabled = false;
+            if (ai != null) ai.enabled = false;
         }
         return hp <= 0;
     }
@@ -98,6 +104,7 @@ public class Unit : MonoBehaviour
 
     public void Destroy()
     {
+        Data.GetInstance().RemoveUnit(this);
         Destroy(gameObject);
     }
 
