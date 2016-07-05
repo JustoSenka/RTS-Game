@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class Common
 {
-    public static GameObject GetObjectUnderMouse()
+    public static GameObject GetObjectUnderMouse(bool disableWarning = false)
     {
         RaycastHit hit = new RaycastHit();
 
@@ -14,7 +14,10 @@ public class Common
             return hit.collider.gameObject;
         }
 
-        Debug.LogWarning("There is no object under the mouse.");
+		if (!disableWarning)
+		{
+			Debug.LogWarning("There is no object under the mouse.");
+		}
         return null;
     }
 

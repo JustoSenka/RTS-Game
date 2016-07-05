@@ -10,21 +10,29 @@ public class Unit : MonoBehaviour
     [Space(5)]
 
     [Header("Unit Stats:")]
-    public float hp;
-    public float mp;
+	public float maxHp;
+	public float hp;
+	public float maxMp;
+	public float mp;
     public float walkSpeed;
     public float runSpeed;
     public float attackSpeed;
     public float attackRange;
     public float damage;
     public float defense;
-    [Range(0.1f, 3)]
-    public float radius;
+
     [Range(0, 100)]
     public float sight;
     [Space(5)]
 
-    [Header("Skill Object References:")]
+	[Header("Physic Parameters:")]
+	[Range(0.1f, 5)]
+	public float radius;
+	[Range(0.1f, 5)]
+	public float height;
+	[Space(5)]
+
+	[Header("Skill Object References:")]
     public ParticleSystemPlayer Skill0;
     public ParticleSystemPlayer Skill1;
     public ParticleSystemPlayer Skill2;

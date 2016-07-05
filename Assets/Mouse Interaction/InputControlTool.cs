@@ -70,20 +70,24 @@ public class InputControlTool : MonoBehaviour
             }
             else if (!skillPhase && Input.GetMouseButtonDown(MouseButton.Right.GetHashCode()))
             {
-                // Right click on enemy unit
-                var unitClickedOn = Common.GetObjectUnderMouse().GetComponent<Unit>();
-                if (unitClickedOn != null && !unitClickedOn.team.Equals(selectRectangle.team))
-                {
-                    selectRectangle.GetSelectedUnits().PerformCommand(new Command(CommandType.Attack, unitClickedOn.transform.position, unitClickedOn, true));
-                    moveCross.ShowAt(unitClickedOn.transform.position, true);
-                }
-                // Right click on ground or anywhere else
-                else
-                {
-                    var mousePos = Common.GetWorldMousePoint(groundLayer);
-                    moveCross.ShowAt(mousePos);
-                    selectRectangle.GetSelectedUnits().PerformCommand(new Command(CommandType.Move, mousePos));
-                }
+				// Right click on enemy unit
+				var obj = Common.GetObjectUnderMouse();
+				if (obj != null)
+				{
+					var unitClickedOn = obj.GetComponent<Unit>();
+					if (unitClickedOn != null && !unitClickedOn.team.Equals(selectRectangle.team))
+					{
+						selectRectangle.GetSelectedUnits().PerformCommand(new Command(CommandType.Attack, unitClickedOn.transform.position, unitClickedOn, true));
+						moveCross.ShowAt(unitClickedOn.transform.position, true);
+					}
+					// Right click on ground or anywhere else
+					else
+					{
+						var mousePos = Common.GetWorldMousePoint(groundLayer);
+						moveCross.ShowAt(mousePos);
+						selectRectangle.GetSelectedUnits().PerformCommand(new Command(CommandType.Move, mousePos));
+					}
+				}
             }
         }
     }
