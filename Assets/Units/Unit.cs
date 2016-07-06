@@ -77,13 +77,11 @@ public class Unit : MonoBehaviour
 
     private void SetAnimatorSpeedIfAgentIsMovingProperly()
     {
-        if (animator != null)
-        {
-            if (!command.type.Equals(CommandType.None) && !command.type.Equals(CommandType.Hold) && !command.type.Equals(CommandType.Busy))
-                animator.SetFloat("Speed", agent.velocity.magnitude);
-            else
-                animator.SetFloat("Speed", 0);
-        }
+        // Little performance upgrade
+        /*if (!command.type.Equals(CommandType.None) && !command.type.Equals(CommandType.Hold) && !command.type.Equals(CommandType.Busy))
+            animator.SetFloat("Speed", agent.velocity.magnitude);
+        else */
+            animator.SetFloat("Speed", agent.velocity.magnitude);
     }
 
     public bool DealDamage(float damageIncome)
@@ -155,13 +153,13 @@ public class Unit : MonoBehaviour
                 this.command = command;
                 isHold = false;
                 agent.SetDestination(command.pos);
-                if (ai != null) ai.setAiTimeUntilCheck(5);
+                if (ai != null) ai.DelaySlowUpdateBy(0.5f);
                 break;
             case CommandType.Attack:
                 this.command = command;
                 isHold = false;
                 agent.SetDestination(command.pos);
-                if (ai != null) ai.setAiTimeUntilCheck(5);
+                if (ai != null) ai.DelaySlowUpdateBy(0.5f);
                 agent.stoppingDistance = (command.strictAttack) ? attackRange + radius + command.unitToAttack.radius : 0;
                 break;
         }

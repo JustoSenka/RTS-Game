@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 
 [RequireComponent(typeof(Unit))]
-public class AI : MonoBehaviour
+public class AI : MonoBehaviourSlowUpdates
 {
     private Unit unit;
     private NavMeshAgent agent;
@@ -13,11 +13,8 @@ public class AI : MonoBehaviour
     private bool isAttacking = false;
 
     private Vector3 lastPos;
-    private float aiTimeUntilCheck = 1;
-
     private readonly float aiCheckingInterval = 0.1f;
     private readonly float aiStoppingConstant = 0.5f;
-    //private readonly float aiAnimationIgnoreSpeed = 0.5f;
     private readonly float aiDistanceCloseToDestination = 5f;
     private readonly float aiAttackRangeInaccuracy = 0.5f;
 
@@ -29,16 +26,17 @@ public class AI : MonoBehaviour
         lastPos = transform.position;
     }
 
-    void Update()
+    protected override void BeforeUpdate()
     {
         command = unit.GetCommand();
 
         CheckIfAgentFinishedCommand();
         CheckIfTargetedEnemyStillAlive();
         CheckIfEnemyStillInRangeWhenAttacking();
+    }
 
-        AiUpdate();
-
+    protected override void AfterUpdate()
+    {
         unit.SetAttacking(isAttacking);
         unit.SetCommand(command);
     }
@@ -83,8 +81,8 @@ public class AI : MonoBehaviour
     {
         if (command.type.Equals(CommandType.Busy) && isAttacking)
         {
-            transform.LookAt(new Vector3(command.unitToAttack.transform.position.x, transform.position.y, command.unitToAttack.transform.position.z));
-            if (Vector3.Distance(command.unitToAttack.transform.position, transform.position) > GetAttackRangeOnUnit(command.unitToAttack) + aiAttackRangeInaccuracy)
+            transform.LookAt(new Vector3(command.unitToAttack.pos.x, transform.position.y, command.unitToAttack.pos.z));
+            if (Vector3.Distance(command.unitToAttack.pos, transform.position) > GetAttackRangeOnUnit(command.unitToAttack) + aiAttackRangeInaccuracy)
             {
                 if (!unit.IsHold())
                 {
@@ -108,6 +106,7 @@ public class AI : MonoBehaviour
 
         isAttacking = false;
         agent.stoppingDistance = 0;
+        agent.destination = unit.pos;
         command = new Command(CommandType.None);
     }
 
@@ -118,15 +117,15 @@ public class AI : MonoBehaviour
             isAttacking = false;
             command.type = CommandType.Attack;
             command.unitToAttack = unitToAttack;
-            command.pos = unitToAttack.transform.position;
+            command.pos = unitToAttack.pos;
             command.strictAttack = strictAttack;
             agent.stoppingDistance = GetAttackRangeOnUnit(unitToAttack);
         }
-        else if (Vector3.Distance(unitToAttack.transform.position, transform.position) <= GetAttackRangeOnUnit(unitToAttack))
+        else if (Vector3.Distance(unitToAttack.pos, transform.position) <= GetAttackRangeOnUnit(unitToAttack))
         {
             command.type = CommandType.Busy;
             command.unitToAttack = unitToAttack;
-            command.pos = unitToAttack.transform.position;
+            command.pos = unitToAttack.pos;
             isAttacking = true;
         }
     }
@@ -136,20 +135,13 @@ public class AI : MonoBehaviour
         return unit.attackRange + unit.radius + unitToAttack.radius;
     }
 
-    // ------- AI UPDATE START -----------------------------------------------------------------------------------------------------------
+    // ------- AI UPDATE START SLOW -----------------------------------------------------------------------------------------------------------
 
-    private void AiUpdate()
+    protected override void SlowUpdate()
     {
-        aiTimeUntilCheck -= Time.deltaTime;
-        if (aiTimeUntilCheck < 0)
-        {
-            StopIfAgentIsStuck();
-            CheckAllEnemyNearby();
-            FollowTargetedUnit();
-
-
-            aiTimeUntilCheck = aiCheckingInterval;
-        }
+        StopIfAgentIsStuck();
+        //CheckAllEnemyNearby();
+        FollowTargetedUnit();
     }
 
     private void StopIfAgentIsStuck()
@@ -200,17 +192,19 @@ public class AI : MonoBehaviour
 
     private void FollowTargetedUnit()
     {
-        if (command.type.Equals(CommandType.Attack) && command.unitToAttack != null)
+        if (command.type.Equals(CommandType.Attack) && command.unitToAttack != null && !command.unitToAttack.IsDead())
         {
-            agent.destination = command.unitToAttack.transform.position;
-            command.pos = command.unitToAttack.transform.position;
+            agent.destination = command.unitToAttack.pos;
+            command.pos = command.unitToAttack.pos;
         }
     }
 
     // ------- AI UPDATE END -----------------------------------------------------------------------------------------------------------
+    // ------- AI UPDATE START EVEN SLOWER ---------------------------------------------------------------------------------------------
 
-    public void setAiTimeUntilCheck(float time)
+    protected override void SlowerUpdate()
     {
-        aiTimeUntilCheck = aiCheckingInterval * time;
+        CheckAllEnemyNearby();
     }
+
 }

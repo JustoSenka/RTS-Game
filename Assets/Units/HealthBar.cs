@@ -3,6 +3,7 @@ using System.Collections;
 
 public class HealthBar : MonoBehaviour
 {
+    [System.NonSerialized]
 	public bool showBar = true;
 	public int barWidth = 80;
 	public int barHeight = 8;
@@ -20,7 +21,6 @@ public class HealthBar : MonoBehaviour
 	public FontStyle fontStyle = FontStyle.Bold; 
 
 	private Unit unit;
-	private SelectRectangle selectRectangle;
 
 	private Texture2D leftBar;
 	private Texture2D rightBar;
@@ -31,7 +31,6 @@ public class HealthBar : MonoBehaviour
 	void Start()
 	{
 		unit = GetComponent<Unit>();
-		selectRectangle = GameObject.FindGameObjectWithTag("GameController").GetComponent<SelectRectangle>();
 
 		leftBar = CreateLeftTexture();
 		middleBar = CreateMiddleTexture();
@@ -50,31 +49,6 @@ public class HealthBar : MonoBehaviour
 			style.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
 	}
 
-	void Update()
-	{
-		showBar = false;
-#if UNITY_EDITOR
-		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-#else
-		if (Input.GetButton("Show Stats"))
-#endif
-		{
-			showBar = true;
-		}
-		else if (selectRectangle.GetSelectedUnits().IndexOf(unit) != -1)
-		{
-			showBar = true;
-		}
-		else
-		{
-			var go = Common.GetObjectUnderMouse(true);
-			var unitUnderMouse = (go != null) ? go.GetComponent<Unit>() : null;
-			showBar = unit.Equals(unitUnderMouse);
-		}
-		
-	}
-
-
 	void OnGUI()
 	{
 		if (!showBar)
@@ -83,12 +57,19 @@ public class HealthBar : MonoBehaviour
 		if (unit.IsDead())
 			return;
 
-		float current = 1f - (((float)unit.maxHp - (float)unit.hp) / (float)unit.maxHp);
-		Vector3 pos = Camera.main.WorldToScreenPoint(unit.pos + new Vector3(0, unit.height, 0));
+		float current = 1f - ((unit.maxHp - unit.hp) / unit.maxHp);
+        Camera camera = Camera.main;
+        Vector3 cameraPosWorld = camera.transform.position;
+
+        Vector3 pos = camera.WorldToScreenPoint(unit.pos + new Vector3(0, unit.height, 0));
 		pos.y = Screen.height - pos.y;
 
-		int calcBarWidth = (int)(barWidth * (15 / Vector3.Distance(Camera.main.transform.position, unit.pos)));
-		int calcBarHeight = (int)(barHeight * (15 / Vector3.Distance(Camera.main.transform.position, unit.pos)));
+		int calcBarWidth = (int)(barWidth * (15 / Vector3.Distance(cameraPosWorld, unit.pos)));
+		int calcBarHeight = (int)(barHeight * (15 / Vector3.Distance(cameraPosWorld, unit.pos)));
+
+        // This shit below has major performance issues on GPU,
+        // Adds up to 600 draw calls with 100 minions with 20 ms both CPU and GPU usage !! 
+        // Also 130 kb GC ALLOC
 
 		Rect posBar = new Rect(pos.x - calcBarWidth / 2, pos.y, calcBarWidth * current, calcBarHeight);
 		GUI.DrawTexture(new Rect((pos.x - 2) - (calcBarWidth / 2), pos.y, 2, calcBarHeight), leftBar);
@@ -97,7 +78,7 @@ public class HealthBar : MonoBehaviour
 		GUI.DrawTexture(new Rect(posBar.width + pos.x - calcBarWidth / 2, pos.y, calcBarWidth - posBar.width, calcBarHeight), emptyBar);
 		if (showText)
 		{
-			var calcFontSize = (int)(fontSize * (15 / Vector3.Distance(Camera.main.transform.position, unit.pos)));
+			var calcFontSize = (int)(fontSize * (15 / Vector3.Distance(cameraPosWorld, unit.pos)));
 			style.fontSize = calcFontSize;
 			string labelToDisplay = unit.hp + " / " + unit.maxHp;
 			if (outlined)
