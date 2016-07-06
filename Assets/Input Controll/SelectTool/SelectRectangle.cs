@@ -189,7 +189,7 @@ public class SelectRectangle : MonoBehaviour
             }
             else
             {
-                prj.orthographicSize = go.GetComponent<NavMeshAgent>().radius;
+                prj.orthographicSize = go.GetComponent<Unit>().radius + 0.2f;
             }
 
             slc.transform.parent = go.transform;

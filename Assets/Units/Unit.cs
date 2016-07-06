@@ -42,6 +42,7 @@ public class Unit : MonoBehaviour
     public GameObject DeathCallback;
 
     protected NavMeshAgent agent;
+    protected NavMeshObstacle obstacle;
     protected Animator animator;
     protected bool isDead = false;
     protected bool isHold = false;
@@ -58,12 +59,22 @@ public class Unit : MonoBehaviour
     protected virtual void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        obstacle = GetComponent<NavMeshObstacle>();
         animator = GetComponent<Animator>();
         ai = GetComponent<AI>();
         DeathCallback = GameObject.FindGameObjectWithTag("GameController");
 
         command.type = CommandType.None;
         agent.radius = radius;
+        agent.height = height;
+
+        if (obstacle)
+        {
+            obstacle.shape = NavMeshObstacleShape.Capsule;
+            obstacle.center = new Vector3(0, (height / 2) - (radius / 2), 0);
+            obstacle.radius = radius - 0.2f;
+            obstacle.height = height;
+        }
     }
 
     protected virtual void FixedUpdate()
@@ -134,33 +145,34 @@ public class Unit : MonoBehaviour
         if (isDead)
             return;
 
-        if (command.type.Equals(CommandType.Busy)) Debug.LogWarning("Perform Command BUSY ????");
-        agent.stoppingDistance = 0;
-
         switch (command.type)
         {
             case CommandType.Hold:
                 this.command = command;
                 isHold = true;
-                agent.ResetPath();
+                if (agent.enabled) agent.ResetPath();
                 break;
             case CommandType.Stop:
                 this.command = new Command(CommandType.None);
                 isHold = false;
-                agent.ResetPath();
+                if (agent.enabled) agent.ResetPath();
                 break;
             case CommandType.Move:
                 this.command = command;
                 isHold = false;
-                agent.SetDestination(command.pos);
-                if (ai != null) ai.DelaySlowUpdateBy(0.5f);
+                if (agent.enabled) agent.SetDestination(command.pos);
+                if (ai) StartCoroutine(ai.DirectCommandOnUnit(this.command));
                 break;
             case CommandType.Attack:
                 this.command = command;
                 isHold = false;
-                agent.SetDestination(command.pos);
-                if (ai != null) ai.DelaySlowUpdateBy(0.5f);
-                agent.stoppingDistance = (command.strictAttack) ? attackRange + radius + command.unitToAttack.radius : 0;
+                if (agent.enabled) agent.SetDestination(command.pos);
+                if (command.strictAttack && command.unitToAttack == this)
+                {
+                    this.command.strictAttack = false;
+                    this.command.unitToAttack = null;
+                }
+                if (ai) StartCoroutine(ai.DirectCommandOnUnit(this.command));
                 break;
         }
     }

@@ -8,9 +8,11 @@ public class AI : MonoBehaviourSlowUpdates
 {
     private Unit unit;
     private NavMeshAgent agent;
+    private NavMeshObstacle obstacle;
     private Command command;
 
     private bool isAttacking = false;
+    private float stoppingDistance = 0;
 
     private Vector3 lastPos;
     private readonly float aiCheckingInterval = 0.1f;
@@ -22,6 +24,7 @@ public class AI : MonoBehaviourSlowUpdates
     {
         unit = GetComponent<Unit>();
         agent = GetComponent<NavMeshAgent>();
+        obstacle = GetComponent<NavMeshObstacle>();
 
         lastPos = transform.position;
     }
@@ -45,7 +48,8 @@ public class AI : MonoBehaviourSlowUpdates
     {
         if (command.type.Equals(CommandType.Move) || command.type.Equals(CommandType.Attack))
         {
-            if (Vector3.Distance(command.pos, transform.position) <= agent.stoppingDistance)
+            var distance = Vector3.Distance(command.pos, transform.position);
+            if (Vector3.Distance(command.pos, transform.position) <= stoppingDistance)
             {
                 if (command.type.Equals(CommandType.Attack) && command.unitToAttack != null)
                 {
@@ -86,7 +90,7 @@ public class AI : MonoBehaviourSlowUpdates
             {
                 if (!unit.IsHold())
                 {
-                    AttackUnit(command.unitToAttack, command.strictAttack);
+                    StartCoroutine(AttackUnit(command.unitToAttack, command.strictAttack));
                 }
                 else
                 {
@@ -105,12 +109,16 @@ public class AI : MonoBehaviourSlowUpdates
         Debug.Log("Stop");
 
         isAttacking = false;
-        agent.stoppingDistance = 0;
-        agent.destination = unit.pos;
+        if (agent && agent.isOnNavMesh)
+        {
+            stoppingDistance = 0;
+            agent.destination = unit.pos;
+            agent.ResetPath();
+        }
         command = new Command(CommandType.None);
     }
 
-    private void AttackUnit(Unit unitToAttack, bool strictAttack = false)
+    private IEnumerator AttackUnit(Unit unitToAttack, bool strictAttack = false)
     {
         if (!unit.IsHold())
         {
@@ -119,10 +127,18 @@ public class AI : MonoBehaviourSlowUpdates
             command.unitToAttack = unitToAttack;
             command.pos = unitToAttack.pos;
             command.strictAttack = strictAttack;
-            agent.stoppingDistance = GetAttackRangeOnUnit(unitToAttack);
+            stoppingDistance = GetAttackRangeOnUnit(unitToAttack);
+            if (!agent.enabled)
+            {
+                obstacle.enabled = false;
+                yield return null;
+                agent.enabled = true;
+                Debug.Log("Follow him, Attack!!!");
+            }
         }
         else if (Vector3.Distance(unitToAttack.pos, transform.position) <= GetAttackRangeOnUnit(unitToAttack))
         {
+            Debug.Log("");
             command.type = CommandType.Busy;
             command.unitToAttack = unitToAttack;
             command.pos = unitToAttack.pos;
@@ -135,27 +151,73 @@ public class AI : MonoBehaviourSlowUpdates
         return unit.attackRange + unit.radius + unitToAttack.radius;
     }
 
+    // Avoid using this function, only callback from unit
+    public IEnumerator DirectCommandOnUnit(Command command)
+    {
+        DelaySlowUpdateBy(0.5f);
+        if (command.type.Equals(CommandType.Move) || command.type.Equals(CommandType.Attack))
+        {
+            obstacle.enabled = false;
+            yield return null; // Need to wait while nav mesh is regenerated once again
+            agent.enabled = true;
+            agent.SetDestination(command.pos);
+        }
+
+        if (command.type.Equals(CommandType.Attack) && command.strictAttack)
+        {
+            stoppingDistance = GetAttackRangeOnUnit(command.unitToAttack);
+        }
+    }
+
     // ------- AI UPDATE START SLOW -----------------------------------------------------------------------------------------------------------
 
     protected override void SlowUpdate()
     {
         StopIfAgentIsStuck();
-        //CheckAllEnemyNearby();
         FollowTargetedUnit();
+        EnableObstacleIfAgentStationary();
     }
 
     private void StopIfAgentIsStuck()
     {
-        if (Vector3.Distance(lastPos, transform.position) < aiStoppingConstant * agent.speed * aiCheckingInterval
+        if (agent.enabled && Vector3.Distance(lastPos, transform.position) < aiStoppingConstant * agent.speed * aiCheckingInterval
             && agent.remainingDistance <= aiDistanceCloseToDestination &&
             (command.type.Equals(CommandType.Move) ||
             command.type.Equals(CommandType.Attack) && command.unitToAttack == null))
         {
             Debug.Log("Stuck");
-            agent.destination = transform.position;
             StopAgentFromDoingCurrentCommand();
         }
         lastPos = transform.position;
+    }
+
+    private void FollowTargetedUnit()
+    {
+        if (agent.enabled && command.type.Equals(CommandType.Attack) && command.unitToAttack != null && !command.unitToAttack.IsDead())
+        {
+            agent.destination = command.unitToAttack.pos;
+            command.pos = command.unitToAttack.pos;
+        }
+    }
+
+    private void EnableObstacleIfAgentStationary()
+    {
+        if (!agent.enabled)
+            return;
+
+        if (command.type.Equals(CommandType.None) || command.type.Equals(CommandType.Hold) || command.type.Equals(CommandType.Busy))
+        {
+            agent.enabled = false;
+            obstacle.enabled = true;
+        }
+    }
+
+    // ------- AI UPDATE END -----------------------------------------------------------------------------------------------------------
+    // ------- AI UPDATE START EVEN SLOWER ---------------------------------------------------------------------------------------------
+
+    protected override void SlowerUpdate()
+    {
+        CheckAllEnemyNearby();
     }
 
     private void CheckAllEnemyNearby()
@@ -184,27 +246,7 @@ public class AI : MonoBehaviourSlowUpdates
             }
         }
 
-        if (closestUnit != null)
-        {
-            AttackUnit(closestUnit);
-        }
+        if (closestUnit)
+            StartCoroutine(AttackUnit(closestUnit));
     }
-
-    private void FollowTargetedUnit()
-    {
-        if (command.type.Equals(CommandType.Attack) && command.unitToAttack != null && !command.unitToAttack.IsDead())
-        {
-            agent.destination = command.unitToAttack.pos;
-            command.pos = command.unitToAttack.pos;
-        }
-    }
-
-    // ------- AI UPDATE END -----------------------------------------------------------------------------------------------------------
-    // ------- AI UPDATE START EVEN SLOWER ---------------------------------------------------------------------------------------------
-
-    protected override void SlowerUpdate()
-    {
-        CheckAllEnemyNearby();
-    }
-
 }
