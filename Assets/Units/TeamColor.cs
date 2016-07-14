@@ -7,16 +7,14 @@ public class TeamColor : MonoBehaviour {
     private Team team;
     private Renderer render;
 
-    private bool firstFrame = false;
-
+	private MaterialPropertyBlock props;
 	void Start () {
         render = GetComponent<Renderer>();
         team = unit.team;
-
-        foreach (var mat in render.materials)
-        {
-            mat.color = Data.GetInstance().UnitColors[team.GetHashCode()];
-        }
+		
+		props = new MaterialPropertyBlock();
+		props.SetColor("_Color", Data.GetInstance().UnitColors[team.GetHashCode()]);
+		render.SetPropertyBlock(props);
     }
 	
 	void Update ()
@@ -24,10 +22,9 @@ public class TeamColor : MonoBehaviour {
         if (!unit.team.Equals(team))
         {
             team = unit.team;
-            foreach (var mat in render.materials)
-            {
-                mat.color = Data.GetInstance().UnitColors[team.GetHashCode()];
-            }
+
+			props.SetColor("_Color", Data.GetInstance().UnitColors[team.GetHashCode()]);
+			render.SetPropertyBlock(props);
         }
     }
 }
