@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class Data : MonoBehaviour
 {
     public GameObject UnitsContainer;
+    public Color[] UnitColors;
 
     private Unit[] units;
     private List<Unit> unitList;
@@ -11,7 +12,7 @@ public class Data : MonoBehaviour
     private float lastUpdate;
     private readonly float updateInterval = 0.1f;
 
-    void Start() { Instance = this; UpdateUnits(); }
+    void Awake() { Instance = this; UpdateUnits(); }
     private static Data Instance;
     public static Data GetInstance()
     {
@@ -41,4 +42,5 @@ public class Data : MonoBehaviour
         // Should never ever return null units inside!!!!!
         return units; 
     }
+
 }
