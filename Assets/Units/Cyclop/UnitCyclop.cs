@@ -40,14 +40,18 @@ public class UnitCyclop : Unit
         switch (command.type)
         {
             case CommandType.Skill0:
-                isRunning = true;
-                Skill0.Play();
-
-                this.RunAfter(6f, () =>
+                if (cooldown0 <= 0)
                 {
-                    isRunning = false;
-                    Skill0.Stop();
-                });
+                    isRunning = true;
+                    Skill0.Play();
+                    cooldown0 = skill0Cooldown;
+
+                    this.RunAfter(skill0Cooldown, () =>
+                    {
+                        isRunning = false;
+                        Skill0.Stop();
+                    });
+                }
 
                 break;
             case CommandType.Skill1:

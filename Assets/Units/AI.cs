@@ -19,6 +19,7 @@ public class AI : MonoBehaviourSlowUpdates
     private readonly float aiStoppingConstant = 0.5f;
     private readonly float aiDistanceCloseToDestination = 5f;
     private readonly float aiAttackRangeInaccuracy = 0.5f;
+    private readonly float aiFollowingSightMultiplier = 3f;
 
     void Start()
     {
@@ -33,6 +34,7 @@ public class AI : MonoBehaviourSlowUpdates
     {
         command = unit.GetCommand();
 
+        //DontDoStupidLongDistanceFollowingCommand();
         CheckIfAgentFinishedCommand();
         CheckIfTargetedEnemyStillAlive();
         CheckIfEnemyStillInRangeWhenAttacking();
@@ -44,18 +46,33 @@ public class AI : MonoBehaviourSlowUpdates
         unit.SetCommand(command);
     }
 
+    private void DontDoStupidLongDistanceFollowingCommand()
+    {
+        // Does not work, remainingDistance is always infinity if you set destination point out of nav mesh (inside and obstacle)
+        if (agent.enabled && command.type.Equals(CommandType.Attack) && command.unitToAttack != null && !command.unitToAttack.IsDead() &&
+            !command.strictAttack && agent.remainingDistance > unit.sight * aiFollowingSightMultiplier && agent.remainingDistance != float.PositiveInfinity)
+        {
+            Debug.Log(agent.remainingDistance);
+            agent.destination = unit.pos;
+        }
+    }
+
     private void CheckIfAgentFinishedCommand()
     {
         if (command.type.Equals(CommandType.Move) || command.type.Equals(CommandType.Attack))
         {
-            var distance = Vector3.Distance(command.pos, transform.position);
-            if (Vector3.Distance(command.pos, transform.position) <= stoppingDistance)
+            var distance = Vector3.Distance(unit.pos, command.pos);
+            if (distance <= stoppingDistance)
             {
                 if (command.type.Equals(CommandType.Attack) && command.unitToAttack != null)
                 {
                     Debug.Log("Finished, now attacking");
                     command.type = CommandType.Busy;
                     isAttacking = true;
+                    if (agent && agent.isOnNavMesh)
+                    {
+                        agent.ResetPath();
+                    }
                 }
                 else
                 {
@@ -112,7 +129,6 @@ public class AI : MonoBehaviourSlowUpdates
         if (agent && agent.isOnNavMesh)
         {
             stoppingDistance = 0;
-            agent.destination = unit.pos;
             agent.ResetPath();
         }
         command = new Command(CommandType.None);
@@ -197,7 +213,7 @@ public class AI : MonoBehaviourSlowUpdates
         {
             agent.destination = command.unitToAttack.pos;
             command.pos = command.unitToAttack.pos;
-        }
+        } 
     }
 
     private void EnableObstacleIfAgentStationary()
@@ -212,7 +228,7 @@ public class AI : MonoBehaviourSlowUpdates
         }
     }
 
-    // ------- AI UPDATE END -----------------------------------------------------------------------------------------------------------
+    // ------- AI SLOW UPDATE END -----------------------------------------------------------------------------------------------------------
     // ------- AI UPDATE START EVEN SLOWER ---------------------------------------------------------------------------------------------
 
     protected override void SlowerUpdate()

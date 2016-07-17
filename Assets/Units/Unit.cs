@@ -39,6 +39,13 @@ public class Unit : MonoBehaviour
     public ParticleSystemPlayer Skill3;
     [Space(5)]
 
+    [Header("Skill Cooldowns:")]
+    public float skill0Cooldown;
+    public float skill1Cooldown;
+    public float skill2Cooldown;
+    public float skill3Cooldown;
+    [Space(5)]
+
     public GameObject DeathCallback;
 
     protected NavMeshAgent agent;
@@ -48,6 +55,11 @@ public class Unit : MonoBehaviour
     protected bool isHold = false;
     protected bool isRunning = false;
     protected bool isAttacking = false;
+
+    protected float cooldown0;
+    protected float cooldown1;
+    protected float cooldown2;
+    protected float cooldown3;
 
     public Command command = new Command(CommandType.None);
 
@@ -77,6 +89,15 @@ public class Unit : MonoBehaviour
         }
     }
 
+    protected virtual void Update()
+    {
+        float delta = Time.deltaTime;
+        cooldown0 -= delta;
+        cooldown1 -= delta;
+        cooldown2 -= delta;
+        cooldown3 -= delta;
+    }
+
     protected virtual void FixedUpdate()
     {
         pos = transform.position;
@@ -88,11 +109,18 @@ public class Unit : MonoBehaviour
 
     private void SetAnimatorSpeedIfAgentIsMovingProperly()
     {
-        // Little performance upgrade
-        /*if (!command.type.Equals(CommandType.None) && !command.type.Equals(CommandType.Hold) && !command.type.Equals(CommandType.Busy))
-            animator.SetFloat("Speed", agent.velocity.magnitude);
-        else */
-            animator.SetFloat("Speed", agent.velocity.magnitude);
+        if (!command.type.Equals(CommandType.None) && !command.type.Equals(CommandType.Hold) && !command.type.Equals(CommandType.Busy)
+            && agent.velocity.magnitude > 0.1)
+        {
+            animator.SetFloat("Speed", agent.speed);
+            animator.SetBool("Running", isRunning);
+        }
+        else
+        {
+            animator.SetFloat("Speed", 0);
+            animator.SetBool("Running", false);
+        }
+            
     }
 
     public bool DealDamage(float damageIncome)
