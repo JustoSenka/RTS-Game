@@ -52,7 +52,7 @@ public class AI : MonoBehaviourSlowUpdates
         if (agent.enabled && command.type.Equals(CommandType.Attack) && command.unitToAttack != null && !command.unitToAttack.IsDead() &&
             !command.strictAttack && agent.remainingDistance > unit.sight * aiFollowingSightMultiplier && agent.remainingDistance != float.PositiveInfinity)
         {
-            Debug.Log(agent.remainingDistance);
+            unit.Log(agent.remainingDistance);
             agent.destination = unit.pos;
         }
     }
@@ -66,7 +66,7 @@ public class AI : MonoBehaviourSlowUpdates
             {
                 if (command.type.Equals(CommandType.Attack) && command.unitToAttack != null)
                 {
-                    Debug.Log("Finished, now attacking");
+                    unit.Log("Finished, now attacking");
                     command.type = CommandType.Busy;
                     isAttacking = true;
                     if (agent && agent.isOnNavMesh)
@@ -76,7 +76,7 @@ public class AI : MonoBehaviourSlowUpdates
                 }
                 else
                 {
-                    Debug.Log("Finished and will do Stop");
+                    unit.Log("Finished and will do Stop");
                     StopAgentFromDoingCurrentCommand();
                 }
             }
@@ -123,7 +123,7 @@ public class AI : MonoBehaviourSlowUpdates
     private void StopAgentFromDoingCurrentCommand()
     {
         if (command.type.Equals(CommandType.Busy) && isAttacking) Debug.LogWarning("What could have stopped unit from attacking ?");
-        Debug.Log("Stop");
+        unit.Log("Stop");
 
         isAttacking = false;
         if (agent && agent.isOnNavMesh)
@@ -149,12 +149,12 @@ public class AI : MonoBehaviourSlowUpdates
                 obstacle.enabled = false;
                 yield return null;
                 agent.enabled = true;
-                Debug.Log("Follow him, Attack!!!");
+                unit.Log("Follow him, Attack!!!");
             }
         }
         else if (Vector3.Distance(unitToAttack.pos, transform.position) <= GetAttackRangeOnUnit(unitToAttack))
         {
-            Debug.Log("");
+            unit.Log("");
             command.type = CommandType.Busy;
             command.unitToAttack = unitToAttack;
             command.pos = unitToAttack.pos;
@@ -201,7 +201,7 @@ public class AI : MonoBehaviourSlowUpdates
             (command.type.Equals(CommandType.Move) ||
             command.type.Equals(CommandType.Attack) && command.unitToAttack == null))
         {
-            Debug.Log("Stuck");
+            unit.Log("Stuck");
             StopAgentFromDoingCurrentCommand();
         }
         lastPos = transform.position;

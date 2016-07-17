@@ -118,6 +118,14 @@ public static class ExtensionMethods
         return size;
     }
 
+    public static void Log<T>(this Unit u, T t)
+    {
+        if (u.team.Equals(Team.T1))
+        {
+            Debug.Log(t.ToString());
+        }
+    }
+
     public static void RunAfter(this MonoBehaviour mono, float sec, Action ac)
     {
         mono.StartCoroutine(RunAfterEnum(sec, ac));
