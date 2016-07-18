@@ -28,6 +28,8 @@ public class HealthBar : MonoBehaviour
 	private Texture2D emptyBar;
 	private GUIStyle style;
 
+    public RectTransform HealthImage;
+
 	void Start()
 	{
 		unit = GetComponent<Unit>();
@@ -49,6 +51,16 @@ public class HealthBar : MonoBehaviour
 			style.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
 	}
 
+    void Update()
+    {
+        if (HealthImage)
+        {
+            var scale = HealthImage.localScale;
+            scale.x = unit.hp / unit.maxHp;
+            HealthImage.localScale = scale;
+        }
+    }
+    
 	void OnGUI()
 	{
 		if (!showBar)
@@ -87,7 +99,7 @@ public class HealthBar : MonoBehaviour
 				GUI.Label(new Rect(posBar.x, posBar.y - (calcFontSize + 2), calcBarWidth, 60), labelToDisplay, style);
 		}
 	}
-
+    
 	private void DrawOutline(Rect rect, string text, GUIStyle theStyle, Color outColor, Color inColor)
 	{
 		var backupStyle = theStyle;
@@ -106,7 +118,7 @@ public class HealthBar : MonoBehaviour
 		GUI.Label(rect, text, style);
 		theStyle = backupStyle;
 	}
-
+    
 	// Create textures ----------------------------
 
 	private Texture2D CreateLeftTexture()
