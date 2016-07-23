@@ -88,4 +88,6 @@ public class StretchRect : MonoBehaviour {
     }
 }
 
+
+
 public enum StretchType { Height, Width }
