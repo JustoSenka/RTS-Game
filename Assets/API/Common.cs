@@ -45,6 +45,28 @@ public class Common
 
 public static class ExtensionMethods
 {
+    public static bool Contains(this RectTransform[] rectTransforms, Vector3 point)
+    {
+        foreach (var rectTrans in rectTransforms)
+        {
+            if (rectTrans.GetRect().Contains(point))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Rect GetRect(this RectTransform rectTransform)
+    {
+        return new Rect(rectTransform.GetScreenPosition(), rectTransform.rect.size);
+    }
+
+    public static Vector2 GetScreenPosition(this RectTransform rectTransform)
+    {
+        return rectTransform.position - Vector3.Scale(rectTransform.rect.size, rectTransform.pivot);
+    }
+
     public static void PerformCommand(this List<Unit> units, Command command)
     {/*
 		if (units.Count > 1 && (command.Equals(Command.Move) || (command.Equals(Command.Attack) && unit == null)))
@@ -71,22 +93,7 @@ public static class ExtensionMethods
         }
         return max;
     }
-    /*
-    public static NavMeshAgent GetClosestAgent(this NavMeshAgent[] agents, Vector3 pos)
-    {
-        float minDist = Common.GetRawDistance2D(agents[0].transform.position, pos);
-        NavMeshAgent closestAgent = agents[0];
-        foreach (var a in agents)
-        {
-            if (minDist > Common.GetRawDistance2D(a.transform.position, pos))
-            {
-                closestAgent = a;
-                minDist = Common.GetRawDistance2D(a.transform.position, pos);
-            }
-        }
-        return closestAgent;
-    }
-    */
+
     public static Vector3 GetObjectSize(this GameObject go)
     {
         Vector3 size = new Vector3(1, 1, 1);

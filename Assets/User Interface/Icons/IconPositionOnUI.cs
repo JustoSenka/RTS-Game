@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 #if UNITY_EDITOR
 [ExecuteInEditMode]
@@ -11,8 +12,10 @@ public class IconPositionOnUI : MonoBehaviour
     [Range(1, 12)]
     public int cell = 1;
     public float sizeInCell;
+    public CommandType commandType;
 
     private RectTransform transRect;
+    private RawImage rawImage;
     private StretchRect skillImageStretch;
 
     private readonly float startX = 204;
@@ -23,6 +26,7 @@ public class IconPositionOnUI : MonoBehaviour
     void Start()
     {
         transRect = GetComponent<RectTransform>();
+        rawImage = GetComponent<RawImage>();
         skillImageStretch = skillImage.GetComponent<StretchRect>();
         SetSize();
     }
@@ -53,5 +57,18 @@ public class IconPositionOnUI : MonoBehaviour
         float size = Mathf.Min(stepX, stepY) * sizeInCell * scaleFactor;
         transRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size);
         transRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size);
+    }
+
+    public void SetImageEnabled(bool enabled)
+    {
+        if (rawImage.enabled != enabled)
+        {
+            rawImage.enabled = enabled;
+        }
+    }
+
+    public bool IsImageEnabled()
+    {
+        return rawImage.enabled;
     }
 }

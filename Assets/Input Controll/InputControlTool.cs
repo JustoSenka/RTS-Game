@@ -24,21 +24,18 @@ public class InputControlTool : MonoBehaviour
 
     void Update()
     {
-        if (selectRectangle.GetSelectedUnits().Count > 0)
+        var selectedUnits = selectRectangle.GetSelectedUnits();
+
+        if (selectedUnits.Count > 0)
         {
             // Checks if skill or special keys are pressed
             if (!skillPhase)
             {
-                currentCommand = GetCurrentCommandAccordingToInput();
-                skillPhase = !currentCommand.type.Equals(CommandType.None);
-                SetSelectionEnabled(!skillPhase);
-
-                if (!currentCommand.type.Equals(CommandType.None) && !selectRectangle.GetSelectedUnits()[0].IsWaypointNecessary(currentCommand))
-                {
-                    selectRectangle.GetSelectedUnits().PerformCommand(currentCommand);
-                    skillPhase = false;
-                }
+                PerformCommand(GetCurrentCommandAccordingToInput());
             }
+
+            if (selectRectangle.excludedScreenAreas.Contains(Input.mousePosition))
+                return;
 
             // Perform actions
             if (skillPhase && Input.GetMouseButtonDown(MouseButton.Left.GetHashCode()))
@@ -50,7 +47,7 @@ public class InputControlTool : MonoBehaviour
                 var unitClickedOn = Common.GetObjectUnderMouse().GetComponent<Unit>();
                 if (unitClickedOn != null && !currentCommand.type.Equals(CommandType.Move))
                 {
-                    selectRectangle.GetSelectedUnits().PerformCommand(new Command(currentCommand.type, unitClickedOn.transform.position, unitClickedOn, true));
+                    selectedUnits.PerformCommand(new Command(currentCommand.type, unitClickedOn.transform.position, unitClickedOn, true));
                     moveCross.ShowAt(unitClickedOn.transform.position, true);
                 }
                 // Attack or skill on ground
@@ -59,7 +56,7 @@ public class InputControlTool : MonoBehaviour
                     var mousePos = Common.GetWorldMousePoint(groundLayer);
                     moveCross.ShowAt(mousePos, !currentCommand.type.Equals(CommandType.Move));
                     currentCommand.pos = mousePos;
-                    selectRectangle.GetSelectedUnits().PerformCommand(currentCommand);
+                    selectedUnits.PerformCommand(currentCommand);
                 }
             }
             else if (skillPhase && Input.GetMouseButtonDown(MouseButton.Right.GetHashCode()))
@@ -77,7 +74,7 @@ public class InputControlTool : MonoBehaviour
 					var unitClickedOn = obj.GetComponent<Unit>();
 					if (unitClickedOn != null && !unitClickedOn.team.Equals(selectRectangle.team))
 					{
-						selectRectangle.GetSelectedUnits().PerformCommand(new Command(CommandType.Attack, unitClickedOn.transform.position, unitClickedOn, true));
+                        selectedUnits.PerformCommand(new Command(CommandType.Attack, unitClickedOn.transform.position, unitClickedOn, true));
 						moveCross.ShowAt(unitClickedOn.transform.position, true);
 					}
 					// Right click on ground or anywhere else
@@ -85,10 +82,23 @@ public class InputControlTool : MonoBehaviour
 					{
 						var mousePos = Common.GetWorldMousePoint(groundLayer);
 						moveCross.ShowAt(mousePos);
-						selectRectangle.GetSelectedUnits().PerformCommand(new Command(CommandType.Move, mousePos));
+                        selectedUnits.PerformCommand(new Command(CommandType.Move, mousePos));
 					}
 				}
             }
+        }
+    }
+
+    public void PerformCommand(Command commandToPerform)
+    {
+        currentCommand = commandToPerform;
+        skillPhase = !currentCommand.type.Equals(CommandType.None);
+        SetSelectionEnabled(!skillPhase);
+
+        if (!currentCommand.type.Equals(CommandType.None) && !selectRectangle.GetSelectedUnits()[0].IsWaypointNecessary(currentCommand))
+        {
+            selectRectangle.GetSelectedUnits().PerformCommand(currentCommand);
+            skillPhase = false;
         }
     }
 
@@ -110,6 +120,11 @@ public class InputControlTool : MonoBehaviour
         {
             selectRectangle.enabled = enabled;
         }
+    }
+
+    public bool IsInSkillPhase()
+    {
+        return skillPhase;
     }
 
     private enum MouseButton { Left, Right, Midle }

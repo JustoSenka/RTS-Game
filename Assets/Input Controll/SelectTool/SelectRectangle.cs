@@ -21,6 +21,7 @@ public class SelectRectangle : MonoBehaviour
 
     [Header("Selector Prefab Reference")]
     public GameObject projectorPrefab;
+    public RectTransform[] excludedScreenAreas;
 
     private List<Unit> selectedUnits { get; set; }
     private List<Unit> emptyList { get; set; }
@@ -76,22 +77,13 @@ public class SelectRectangle : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(mouseButton.GetHashCode()))
-        {
-            isDragging = true;
-            startPoint = Input.mousePosition;
-            if (!Input.GetKey(multiSelectKey))
-            {
-                DeselectAllObjects();
-            }
-        }
-
+        // Released mouse while dragged, confirm selection
         if (Input.GetMouseButtonUp(mouseButton.GetHashCode()) && isDragging)
         {
             isDragging = false;
             if (Vector2.Distance(startPoint, Input.mousePosition) < 8)
             {
-                if (!Input.GetKey(multiSelectKey))
+                if (!Input.GetKey(multiSelectKey) && !excludedScreenAreas.Contains(Input.mousePosition))
                 {
                     DeselectAllObjects();
                 }
@@ -103,6 +95,18 @@ public class SelectRectangle : MonoBehaviour
             }
         }
 
+        // Check if started dragging
+        if (Input.GetMouseButtonDown(mouseButton.GetHashCode()) && !excludedScreenAreas.Contains(Input.mousePosition))
+        {
+            isDragging = true;
+            startPoint = Input.mousePosition;
+            if (!Input.GetKey(multiSelectKey))
+            {
+                DeselectAllObjects();
+            }
+        }
+
+        // Activelly select all units under selection rect
         if (isDragging)
         {
             if (Vector2.Distance(startPoint, Input.mousePosition) < 8)
@@ -129,7 +133,7 @@ public class SelectRectangle : MonoBehaviour
     private void PerformMouseClick()
     {
         var go = Common.GetObjectUnderMouse();
-        var unit = (go != null) ? go.GetComponent<Unit>() : null;
+        var unit = (go) ? go.GetComponent<Unit>() : null;
         if (unit != null && unit.team.Equals(team))
         {
             MarkObjectAsSelected(unit.gameObject);

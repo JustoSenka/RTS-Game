@@ -10,7 +10,6 @@ public class Data : MonoBehaviour
     private List<Unit> unitList;
 
     private float lastUpdate;
-    private readonly float updateInterval = 0.1f;
 
     void Awake() { Instance = this; UpdateUnits(); }
     private static Data Instance;
