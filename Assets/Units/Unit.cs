@@ -7,6 +7,7 @@ using System;
 public class Unit : MonoBehaviour
 {
     public Team team = Team.T1;
+	public int tier;
     [Space(5)]
 
     [Header("Unit Stats:")]
@@ -215,4 +216,23 @@ public class Unit : MonoBehaviour
 public enum Team
 {
     T1, T2, T3, T4, T5, T6, T7, T8
+}
+
+public class UnitComparer : IComparer<Unit>
+{
+	public int Compare(Unit x, Unit y)
+	{
+		if (x == y)
+		{
+			return 0;
+		}
+		else if (x.tier > y.tier)
+		{
+			return 1;
+		}
+		else
+		{
+			return -1;
+		}
+	}
 }

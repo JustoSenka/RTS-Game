@@ -23,15 +23,15 @@ public class SelectRectangle : MonoBehaviour
     public GameObject projectorPrefab;
     public RectTransform[] excludedScreenAreas;
 
-    private List<Unit> selectedUnits { get; set; }
-    private List<Unit> emptyList { get; set; }
+	private SortedList<Unit> selectedUnits { get; set; }
+	private SortedList<Unit> emptyList { get; set; }
 
-    private Vector2 startPoint;
+	private Vector2 startPoint;
     private Texture2D rectTexture;
     private Texture2D borderTexture;
     private bool isDragging = false;
 
-    public List<Unit> GetSelectedUnits()
+    public SortedList<Unit> GetSelectedUnits()
     {
         if (isDragging)
             return emptyList;
@@ -59,8 +59,8 @@ public class SelectRectangle : MonoBehaviour
     {
         rectTexture = CreateColorTexture(new Rect(0, 0, 2, 2), rectangleColor);
         borderTexture = CreateColorTexture(new Rect(0, 0, 2, 2), rectangleBorderColor);
-        selectedUnits = new List<Unit>();
-        emptyList = new List<Unit>();
+        selectedUnits = new SortedList<Unit>(new UnitComparer());
+        emptyList = new SortedList<Unit>(new UnitComparer());
     }
 
     private void DeselectAllObjects()
