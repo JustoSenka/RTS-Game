@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
-using System.Collections;
 
 #if UNITY_EDITOR
 [ExecuteInEditMode]
@@ -24,7 +22,8 @@ public class StretchRect : MonoBehaviour {
 	void Start () {
         transRect = GetComponent<RectTransform>();
         SetSize();
-    }
+		this.RunAfter(0.04f, () => SetSize());
+	}
 
 	void Update () {
 #if UNITY_EDITOR

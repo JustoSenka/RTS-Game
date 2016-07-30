@@ -1,0 +1,38 @@
+ManifestFileVersion: 0
+CRC: 1383753532
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c9c2d51fb6ae7a588b35e7f60702f79b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 6759894fca659e2049f05064db45ce61
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+Assets:
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_04.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_15.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_16.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_22.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_01.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_10.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_09.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_03.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_12.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_08.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_06.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_17.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_20.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_02.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_19.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_07.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_13.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_00.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_11.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_21.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_14.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_18.png
+- Assets/User Interface/Icons/Textures/Skill Icons/Icon_Skill_05.png
+Dependencies: []

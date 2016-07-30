@@ -9,9 +9,11 @@ public class IconPositionOnUI : MonoBehaviour
 {
     public RectTransform skillImage;
 
-    [Range(1, 12)]
-    public int cell = 1;
-    public float sizeInCell;
+	[Range(1, 12)]
+	[SerializeField]
+	private int cell = 1;
+
+	public float sizeInCell;
     public CommandType commandType;
 
     private RectTransform transRect;
@@ -28,8 +30,9 @@ public class IconPositionOnUI : MonoBehaviour
         transRect = GetComponent<RectTransform>();
         rawImage = GetComponent<RawImage>();
         skillImageStretch = skillImage.GetComponent<StretchRect>();
-        SetSize();
-    }
+		SetSize();
+		this.RunAfter(0.06f, () => SetSize());
+	}
 
     void Update()
     {
@@ -59,9 +62,21 @@ public class IconPositionOnUI : MonoBehaviour
         transRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size);
     }
 
+	public void SetCell(int cell)
+	{
+		this.cell = cell;
+		SetSize();
+	}
+
+	public int GetCell()
+	{
+		return cell;
+	}
+
     public void SetImageEnabled(bool enabled)
     {
-        if (rawImage.enabled != enabled)
+		SetSize();
+		if (rawImage.enabled != enabled)
         {
             rawImage.enabled = enabled;
         }

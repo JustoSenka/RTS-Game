@@ -1,8 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 public class UIController : MonoBehaviour {
 
@@ -68,7 +64,7 @@ public class UIController : MonoBehaviour {
             {
                 if (icon.GetRect().Contains(pos))
                 {
-                    directClickOn = icon.GetComponent<IconPositionOnUI>().cell;
+                    directClickOn = icon.GetComponent<IconPositionOnUI>().GetCell();
                     return icon.GetComponent<IconPositionOnUI>().commandType;
                 }
             }
@@ -86,36 +82,36 @@ public class UIController : MonoBehaviour {
         {
             if (Input.GetButton("Skill0"))
             {
-                highlighter.cell = 9;
+                highlighter.SetCell(9);
             }
             else if (Input.GetButton("Skill1"))
             {
-                highlighter.cell = 10;
-            }
+                highlighter.SetCell(10);
+			}
             else if (Input.GetButton("Skill2"))
             {
-                highlighter.cell = 11;
-            }
+                highlighter.SetCell(11);
+			}
             else if (Input.GetButton("Skill3"))
             {
-                highlighter.cell = 12;
-            }
+                highlighter.SetCell(12);
+			}
             else if (Input.GetButton("Attack"))
             {
-                highlighter.cell = 2;
-            }
+                highlighter.SetCell(2);
+			}
             else if (Input.GetButton("Hold"))
             {
-                highlighter.cell = 3;
-            }
+                highlighter.SetCell(3);
+			}
             else if (Input.GetButton("Stop"))
             {
-                highlighter.cell = 4;
-            }
+                highlighter.SetCell(4);
+			}
             else if (Input.GetButton("Move"))
             {
-                highlighter.cell = 1;
-            }
+                highlighter.SetCell(1);
+			}
             else
             {
                 highlightIconEnabled = false;
@@ -129,7 +125,7 @@ public class UIController : MonoBehaviour {
     {
         if (directClickOn != 0)
         {
-            highlighter.cell = directClickOn;
+			highlighter.SetCell(directClickOn);
             highlighter.SetImageEnabled(true);
         }
     }
