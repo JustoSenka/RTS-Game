@@ -67,24 +67,38 @@ public static class ExtensionMethods
         return rectTransform.position - Vector3.Scale(rectTransform.rect.size, rectTransform.pivot);
     }
 
-    public static void PerformCommand(this List<Unit> units, Command command)
-    {/*
-		if (units.Count > 1 && (command.Equals(Command.Move) || (command.Equals(Command.Attack) && unit == null)))
+	public static void PerformCommand(this SortedList<Unit> units, Command command, bool useTier = false)
+	{
+		if (useTier)
 		{
-			int cols = Mathf.RoundToInt(Mathf.Sqrt(units.Count));
-
-			//TODO: construct a grid of units
+			units.PerformCommand(command, units[0].tier);
 		}
 		else
-		{*/
-        foreach (var u in units)
-        {
-            u.PerformCommand(command);
-        }
-        //}
+		{
+			units.PerformCommand(command, 0);
+		}
+	}
+
+	public static void PerformCommand(this SortedList<Unit> units, Command command, int tier)
+    {
+		if (tier == 0 || !(command.type.Equals(CommandType.Skill0) || command.type.Equals(CommandType.Skill1) ||
+			command.type.Equals(CommandType.Skill2) || command.type.Equals(CommandType.Skill3)))
+		{
+			foreach (var u in units)
+			{
+				u.PerformCommand(command);
+			}
+		}
+		else
+		{
+			foreach (var u in units)
+			{
+				if (u.tier == tier) u.PerformCommand(command);
+			}
+		}
     }
 
-    public static float GetBiggestUnitRadius(this List<Unit> units)
+    public static float GetBiggestUnitRadius(this SortedList<Unit> units)
     {
         float max = 0;
         foreach (var u in units)

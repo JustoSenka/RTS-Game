@@ -47,7 +47,7 @@ public class InputControlTool : MonoBehaviour
                 var unitClickedOn = Common.GetObjectUnderMouse().GetComponent<Unit>();
                 if (unitClickedOn != null && !currentCommand.type.Equals(CommandType.Move))
                 {
-                    selectedUnits.PerformCommand(new Command(currentCommand.type, unitClickedOn.transform.position, unitClickedOn, true));
+                    selectedUnits.PerformCommand(new Command(currentCommand.type, unitClickedOn.transform.position, unitClickedOn, true), true);
                     moveCross.ShowAt(unitClickedOn.transform.position, true);
                 }
                 // Attack or skill on ground
@@ -56,7 +56,7 @@ public class InputControlTool : MonoBehaviour
                     var mousePos = Common.GetWorldMousePoint(groundLayer);
                     moveCross.ShowAt(mousePos, !currentCommand.type.Equals(CommandType.Move));
                     currentCommand.pos = mousePos;
-                    selectedUnits.PerformCommand(currentCommand);
+                    selectedUnits.PerformCommand(currentCommand, true);
                 }
             }
             else if (skillPhase && Input.GetMouseButtonDown(MouseButton.Right.GetHashCode()))
@@ -74,7 +74,7 @@ public class InputControlTool : MonoBehaviour
 					var unitClickedOn = obj.GetComponent<Unit>();
 					if (unitClickedOn != null && !unitClickedOn.team.Equals(selectRectangle.team))
 					{
-                        selectedUnits.PerformCommand(new Command(CommandType.Attack, unitClickedOn.transform.position, unitClickedOn, true));
+                        selectedUnits.PerformCommand(new Command(CommandType.Attack, unitClickedOn.transform.position, unitClickedOn, true), true);
 						moveCross.ShowAt(unitClickedOn.transform.position, true);
 					}
 					// Right click on ground or anywhere else
@@ -82,7 +82,7 @@ public class InputControlTool : MonoBehaviour
 					{
 						var mousePos = Common.GetWorldMousePoint(groundLayer);
 						moveCross.ShowAt(mousePos);
-                        selectedUnits.PerformCommand(new Command(CommandType.Move, mousePos));
+                        selectedUnits.PerformCommand(new Command(CommandType.Move, mousePos), true);
 					}
 				}
             }
@@ -97,7 +97,7 @@ public class InputControlTool : MonoBehaviour
 
         if (!currentCommand.type.Equals(CommandType.None) && !selectRectangle.GetSelectedUnits()[0].IsWaypointNecessary(currentCommand))
         {
-            selectRectangle.GetSelectedUnits().PerformCommand(currentCommand);
+            selectRectangle.GetSelectedUnits().PerformCommand(currentCommand, true);
             skillPhase = false;
         }
     }
