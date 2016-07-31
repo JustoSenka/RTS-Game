@@ -82,4 +82,10 @@ public class Data : MonoBehaviour
 	}
 
 	#endregion
+
+	#region All Skill Instances here
+
+	public Skill[] skills;
+
+	#endregion
 }

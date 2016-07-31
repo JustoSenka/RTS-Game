@@ -30,6 +30,7 @@ public class HealthBar : MonoBehaviour
         {
             var scale = healthImage.localScale;
             scale.x = unit.hp / unit.maxHp;
+			if (scale.x < 0) scale.x = 0;
             healthImage.localScale = scale;
             lastHp = unit.hp;
         }
@@ -37,7 +38,8 @@ public class HealthBar : MonoBehaviour
         {
             var scale = manaImage.localScale;
             scale.x = unit.mp / unit.maxMp;
-            manaImage.localScale = scale;
+			if (scale.x < 0) scale.x = 0;
+			manaImage.localScale = scale;
             lastMp = unit.mp;
         }
         if (lastShowBar != showBar)

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class UnitSpider : Unit
+public class UnitSpider : UnitHero
 {
     protected override void Start()
     {
@@ -14,55 +14,11 @@ public class UnitSpider : Unit
         animator.SetFloat("RandomAttack", (animator.GetFloat("RandomAttack") + 1) % 3);
     }
 
-    public override bool IsWaypointNecessary(Command command)
-    {
-        bool ret = false;
-
-        if (base.IsWaypointNecessary(command)) return true;
-
-        switch (command.type)
-        {
-            case CommandType.Skill2:
-            case CommandType.Skill3:
-                ret = true;
-                break;
-        }
-        return ret;
-    }
-
     public override void PerformCommand(Command command)
     {
         if (isDead)
             return;
 
         base.PerformCommand(command);
-
-        switch (command.type)
-        {
-            case CommandType.Skill0:
-                if (cooldown0 <= 0)
-                {
-                    isRunning = true;
-                    Skill0.Play();
-                    cooldown0 = skill0Cooldown;
-
-                    this.RunAfter(skill0Cooldown, () =>
-                    {
-                        isRunning = false;
-                        Skill0.Stop();
-                    });
-                }
-
-                break;
-            case CommandType.Skill1:
-
-                break;
-            case CommandType.Skill2:
-
-                break;
-            case CommandType.Skill3:
-
-                break;
-        }
     }
 }

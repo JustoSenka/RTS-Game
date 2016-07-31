@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour {
 
@@ -10,15 +12,13 @@ public class UIController : MonoBehaviour {
     public RectTransform[] iconRects = new RectTransform[16];
 
     private int directClickOn = 0;
+	private Unit lastUnitSelected;
 
-    void Start () {
-
-	}
-	
 	void Update ()
     {
         if (selectRectangle.GetSelectedUnits().Count > 0)
         {
+			PutIconTexturesAccordingUnitSelected();
             EnableIcons(true);
             CheckIfClickedDirectlyOnUI();
             PutHighlightsAccordingInputControlTool();
@@ -33,7 +33,19 @@ public class UIController : MonoBehaviour {
         }
     }
 
-    private void EnableIcons(bool enabled)
+	private void PutIconTexturesAccordingUnitSelected()
+	{
+		if (lastUnitSelected != selectRectangle.GetSelectedUnits()[0])
+		{
+			lastUnitSelected = selectRectangle.GetSelectedUnits()[0];
+			for (int i = 0; i < 4; i++)
+			{
+				iconRects[i].GetComponent<RawImage>().texture = lastUnitSelected.skills[i].main.tex;
+			}
+		}
+	}
+
+	private void EnableIcons(bool enabled)
     {
         var icon = iconRects[0].GetComponent<IconPositionOnUI>();
         if (icon.IsImageEnabled() == enabled)

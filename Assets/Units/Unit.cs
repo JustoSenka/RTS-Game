@@ -13,9 +13,13 @@ public class Unit : MonoBehaviour
     [Header("Unit Stats:")]
 	public float maxHp;
 	public float hp;
+	public float hpRegen;
 	public float maxMp;
 	public float mp;
-    public float walkSpeed;
+	public float mpRegen;
+
+	[Space(5)]
+	public float walkSpeed;
     public float runSpeed;
     public float attackSpeed;
     public float attackRange;
@@ -33,23 +37,16 @@ public class Unit : MonoBehaviour
 	public float height;
 	[Space(5)]
 
-	[Header("Skill Object References:")]
-    public ParticleSystemPlayer Skill0;
-    public ParticleSystemPlayer Skill1;
-    public ParticleSystemPlayer Skill2;
-    public ParticleSystemPlayer Skill3;
-    [Space(5)]
+	[Header("Skill Particles References:")]
+	public ParticleSystemPlayer[] skillParticleRef = new ParticleSystemPlayer[4];
+	[Space(5)]
 
-    [Header("Skill Cooldowns:")]
-    public float skill0Cooldown;
-    public float skill1Cooldown;
-    public float skill2Cooldown;
-    public float skill3Cooldown;
-    [Space(5)]
+	[Header("Skill instruction ref index:")]
+	public int[] skillIndex = new int[4];
+	[Space(5)]
 
-    public GameObject DeathCallback;
-
-    protected NavMeshAgent agent;
+	protected AI ai;
+	protected NavMeshAgent agent;
     protected NavMeshObstacle obstacle;
     protected Animator animator;
     protected bool isDead = false;
@@ -57,29 +54,36 @@ public class Unit : MonoBehaviour
     protected bool isRunning = false;
     protected bool isAttacking = false;
 
-    protected float cooldown0;
-    protected float cooldown1;
-    protected float cooldown2;
-    protected float cooldown3;
+	protected float[] cooldowns = new float[4];
 
-    public Command command = new Command(CommandType.None);
+	//[NonSerialized]
+	public Command command = new Command(CommandType.None);
 
-    [NonSerialized]
-    public Vector3 pos;
+	[NonSerialized] public Skill[] skills = new Skill[4];
+	[NonSerialized] public Vector3 pos;
+    
+	private GameObject DeathCallback;
 
-    private AI ai;
-
-    protected virtual void Start()
+	protected virtual void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
         animator = GetComponent<Animator>();
         ai = GetComponent<AI>();
-        DeathCallback = GameObject.FindGameObjectWithTag("GameController");
 
+        DeathCallback = GameObject.FindGameObjectWithTag("GameController");
         command.type = CommandType.None;
-        agent.radius = radius;
-        agent.height = height;
+
+		for (int i = 0; i < 4; i++)
+		{
+			skills[i] = Data.GetInstance().skills[skillIndex[i]];
+		}
+
+		if (agent)
+		{
+			agent.radius = radius;
+			agent.height = height;
+		}
 
         if (obstacle)
         {
@@ -93,11 +97,16 @@ public class Unit : MonoBehaviour
     protected virtual void Update()
     {
         float delta = Time.deltaTime;
-        cooldown0 -= delta;
-        cooldown1 -= delta;
-        cooldown2 -= delta;
-        cooldown3 -= delta;
-    }
+		for (int i = 0; i < cooldowns.Length; i++)
+		{
+			cooldowns[i] -= delta;
+		}
+
+		hp += hpRegen * delta;
+		mp += mpRegen * delta;
+		if (hp > maxHp) hp = maxHp;
+		if (mp > maxMp) mp = maxMp;
+	}
 
     protected virtual void FixedUpdate()
     {
@@ -154,22 +163,26 @@ public class Unit : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Virtual methods: ------------------------------------------------------------------------------------
-
-    public virtual bool IsWaypointNecessary(Command command)
+    public bool IsWaypointNecessary(Command command)
     {
-        bool ret = false;
-        switch (command.type)
-        {
-            case CommandType.Move:
-            case CommandType.Attack:
-                ret = true;
-                break;
-        }
-        return ret;
-    }
+		int hash = command.type.GetHashCode();
+		if (command.type.Equals(CommandType.Move) || command.type.Equals(CommandType.Attack))
+		{
+			return true;
+		}
+		else if (hash >= 0 && hash <= 3 && skills[hash] != null)
+		{
+			return skills[hash].main.requirePath;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
-    public virtual void PerformCommand(Command command)
+	// Virtual methods: ------------------------------------------------------------------------------------
+
+	public virtual void PerformCommand(Command command)
     {
         if (isDead)
             return;
@@ -203,8 +216,17 @@ public class Unit : MonoBehaviour
                 }
                 if (ai) StartCoroutine(ai.DirectCommandOnUnit(this.command));
                 break;
+			default:
+				PerformSkill(command);
+				break;
         }
     }
+
+	// This should be overriden by child class
+	protected virtual void PerformSkill(Command command)
+	{
+
+	}
 
     public Command GetCommand() { return command; }
     public void SetCommand(Command command) { this.command = command; }
