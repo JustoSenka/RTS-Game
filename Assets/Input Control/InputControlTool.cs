@@ -91,11 +91,20 @@ public class InputControlTool : MonoBehaviour
 
     public void PerformCommand(Command commandToPerform)
     {
-        currentCommand = commandToPerform;
-        skillPhase = !currentCommand.type.Equals(CommandType.None);
-        SetSelectionEnabled(!skillPhase);
+		var topUnit = selectRectangle.GetSelectedUnits()[0];
 
-        if (!currentCommand.type.Equals(CommandType.None) && !selectRectangle.GetSelectedUnits()[0].IsWaypointNecessary(currentCommand))
+		// If skill not ready or no mana, do nothing
+		var hash = commandToPerform.type.GetHashCode();
+		if (hash.IsSkill() && (topUnit.cooldowns[hash % 4] > 0 || topUnit.mp < topUnit.skills[hash % 4].main.manaCost))
+			return;
+
+		// Set command and skill phase accodingly
+		currentCommand = commandToPerform;
+		skillPhase = !currentCommand.type.Equals(CommandType.None);
+		SetSelectionEnabled(!skillPhase);
+
+		// If waypoint not necessary - perform
+		if (!currentCommand.type.Equals(CommandType.None) && !topUnit.IsWaypointNecessary(currentCommand))
         {
             selectRectangle.GetSelectedUnits().PerformCommand(currentCommand, true);
             skillPhase = false;

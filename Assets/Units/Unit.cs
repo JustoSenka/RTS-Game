@@ -54,11 +54,10 @@ public class Unit : MonoBehaviour
     protected bool isRunning = false;
     protected bool isAttacking = false;
 
-	protected float[] cooldowns = new float[4];
-
 	//[NonSerialized]
 	public Command command = new Command(CommandType.None);
 
+	[NonSerialized] public float[] cooldowns = new float[4];
 	[NonSerialized] public Skill[] skills = new Skill[4];
 	[NonSerialized] public Vector3 pos;
     
@@ -170,7 +169,7 @@ public class Unit : MonoBehaviour
 		{
 			return true;
 		}
-		else if (hash >= 0 && hash <= 3 && skills[hash] != null)
+		else if (hash.IsSkill() && skills[hash % 4] != null)
 		{
 			return skills[hash].main.requirePath;
 		}

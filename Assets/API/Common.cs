@@ -145,7 +145,18 @@ public static class ExtensionMethods
         return size;
     }
 
-    public static void Log<T>(this Unit u, T t)
+	public static bool IsSkill(this int orig) { return orig.IsBetween(0, 3); }
+	public static bool IsBetween(this int orig, int a, int b)
+	{
+		return orig >= a && orig <= b;
+	}
+
+	public static bool IsBetween(this float orig, float a, float b)
+	{
+		return orig >= a && orig <= b;
+	}
+
+	public static void Log<T>(this Unit u, T t)
     {
         if (u.team.Equals(Team.T1))
         {
@@ -155,23 +166,30 @@ public static class ExtensionMethods
 
     public static void RunAfter(this MonoBehaviour mono, float sec, Action ac)
     {
-        mono.StartCoroutine(RunAfterEnum(sec, ac));
+		if (sec > 0)
+		{
+			mono.StartCoroutine(RunAfterEnum(sec, ac));
+		}
+		else
+		{
+			ac.Invoke();
+		}
     }
 
 	public static void RunAfterOneFrame(this MonoBehaviour mono, Action ac)
 	{
-		mono.StartCoroutine(RunAfterEnum(0, ac));
+		mono.StartCoroutine(RunAfterEnum(-1, ac));
 	}
 
 	public static IEnumerator RunAfterEnum(float sec, Action ac)
     {
-		if (sec != 0)
+		if (sec == -1)
 		{
-			yield return new WaitForSeconds(sec);
+			yield return null;
 		}
 		else
 		{
-			yield return null;
+			yield return new WaitForSeconds(sec);
 		}
         ac.Invoke();
     }

@@ -59,6 +59,7 @@ public class Skill
 		public GameObject unitToSummon;
 		public int numOfUnits;
 		public float lifetime;
+		public float delay;
 	}
 
 	[System.Serializable]
@@ -67,6 +68,7 @@ public class Skill
 		public bool enabled;
 		public bool teleport;
 		public float lerpSpeed;
+		public float delay;
 	}
 
 	[System.Serializable]
@@ -75,6 +77,7 @@ public class Skill
 		public bool enabled;
 		public float duration;
 		public Vector3 position;
+		public float delay;
 	}
 
 	private Skill() { }

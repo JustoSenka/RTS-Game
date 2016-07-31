@@ -12,6 +12,7 @@ public class UIController : MonoBehaviour {
     public RectTransform[] iconRects = new RectTransform[16];
 
     private int directClickOn = 0;
+	private bool[] isEnabled = new bool[4];
 	private Unit lastUnitSelected;
 
 	void Update ()
@@ -20,8 +21,9 @@ public class UIController : MonoBehaviour {
         {
 			PutIconTexturesAccordingUnitSelected();
             EnableIcons(true);
+			CheckIfIconsDisabled();
             CheckIfClickedDirectlyOnUI();
-            PutHighlightsAccordingInputControlTool();
+            PutHighlightsAccordingToButtonClicks();
             PutHighlightsOnDirectClick();
             HighlightHoldIcon();
         }
@@ -58,12 +60,44 @@ public class UIController : MonoBehaviour {
         }
     }
 
-    private void CheckIfClickedDirectlyOnUI()
+	private void CheckIfIconsDisabled()
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			var iconBlackMask = iconRects[i + 4].GetComponent<IconPositionOnUI>();
+			if (lastUnitSelected.cooldowns[i] > 0)
+			{
+				isEnabled[i] = false;
+				iconBlackMask.heightModifier = lastUnitSelected.cooldowns[i] / lastUnitSelected.skills[i].main.cooldown;
+			}
+			else if (lastUnitSelected.mp < lastUnitSelected.skills[i].main.manaCost)
+			{
+				isEnabled[i] = false;
+				iconBlackMask.heightModifier = 1;
+			}
+			else
+			{
+				isEnabled[i] = true;
+				iconBlackMask.heightModifier = 0;
+			}
+		}
+	}
+
+	private void CheckIfClickedDirectlyOnUI()
     {
         var currentCommand = GetCurrentCommandAccordingToMouse();
         if (!currentCommand.Equals(CommandType.None))
         {
-            inputControlTool.PerformCommand(new Command(currentCommand));
+			var hash = currentCommand.GetHashCode();
+			if (hash.IsSkill() && !isEnabled[hash % 4])
+			{
+				currentCommand = CommandType.None;
+				directClickOn = 0;
+			}
+			else
+			{
+				inputControlTool.PerformCommand(new Command(currentCommand));
+			}
         }
     }
 
@@ -86,25 +120,25 @@ public class UIController : MonoBehaviour {
         return CommandType.None;
     }
 
-    private void PutHighlightsAccordingInputControlTool()
+    private void PutHighlightsAccordingToButtonClicks()
     {
         bool highlightIconEnabled = true;
 
         if (!inputControlTool.IsInSkillPhase())
         {
-            if (Input.GetButton("Skill0"))
+            if (Input.GetButton("Skill0") && isEnabled[0])
             {
                 highlighter.SetCell(9);
             }
-            else if (Input.GetButton("Skill1"))
+            else if (Input.GetButton("Skill1") && isEnabled[1])
             {
                 highlighter.SetCell(10);
 			}
-            else if (Input.GetButton("Skill2"))
+            else if (Input.GetButton("Skill2") && isEnabled[2])
             {
                 highlighter.SetCell(11);
 			}
-            else if (Input.GetButton("Skill3"))
+            else if (Input.GetButton("Skill3") && isEnabled[3])
             {
                 highlighter.SetCell(12);
 			}

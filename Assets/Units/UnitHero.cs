@@ -9,14 +9,14 @@ public class UnitHero : Unit
 	{
 		var hash = command.type.GetHashCode();
 		var skill = skills[hash];
-		if (hash >= 0 && hash <= 3 && cooldowns[hash % cooldowns.Length] <= 0)
+
+		// This check must be here, it's crucial
+		// I know, Input Control Tool and UIControler also does this check, but only for top unit!! 
+		if (hash.IsSkill() && cooldowns[hash % cooldowns.Length] <= 0 && mp >= skill.main.manaCost)
 		{
-			if (mp >= skill.main.manaCost)
-			{
-				mp -= skill.main.manaCost;
-				cooldowns[hash] = skill.main.cooldown;
-				SkillReqsMet(hash, skill, command);
-			}
+			mp -= skill.main.manaCost;
+			cooldowns[hash] = skill.main.cooldown;
+			SkillReqsMet(hash, skill, command);
 		}
 	}
 
@@ -78,9 +78,12 @@ public class UnitHero : Unit
 		{
 			if (skill.movement.teleport)
 			{
-				// TODO: multiple Units clamp into one
-				transform.position = command.pos;
-				PerformCommand(new Command(CommandType.Attack, Common.GetRandomVector(1) + command.pos));
+				// TODO: multiple Units clamp into one (sometimes)
+				this.RunAfter(skill.movement.delay, () =>
+				{
+					transform.position = command.pos;
+					PerformCommand(new Command(CommandType.Attack, Common.GetRandomVector(1) + command.pos));
+				});
 			}
 			else
 			{

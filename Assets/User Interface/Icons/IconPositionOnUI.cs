@@ -16,7 +16,12 @@ public class IconPositionOnUI : MonoBehaviour
 	public float sizeInCell;
     public CommandType commandType;
 
-    private RectTransform transRect;
+	public bool updateEveryFrame = false;
+
+	[Range(0, 1)]
+	public float heightModifier = 1;
+
+	private RectTransform transRect;
     private RawImage rawImage;
     private StretchRect skillImageStretch;
 
@@ -38,9 +43,15 @@ public class IconPositionOnUI : MonoBehaviour
     {
 #if UNITY_EDITOR
         SetSize();
+#else
+		if (updateEveryFrame)
+		{
+			SetSize();
+		}
 #endif
     }
 
+	// Only works when pivot is (0.5, 0.5)
     private void SetSize()
     {
         float posX = 0;
@@ -54,13 +65,13 @@ public class IconPositionOnUI : MonoBehaviour
             posX = Screen.width - (startX - stepX * ((cell - 1) % 4)) * scaleFactor;
             posY = (startY - (stepY * (Mathf.CeilToInt((cell - 1) / 4)))) * scaleFactor;
         }
-        
-        transRect.position = new Vector3(posX, posY, 0);
 
         float size = Mathf.Min(stepX, stepY) * sizeInCell * scaleFactor;
-        transRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size);
+        transRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size * heightModifier);
         transRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size);
-    }
+
+		transRect.position = new Vector3(posX, posY - size * (1 - heightModifier) * 0.5f, 0);
+	}
 
 	public void SetCell(int cell)
 	{
