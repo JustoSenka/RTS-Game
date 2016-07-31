@@ -9,20 +9,30 @@ public class Skill
 
 	[Header("Modules:")]
 	public Main main;
+	public Animator animator;
 	public Offensive offensive;
 	public Buff buff;
+	public Summon summon;
 	public Movement movement;
+	public Particles particles;
 
 	[System.Serializable]
 	public struct Main
 	{
 		public Texture tex;
-		public SkillType skillType;
 		public bool requirePath;
 		public bool mustTargetUnit;
 		public float range;
 		public float manaCost;
 		public float cooldown;
+	}
+
+	[System.Serializable]
+	public struct Animator
+	{
+		public bool enabled;
+		public string stateName;
+		public float duration;
 	}
 
 	[System.Serializable]
@@ -43,6 +53,15 @@ public class Skill
 	}
 
 	[System.Serializable]
+	public struct Summon
+	{
+		public bool enabled;
+		public GameObject unitToSummon;
+		public int numOfUnits;
+		public float lifetime;
+	}
+
+	[System.Serializable]
 	public struct Movement
 	{
 		public bool enabled;
@@ -50,16 +69,23 @@ public class Skill
 		public float lerpSpeed;
 	}
 
+	[System.Serializable]
+	public struct Particles
+	{
+		public bool enabled;
+		public float duration;
+		public Vector3 position;
+	}
+
 	private Skill() { }
-}
-
-
-public enum SkillType
-{
-	Melee, Magic, Misisile, Buff, Movement, Passive
 }
 
 public enum BuffType
 {
-	Damage, Armor, Speed, Heal, Steal
+	[FieldName("damage")] Damage,
+	[FieldName("defense")] Defense,
+	[FieldName("walkSpeed")] WalkSpeed,
+	[FieldName("attackSpeed")] AttackSpeed,
+	[FieldName("attackRange")] AttackRange,
+	[FieldName("hp")] Heal,
 }

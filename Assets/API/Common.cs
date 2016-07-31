@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System;
+using Random = UnityEngine.Random;
 using System.Collections;
-using System.Collections.Generic;
+using System.Reflection;
 
 public class Common
 {
@@ -39,6 +40,11 @@ public class Common
         var z = vec.z - other.z;
         return x * x + z * z;
     }
+
+	public static Vector3 GetRandomVector(float multiplier)
+	{
+		return new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), 0) * multiplier;
+	}
 }
 
 
@@ -152,9 +158,43 @@ public static class ExtensionMethods
         mono.StartCoroutine(RunAfterEnum(sec, ac));
     }
 
-    public static IEnumerator RunAfterEnum(float sec, Action ac)
+	public static void RunAfterOneFrame(this MonoBehaviour mono, Action ac)
+	{
+		mono.StartCoroutine(RunAfterEnum(0, ac));
+	}
+
+	public static IEnumerator RunAfterEnum(float sec, Action ac)
     {
-        yield return new WaitForSeconds(sec);
+		if (sec != 0)
+		{
+			yield return new WaitForSeconds(sec);
+		}
+		else
+		{
+			yield return null;
+		}
         ac.Invoke();
     }
+}
+
+
+
+public static class ReflectionExtensionMethods
+{
+	public static FieldName GetFieldNameAttribute(this BuffType buffType)
+	{
+		return Attribute.GetCustomAttribute(typeof(BuffType).GetField(buffType.ToString()), typeof(FieldName)) as FieldName;
+	}
+
+	public static void IncreaseFieldValueBy(this Unit unit, BuffType buffType, float value)
+	{
+		FieldInfo field = unit.GetType().GetField(buffType.GetFieldNameAttribute().name);
+		field.SetValue(unit, int.Parse(field.GetValue(unit).ToString()) + value);
+	}
+
+	public static void DecreaseFieldValueBy(this Unit unit, BuffType buffType, float value)
+	{
+		FieldInfo field = unit.GetType().GetField(buffType.GetFieldNameAttribute().name);
+		field.SetValue(unit, int.Parse(field.GetValue(unit).ToString()) - value);
+	}
 }

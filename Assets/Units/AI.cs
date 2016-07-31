@@ -32,7 +32,12 @@ public class AI : MonoBehaviourSlowUpdates
 
     protected override void BeforeUpdate()
     {
-        command = unit.GetCommand();
+		if (agent.enabled && obstacle.enabled)
+		{
+			Debug.LogWarning("Both agent and obstacle are enabled!");
+		}
+
+		command = unit.GetCommand();
 
         //DontDoStupidLongDistanceFollowingCommand();
         CheckIfAgentFinishedCommand();
