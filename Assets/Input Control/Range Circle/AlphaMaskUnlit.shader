@@ -1,54 +1,56 @@
 ﻿Shader "Custom/AlphaMaskUnlit"
 {
-	Properties
-	{
-		_MainTex ("Texture", 2D) = "white" {}
+	Properties{
+		_Color("Main Color", Color) = (1,1,1,1)
+		_ShadowTex("Cookie", 2D) = "" {}
 	}
-	SubShader
-	{
-		Tags { "RenderType"="Transparent" }
-		LOD 100
 
-		Pass
-		{
+		Subshader{
+		Tags{ "Queue" = "Transparent" }
+		Pass{
+			ZWrite Off
+			AlphaTest Greater 0
+			ColorMask RGB
+			Blend SrcAlpha OneMinusSrcAlpha
+
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-			
+			#pragma multi_compile_fog
 			#include "UnityCG.cginc"
 
-			struct appdata
-			{
-				float4 vertex : POSITION;
-				float2 uv : TEXCOORD0;
+			struct v2f {
+				float4 uvShadow : TEXCOORD0;
+				float4 uvFalloff : TEXCOORD1;
+				UNITY_FOG_COORDS(2)
+				float4 pos : SV_POSITION;
 			};
 
-			struct v2f
-			{
-				float2 uv : TEXCOORD0;
-				UNITY_FOG_COORDS(1)
-				float4 vertex : SV_POSITION;
-			};
+			float4x4 unity_Projector;
+			float4x4 unity_ProjectorClip;
 
-			sampler2D _MainTex;
-			float4 _MainTex_ST;
-			
-			v2f vert (appdata v)
+			v2f vert(float4 vertex : POSITION)
 			{
 				v2f o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
-				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-				UNITY_TRANSFER_FOG(o,o.vertex);
+				o.pos = mul(UNITY_MATRIX_MVP, vertex);
+				o.uvShadow = mul(unity_Projector, vertex);
+				o.uvFalloff = mul(unity_ProjectorClip, vertex);
+				UNITY_TRANSFER_FOG(o,o.pos);
 				return o;
 			}
-			
-			fixed4 frag (v2f i) : SV_Target
+
+			fixed4 _Color;
+			sampler2D _ShadowTex;
+
+			fixed4 frag(v2f i) : SV_Target
 			{
-				// sample the texture
-				fixed4 col = tex2D(_MainTex, i.uv);
-				// apply fog
-				UNITY_APPLY_FOG(i.fogCoord, col);
-				return col;
+				fixed4 texS = tex2Dproj(_ShadowTex, UNITY_PROJ_COORD(i.uvShadow));
+				texS.rgba *= _Color.rgba;
+
+				fixed4 res = texS;
+
+				UNITY_APPLY_FOG_COLOR(i.fogCoord, res, fixed4(0,0,0,0));
+				return res;
 			}
 			ENDCG
 		}

@@ -8,7 +8,7 @@ public class SelectRectangle : MonoBehaviour
     public Team team = Team.T1;
 
     [Header("Mouse Buttons:")]
-    public MouseButton mouseButton = MouseButton.left;
+    public MouseButton mouseButton = MouseButton.Left;
     public KeyCode multiSelectKey = KeyCode.LeftShift;
     [Space(5)]
 
@@ -46,13 +46,13 @@ public class SelectRectangle : MonoBehaviour
 
     public void DeselectObject(GameObject go)
     {
-        if (go.GetComponentsInChildren<Projector>().Length > 0)
-        {
-            Projector prj = go.GetComponentsInChildren<Projector>()[0];
-            GameObject prnt = prj.transform.parent.gameObject;
-            Destroy(prnt);
-            selectedUnits.Remove(go.GetComponent<Unit>());
-        }
+		var projector = go.GetComponent<SelectProjector>();
+		if (projector)
+		{
+			projector.Disable();
+		}
+
+		selectedUnits.Remove(go.GetComponent<Unit>());
     }
 
     void Awake()
@@ -65,13 +65,15 @@ public class SelectRectangle : MonoBehaviour
 
     private void DeselectAllObjects()
     {
-        for (int i = 0; i < selectedUnits.Count; i++)
-        {
-            // TODO: This one is slow, doing on all minions selected every frame, 3.5 ms when dragging
-            Projector projector = selectedUnits[i].GetComponentsInChildren<Projector>()[0];
-            GameObject parent = projector.transform.parent.gameObject;
-            Destroy(parent);
-        }
+		foreach (var unit in selectedUnits)
+		{
+			var projector = unit.GetComponent<SelectProjector>();
+			if (projector)
+			{
+				projector.Disable();
+			}
+		}
+
         selectedUnits.Clear();
     }
 
@@ -179,26 +181,11 @@ public class SelectRectangle : MonoBehaviour
         if (!unit.team.Equals(team) || unit.IsDead())
             return;
 
-        if (go.GetComponentsInChildren<Projector>().Length == 0)
+		var projector = go.GetComponent<SelectProjector>();
+		if (projector)
         {
-            selectedUnits.Add(go.GetComponent<Unit>());
-            GameObject slc = (GameObject)Instantiate(projectorPrefab);
-            Projector prj = slc.GetComponentsInChildren<Projector>()[0];
-
-            if (scaleToObject)
-            {
-                var size = go.GetObjectSize();
-                if (scaleToBiggerAxis) prj.orthographicSize = Mathf.Max(go.transform.localScale.x * size.x, go.transform.localScale.z * size.z);
-                else prj.orthographicSize = Mathf.Min(go.transform.localScale.x * size.x, go.transform.localScale.z * size.z);
-            }
-            else
-            {
-                prj.orthographicSize = go.GetComponent<Unit>().radius + 0.2f;
-            }
-
-            slc.transform.parent = go.transform;
-            slc.transform.localPosition = new Vector3(0f, 0.3f, 0f);
-            slc.transform.rotation = go.transform.rotation;
+            selectedUnits.Add(unit);
+			projector.Enable();
         }
     }
 
@@ -237,5 +224,5 @@ public class SelectRectangle : MonoBehaviour
 
 public enum MouseButton
 {
-    left, right, middle
+    Left, Right, Middle
 }
