@@ -14,10 +14,26 @@ public class UnitHero : Unit
 		// I know, Input Control Tool and UIControler also does this check, but only for top unit!! 
 		if (hash.IsSkill() && cooldowns[hash % cooldowns.Length] <= 0 && mp >= skill.main.manaCost)
 		{
-			mp -= skill.main.manaCost;
-			cooldowns[hash] = skill.main.cooldown;
-			SkillReqsMet(hash, skill, command);
+			// Is close in range, perform skill
+			if (!skill.main.requirePath || Common.GetRawDistance2D(pos, command.pos) < skill.main.range * skill.main.range)
+			{
+				mp -= skill.main.manaCost;
+				cooldowns[hash] = skill.main.cooldown;
+				SkillReqsMet(hash, skill, command);
+			}
+			// Too far in range, move closer
+			else
+			{
+				commandPending = command;
+				PerformCommand(new Command(CommandType.Move, command.pos));
+			}
 		}
+	}
+
+	public override void PerformPendingSkill()
+	{
+		PerformSkill(commandPending);
+		commandPending = Command.None;
 	}
 
 	private void SkillReqsMet(int index, Skill skill, Command command)
@@ -36,9 +52,21 @@ public class UnitHero : Unit
 
 		if (skill.buff.enabled)
 		{
-			this.IncreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue);
-			if (!skill.buff.buffType.Equals(BuffType.Heal))
-				this.RunAfter(skill.buff.duration, () => this.DecreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue));
+			// Buff on other
+			if (skill.main.requirePath && skill.main.mustTargetUnit)
+			{
+				command.unitToAttack.IncreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue);
+				if (!skill.buff.buffType.Equals(BuffType.Heal))
+					command.unitToAttack.RunAfter(skill.buff.duration, () => command.unitToAttack.DecreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue));
+			}
+			// Buff on self
+			else
+			{
+				this.IncreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue);
+				if (!skill.buff.buffType.Equals(BuffType.Heal))
+					this.RunAfter(skill.buff.duration, () => this.DecreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue));
+			}
+
 		}
 
 		if (skill.summon.enabled)
@@ -97,5 +125,7 @@ public class UnitHero : Unit
 				skillParticleRef[index].SetPosition(skill.particles.position);
 			skillParticleRef[index].Play(skill.particles.duration);
 		}
+
+		commandPending = Command.None;
 	}
 }

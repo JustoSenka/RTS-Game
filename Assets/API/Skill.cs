@@ -81,6 +81,14 @@ public class Skill
 	}
 
 	private Skill() { }
+
+	/// <summary>
+	/// Does the object exists?
+	/// </summary>
+	public static implicit operator bool(Skill skill)
+	{
+		return skill != null;
+	}
 }
 
 public enum BuffType

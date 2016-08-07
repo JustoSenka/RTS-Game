@@ -55,10 +55,11 @@ public class Unit : MonoBehaviour
     protected bool isAttacking = false;
 
 	//[NonSerialized]
-	public Command command = new Command(CommandType.None);
+	public Command command;
 
 	[NonSerialized] public float[] cooldowns = new float[4];
 	[NonSerialized] public Skill[] skills = new Skill[4];
+	[NonSerialized] public Command commandPending;
 	[NonSerialized] public Vector3 pos;
     
 	private GameObject DeathCallback;
@@ -71,7 +72,8 @@ public class Unit : MonoBehaviour
         ai = GetComponent<AI>();
 
         DeathCallback = GameObject.FindGameObjectWithTag("GameController");
-        command.type = CommandType.None;
+        command = Command.None;
+		commandPending = Command.None;
 
 		for (int i = 0; i < 4; i++)
 		{
@@ -137,7 +139,7 @@ public class Unit : MonoBehaviour
         hp -= (damageIncome > defense) ? damageIncome - defense : 0;
         if (hp <= 0)
         {
-            if (DeathCallback != null)
+            if (DeathCallback)
             {
                 DeathCallback.SendMessage("DeathCallback", gameObject);
             }
@@ -176,6 +178,25 @@ public class Unit : MonoBehaviour
 		else
 		{
 			return false;
+		}
+	}
+
+	public bool IsSkillUsedOnUnit(Command command)
+	{
+		Skill skill = GetSkill(command);
+		return (skill == null) ? false : skill.main.mustTargetUnit;
+	}
+
+	public Skill GetSkill(Command command)
+	{
+		int hash = command.type.GetHashCode();
+		if (hash.IsSkill() && skills[hash % 4] != null)
+		{
+			return skills[hash];
+		}
+		else
+		{
+			return null;
 		}
 	}
 
@@ -222,12 +243,10 @@ public class Unit : MonoBehaviour
     }
 
 	// This should be overriden by child class
-	protected virtual void PerformSkill(Command command)
-	{
+	protected virtual void PerformSkill(Command command){ }
+	public virtual void PerformPendingSkill() { }
 
-	}
-
-    public Command GetCommand() { return command; }
+	public Command GetCommand() { return command; }
     public void SetCommand(Command command) { this.command = command; }
     public void SetAttacking(bool isAttacking) { this.isAttacking = isAttacking; }
     public bool IsHold() { return isHold; }

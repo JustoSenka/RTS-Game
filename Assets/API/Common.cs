@@ -3,6 +3,7 @@ using System;
 using Random = UnityEngine.Random;
 using System.Collections;
 using System.Reflection;
+using System.Collections.Generic;
 
 public class Common
 {
@@ -73,6 +74,15 @@ public static class ExtensionMethods
         return rectTransform.position - Vector3.Scale(rectTransform.rect.size, rectTransform.pivot);
     }
 
+	public static void ForEachOnHighestTier(this SortedList<Unit> units, Action<Unit> ac)
+	{
+		var tier = units[0].tier;
+		foreach (var u in units)
+		{
+			if (u.tier == tier) ac.Invoke(u);
+		}
+	}
+
 	public static void PerformCommand(this SortedList<Unit> units, Command command, bool useTier = false)
 	{
 		if (useTier)
@@ -87,8 +97,7 @@ public static class ExtensionMethods
 
 	public static void PerformCommand(this SortedList<Unit> units, Command command, int tier)
     {
-		if (tier == 0 || !(command.type.Equals(CommandType.Skill0) || command.type.Equals(CommandType.Skill1) ||
-			command.type.Equals(CommandType.Skill2) || command.type.Equals(CommandType.Skill3)))
+		if (tier == 0 || !command.type.GetHashCode().IsSkill())
 		{
 			foreach (var u in units)
 			{
@@ -207,12 +216,12 @@ public static class ReflectionExtensionMethods
 	public static void IncreaseFieldValueBy(this Unit unit, BuffType buffType, float value)
 	{
 		FieldInfo field = unit.GetType().GetField(buffType.GetFieldNameAttribute().name);
-		field.SetValue(unit, int.Parse(field.GetValue(unit).ToString()) + value);
+		field.SetValue(unit, float.Parse(field.GetValue(unit).ToString()) + value);
 	}
 
 	public static void DecreaseFieldValueBy(this Unit unit, BuffType buffType, float value)
 	{
 		FieldInfo field = unit.GetType().GetField(buffType.GetFieldNameAttribute().name);
-		field.SetValue(unit, int.Parse(field.GetValue(unit).ToString()) - value);
+		field.SetValue(unit, float.Parse(field.GetValue(unit).ToString()) - value);
 	}
 }

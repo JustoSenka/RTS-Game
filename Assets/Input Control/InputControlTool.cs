@@ -22,7 +22,17 @@ public class InputControlTool : MonoBehaviour
         moveCross = gameObject.GetComponentInChildren<TargetMoveAnimation>();
     }
 
-    void Update()
+	public void DeathCallback(GameObject unitGO)
+	{
+		// Disable skill range projector as soon as unit died
+		var projector = unitGO.GetComponent<RangeProjector>();
+		if (projector)
+		{
+			projector.Disable();
+		}
+	}
+
+	void Update()
     {
         var selectedUnits = selectRectangle.GetSelectedUnits();
 
@@ -40,31 +50,56 @@ public class InputControlTool : MonoBehaviour
             // Perform actions
             if (skillPhase && Input.GetMouseButtonDown(MouseButton.Left.GetHashCode()))
             {
-                SetSelectionEnabled(true);
-                skillPhase = false;
+				SetSelectionEnabled(true);
+				skillPhase = false;
 
-                // Attack or skill on any unit
-                var unitClickedOn = Common.GetObjectUnderMouse().GetComponent<Unit>();
-                if (unitClickedOn != null && !currentCommand.type.Equals(CommandType.Move))
-                {
-                    selectedUnits.PerformCommand(new Command(currentCommand.type, unitClickedOn.transform.position, unitClickedOn, true), true);
-                    moveCross.ShowAt(unitClickedOn.transform.position, true);
-                }
-                // Attack or skill on ground
-                else
-                {
-                    var mousePos = Common.GetWorldMousePoint(groundLayer);
-                    moveCross.ShowAt(mousePos, !currentCommand.type.Equals(CommandType.Move));
-                    currentCommand.pos = mousePos;
-                    selectedUnits.PerformCommand(currentCommand, true);
-                }
-            }
+				var unitClickedOn = Common.GetObjectUnderMouse().GetComponent<Unit>();
+				var topUnit = selectedUnits[0];
+				var commandHash = currentCommand.type.GetHashCode();
+
+				// Skill on unit
+				if (commandHash.IsSkill() && topUnit.skills[commandHash % 4].main.mustTargetUnit)
+				{
+					if (unitClickedOn)
+					{
+						selectedUnits.PerformCommand(new Command(currentCommand.type, unitClickedOn.transform.position, unitClickedOn, true), true);
+						moveCross.ShowAt(unitClickedOn.transform.position, true);
+					}
+					else
+					{
+						Debug.Log("This skill must target unit");
+						// play sound or do smth..
+					}
+				}
+				// Skill on ground or attack on unit, or move
+				else 
+				{
+					if (unitClickedOn && currentCommand.type.Equals(CommandType.Attack))
+					{
+						selectedUnits.PerformCommand(new Command(currentCommand.type, unitClickedOn.transform.position, unitClickedOn, true), true);
+						moveCross.ShowAt(unitClickedOn.transform.position, true);
+					}
+					else
+					{
+						var mousePos = Common.GetWorldMousePoint(groundLayer);
+						moveCross.ShowAt(mousePos, !currentCommand.type.Equals(CommandType.Move));
+						currentCommand.pos = mousePos;
+						selectedUnits.PerformCommand(currentCommand, true);
+					}
+				}
+
+				// Disable all range projectors
+				selectRectangle.GetSelectedUnits().ForEach((u) => u.GetComponent<RangeProjector>().Disable());
+			}
             else if (skillPhase && Input.GetMouseButtonDown(MouseButton.Right.GetHashCode()))
             {
                 SetSelectionEnabled(true);
                 currentCommand = new Command(CommandType.None);
                 skillPhase = false;
-            }
+
+				// Disable all range projectors
+				selectRectangle.GetSelectedUnits().ForEach((u) => u.GetComponent<RangeProjector>().Disable());
+			}
             else if (!skillPhase && Input.GetMouseButtonDown(MouseButton.Right.GetHashCode()))
             {
 				// Right click on enemy unit
@@ -87,6 +122,12 @@ public class InputControlTool : MonoBehaviour
 				}
             }
         }
+		// Selected unit count less than one
+		else
+		{
+			SetSelectionEnabled(true);
+			currentCommand = new Command(CommandType.None);
+		}
     }
 
     public void PerformCommand(Command commandToPerform)
@@ -109,6 +150,15 @@ public class InputControlTool : MonoBehaviour
             selectRectangle.GetSelectedUnits().PerformCommand(currentCommand, true);
             skillPhase = false;
         }
+
+		// Enable range projector on top units
+		if (skillPhase && hash.IsSkill())
+		{
+			if (hash.IsSkill())
+			{
+				selectRectangle.GetSelectedUnits().ForEachOnHighestTier((u) => u.GetComponent<RangeProjector>().Enable(u.skills[hash].main.range));
+			}
+		}
     }
 
     private Command GetCurrentCommandAccordingToInput()
@@ -125,7 +175,7 @@ public class InputControlTool : MonoBehaviour
 
     public void SetSelectionEnabled(bool enabled)
     {
-        if (selectRectangle != null)
+        if (selectRectangle && selectRectangle.enabled != enabled)
         {
             selectRectangle.enabled = enabled;
         }

@@ -42,4 +42,9 @@ public class SelectProjector : MonoBehaviour
 			projector.enabled = false;
 		}
 	}
+
+	public bool IsEnabled()
+	{
+		return projector.enabled;
+	}
 }

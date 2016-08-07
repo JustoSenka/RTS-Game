@@ -12,19 +12,15 @@ public class SelectRectangle : MonoBehaviour
     public KeyCode multiSelectKey = KeyCode.LeftShift;
     [Space(5)]
 
-    [Header("Selection Circle Options:")]
-    public bool scaleToObject = true;
-    public bool scaleToBiggerAxis = true;
+    [Header("Selection Rectangle Options:")]
     public Color rectangleColor = new Color(190f / 255f, 190f / 255f, 1.0f, 0.2f);
     public Color rectangleBorderColor = new Color(0.5f, 0.5f, 1.0f, 0.9f);
     [Space(5)]
 
-    [Header("Selector Prefab Reference")]
-    public GameObject projectorPrefab;
     public RectTransform[] excludedScreenAreas;
 
-	private SortedList<Unit> selectedUnits { get; set; }
-	private SortedList<Unit> emptyList { get; set; }
+	private SortedList<Unit> selectedUnits;
+	private SortedList<Unit> emptyList;
 
 	private Vector2 startPoint;
     private Texture2D rectTexture;
@@ -130,7 +126,16 @@ public class SelectRectangle : MonoBehaviour
                 }
             });
         }
-    }
+
+#if UNITY_EDITOR
+		// Regression test for bug when same object can be selected multiple times
+		if (GetSelectedUnits().Count > Data.GetInstance().GetAllUnits().Length)
+		{
+			Debug.LogError("Selected unit count is greater than total unit count on field: "
+				+ GetSelectedUnits().Count + " > " + Data.GetInstance().GetAllUnits().Length);
+		}
+#endif
+	}
 
     private void PerformMouseClick()
     {
@@ -182,7 +187,7 @@ public class SelectRectangle : MonoBehaviour
             return;
 
 		var projector = go.GetComponent<SelectProjector>();
-		if (projector)
+		if (projector && !projector.IsEnabled())
         {
             selectedUnits.Add(unit);
 			projector.Enable();

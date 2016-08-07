@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 
+[Serializable]
 public class SortedList<T> : List<T>
 {
 	private bool isGenuine;

@@ -34,18 +34,19 @@ public class AI : MonoBehaviourSlowUpdates
     {
 		if (agent.enabled && obstacle.enabled)
 		{
-			Debug.LogWarning("Both agent and obstacle are enabled!");
+			Debug.LogError("Both agent and obstacle are enabled!");
 		}
 
 		command = unit.GetCommand();
 
-        //DontDoStupidLongDistanceFollowingCommand();
+		//DontDoStupidLongDistanceFollowingCommand();
+		CheckIfUnitIsCloseToPerformSkill();
         CheckIfAgentFinishedCommand();
         CheckIfTargetedEnemyStillAlive();
         CheckIfEnemyStillInRangeWhenAttacking();
     }
 
-    protected override void AfterUpdate()
+	protected override void AfterUpdate()
     {
         unit.SetAttacking(isAttacking);
         unit.SetCommand(command);
@@ -62,14 +63,41 @@ public class AI : MonoBehaviourSlowUpdates
         }
     }
 
-    private void CheckIfAgentFinishedCommand()
+	private void CheckIfUnitIsCloseToPerformSkill()
+	{
+		if (command.type.Equals(CommandType.Move) && !unit.commandPending.IsNone())
+		{
+			// If on spceific unit and it's dead, cancel everything
+			Skill skill = unit.GetSkill(unit.commandPending);
+			if (skill && skill.main.mustTargetUnit)
+			{
+				if (!unit.commandPending.unitToAttack || unit.commandPending.unitToAttack.IsDead())
+				{
+					StopAgentFromDoingCurrentCommand();
+					unit.commandPending = Command.None;
+					return;
+				}
+			}
+
+			// Close enough, perform skill
+			var distance = Vector3.Distance(unit.pos, unit.commandPending.pos);
+			if (distance < unit.GetSkill(unit.commandPending).main.range)
+			{
+				StopAgentFromDoingCurrentCommand();
+				unit.PerformPendingSkill();
+			}
+		}
+	}
+
+	private void CheckIfAgentFinishedCommand()
     {
         if (command.type.Equals(CommandType.Move) || command.type.Equals(CommandType.Attack))
         {
             var distance = Vector3.Distance(unit.pos, command.pos);
             if (distance <= stoppingDistance)
             {
-                if (command.type.Equals(CommandType.Attack) && command.unitToAttack != null)
+				// Attack and close to enemy, stop and attack
+                if (command.type.Equals(CommandType.Attack) && command.unitToAttack)
                 {
                     unit.Log("Finished, now attacking");
                     command.type = CommandType.Busy;
@@ -79,6 +107,7 @@ public class AI : MonoBehaviourSlowUpdates
                         agent.ResetPath();
                     }
                 }
+				// attack or move without enemies nearby, just stop
                 else
                 {
                     unit.Log("Finished and will do Stop");
@@ -136,7 +165,7 @@ public class AI : MonoBehaviourSlowUpdates
             stoppingDistance = 0;
             agent.ResetPath();
         }
-        command = new Command(CommandType.None);
+		command = Command.None;
     }
 
     private IEnumerator AttackUnit(Unit unitToAttack, bool strictAttack = false)
@@ -172,8 +201,10 @@ public class AI : MonoBehaviourSlowUpdates
         return unit.attackRange + unit.radius + unitToAttack.radius;
     }
 
-    // Avoid using this function, only callback from unit
-    public IEnumerator DirectCommandOnUnit(Command command)
+	/// <summary>
+	/// Avoid using this function, only callback from unit
+	/// </summary>
+	public IEnumerator DirectCommandOnUnit(Command command)
     {
         DelaySlowUpdateBy(0.5f);
         if (command.type.Equals(CommandType.Move) || command.type.Equals(CommandType.Attack))

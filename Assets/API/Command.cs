@@ -4,6 +4,8 @@ using System.Collections;
 [System.Serializable]
 public struct Command {
 
+	public static Command None = new Command(CommandType.None);
+
     public CommandType type;
     public Vector3 pos;
     public Unit unitToAttack;
@@ -16,6 +18,11 @@ public struct Command {
         this.unitToAttack = unitToAttack;
         this.strictAttack = strictAttack;
     }
+
+	public bool IsNone()
+	{
+		return type.Equals(CommandType.None);
+	}
 }
 
 public enum CommandType
