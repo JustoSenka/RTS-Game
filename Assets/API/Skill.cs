@@ -20,8 +20,7 @@ public class Skill
 	public struct Main
 	{
 		public Texture tex;
-		public bool requirePath;
-		public bool mustTargetUnit;
+		public Path path;
 		public float range;
 		public float manaCost;
 		public float cooldown;
@@ -75,8 +74,18 @@ public class Skill
 	public struct Particles
 	{
 		public bool enabled;
+		public SingleParticle[] array;
+	}
+
+	[System.Serializable]
+	public struct SingleParticle
+	{
+		public int id;
 		public float duration;
-		public Vector3 position;
+		public StartPosition startPosition;
+		public UnitAttachment unitAttachment;
+		public Vector3 positionOnUnit;
+		public bool friendlyFire; // @TODO: 
 		public float delay;
 	}
 
@@ -99,4 +108,32 @@ public enum BuffType
 	[FieldName("attackSpeed")] AttackSpeed,
 	[FieldName("attackRange")] AttackRange,
 	[FieldName("hp")] Heal,
+}
+
+public enum Path
+{
+	None, Range, OnUnit, OnlyDirection
+}
+
+public enum StartPosition
+{
+	Self, Enemy, Mouse, Projectile
+}
+
+public enum UnitAttachment
+{
+	Self, Enemy, World
+}
+
+public static class EnumExtensionMethods
+{
+	public static bool requireSecondClick(this Path p)
+	{
+		return !p.Equals(Path.None);
+	}
+
+	public static bool isRangeUsed(this Path p)
+	{
+		return p.Equals(Path.Range) || p.Equals(Path.OnUnit);
+	}
 }

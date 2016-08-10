@@ -15,7 +15,7 @@ public class UnitHero : Unit
 		if (hash.IsSkill() && cooldowns[hash % cooldowns.Length] <= 0 && mp >= skill.main.manaCost)
 		{
 			// Is close in range, perform skill
-			if (!skill.main.requirePath || Common.GetRawDistance2D(pos, command.pos) < skill.main.range * skill.main.range)
+			if (!skill.main.path.requireSecondClick() || Common.GetRawDistance2D(pos, command.pos) < skill.main.range * skill.main.range)
 			{
 				mp -= skill.main.manaCost;
 				cooldowns[hash] = skill.main.cooldown;
@@ -52,21 +52,11 @@ public class UnitHero : Unit
 
 		if (skill.buff.enabled)
 		{
-			// Buff on other
-			if (skill.main.requirePath && skill.main.mustTargetUnit)
-			{
-				command.unitToAttack.IncreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue);
-				if (!skill.buff.buffType.Equals(BuffType.Heal))
-					command.unitToAttack.RunAfter(skill.buff.duration, () => command.unitToAttack.DecreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue));
-			}
-			// Buff on self
-			else
-			{
-				this.IncreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue);
-				if (!skill.buff.buffType.Equals(BuffType.Heal))
-					this.RunAfter(skill.buff.duration, () => this.DecreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue));
-			}
+			Unit targetedUnit = (skill.main.path.Equals(Path.OnUnit)) ? command.unitToAttack : this;
 
+			targetedUnit.IncreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue);
+			if (!skill.buff.buffType.Equals(BuffType.Heal))
+				targetedUnit.RunAfter(skill.buff.duration, () => targetedUnit.DecreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue));
 		}
 
 		if (skill.summon.enabled)
@@ -80,7 +70,7 @@ public class UnitHero : Unit
 				minion.GetComponent<NavMeshAgent>().enabled = true;
 
 				// Create units at position
-				if (skill.main.requirePath)
+				if (skill.main.path.Equals(Path.Range))
 				{
 					minion.transform.position = Common.GetRandomVector(0.5f) + command.pos;
 				}
@@ -121,11 +111,81 @@ public class UnitHero : Unit
 
 		if (skill.particles.enabled)
 		{
+			foreach (var p in skill.particles.array)
+			{
+				this.RunAfter(p.delay, () =>
+				{
+					var ps = Instantiate(Particles.Instance[p.id]);
+
+					ps.transform.SetParent(GetPsUnitAttachment(p, skill, command));
+					ps.transform.position = GetPsStartPosition(p, skill, command);
+					ps.transform.position += p.positionOnUnit;
+
+					//@TODO: Particles should be rotated 90 on x to look up
+
+					ps.transform.localRotation = Quaternion.identity;
+					if (p.startPosition.Equals(StartPosition.Projectile))
+					{
+						Vector3 postoLookAt = (command.unitToAttack) ? command.unitToAttack.pos : command.pos;
+						ps.transform.LookAt(postoLookAt);
+					}
+
+					ps.Play(true);
+
+					Particles.Instance.RunAfter(p.duration, () => Destroy(ps.gameObject));
+				});
+			}
+
+
+			/*
 			if (skill.particles.position != Vector3.zero)
 				skillParticleRef[index].SetPosition(skill.particles.position);
 			skillParticleRef[index].Play(skill.particles.duration);
+			*/
 		}
 
 		commandPending = Command.None;
 	}
+
+	private Transform GetPsUnitAttachment(Skill.SingleParticle p, Skill skill, Command command)
+	{
+		switch (p.unitAttachment)
+		{
+			case UnitAttachment.Self:
+				return transform;
+			case UnitAttachment.Enemy:
+				if (!command.unitToAttack)
+				{
+					Debug.LogWarning("Skill must target unit, for particles to be attached on them");
+					return GameObject.FindGameObjectWithTag("Generated").transform;
+				}
+				return command.unitToAttack.transform;
+			case UnitAttachment.World:
+				return GameObject.FindGameObjectWithTag("Generated").transform;
+			default:
+				return null;
+		}
+	}
+
+	private Vector3 GetPsStartPosition(Skill.SingleParticle p, Skill skill, Command command)
+	{
+		switch (p.startPosition)
+		{
+			case StartPosition.Self:
+			case StartPosition.Projectile:
+				return pos;
+			case StartPosition.Enemy:
+				if (!command.unitToAttack)
+				{
+					Debug.LogWarning("Skill must target unit, for particles to show up on them");
+					return command.pos;
+				}
+				return command.unitToAttack.pos;
+			case StartPosition.Mouse:
+				return command.pos;
+			default:
+				return pos;
+		}
+	}
+
 }

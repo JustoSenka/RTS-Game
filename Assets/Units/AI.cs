@@ -65,11 +65,13 @@ public class AI : MonoBehaviourSlowUpdates
 
 	private void CheckIfUnitIsCloseToPerformSkill()
 	{
+		// @TODO: add method  that follows target if it moves
+
 		if (command.type.Equals(CommandType.Move) && !unit.commandPending.IsNone())
 		{
 			// If on spceific unit and it's dead, cancel everything
 			Skill skill = unit.GetSkill(unit.commandPending);
-			if (skill && skill.main.mustTargetUnit)
+			if (skill && skill.main.path.isRangeUsed())
 			{
 				if (!unit.commandPending.unitToAttack || unit.commandPending.unitToAttack.IsDead())
 				{

@@ -58,7 +58,7 @@ public class InputControlTool : MonoBehaviour
 				var commandHash = currentCommand.type.GetHashCode();
 
 				// Skill on unit
-				if (commandHash.IsSkill() && topUnit.skills[commandHash % 4].main.mustTargetUnit)
+				if (commandHash.IsSkill() && topUnit.skills[commandHash % 4].main.path.Equals(Path.OnUnit))
 				{
 					if (unitClickedOn)
 					{

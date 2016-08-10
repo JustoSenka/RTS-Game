@@ -59,7 +59,7 @@ public class Unit : MonoBehaviour
 
 	[NonSerialized] public float[] cooldowns = new float[4];
 	[NonSerialized] public Skill[] skills = new Skill[4];
-	[NonSerialized] public Command commandPending;
+	/*[NonSerialized]*/ public Command commandPending;
 	[NonSerialized] public Vector3 pos;
     
 	private GameObject DeathCallback;
@@ -173,7 +173,7 @@ public class Unit : MonoBehaviour
 		}
 		else if (hash.IsSkill() && skills[hash % 4] != null)
 		{
-			return skills[hash].main.requirePath;
+			return skills[hash].main.path.requireSecondClick();
 		}
 		else
 		{
@@ -184,7 +184,7 @@ public class Unit : MonoBehaviour
 	public bool IsSkillUsedOnUnit(Command command)
 	{
 		Skill skill = GetSkill(command);
-		return (skill == null) ? false : skill.main.mustTargetUnit;
+		return (skill == null) ? false : skill.main.path.Equals(Path.OnUnit);
 	}
 
 	public Skill GetSkill(Command command)
@@ -207,7 +207,10 @@ public class Unit : MonoBehaviour
         if (isDead)
             return;
 
-        switch (command.type)
+		// commandPending = Command.None;
+		// @TODO: this must be extracted to input control or somewhere here. Direct command should remove
+		//  Pending one from queue. From skill callbacks here to move accordingly. 
+		switch (command.type)
         {
             case CommandType.Hold:
                 this.command = command;
@@ -240,7 +243,7 @@ public class Unit : MonoBehaviour
 				PerformSkill(command);
 				break;
         }
-    }
+	}
 
 	// This should be overriden by child class
 	protected virtual void PerformSkill(Command command){ }
