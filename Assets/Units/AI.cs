@@ -66,6 +66,7 @@ public class AI : MonoBehaviourSlowUpdates
 	private void CheckIfUnitIsCloseToPerformSkill()
 	{
 		// @TODO: add method  that follows target if it moves
+		// @TODO: Skill on ground became broken
 
 		if (command.type.Equals(CommandType.Move) && !unit.commandPending.IsNone())
 		{

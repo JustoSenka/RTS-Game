@@ -24,6 +24,7 @@ public class UnitHero : Unit
 			// Too far in range, move closer
 			else
 			{
+				// @TODO: Fix this, cannot cancel pending command
 				commandPending = command;
 				PerformCommand(new Command(CommandType.Move, command.pos));
 			}
@@ -52,44 +53,50 @@ public class UnitHero : Unit
 
 		if (skill.buff.enabled)
 		{
-			Unit targetedUnit = (skill.main.path.Equals(Path.OnUnit)) ? command.unitToAttack : this;
+			this.RunAfter(skill.buff.delay, () =>
+			{
+				Unit targetedUnit = (skill.main.path.Equals(Path.OnUnit)) ? command.unitToAttack : this;
 
-			targetedUnit.IncreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue);
-			if (!skill.buff.buffType.Equals(BuffType.Heal))
-				targetedUnit.RunAfter(skill.buff.duration, () => targetedUnit.DecreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue));
+				targetedUnit.IncreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue);
+				if (!skill.buff.buffType.Equals(BuffType.Heal))
+					targetedUnit.RunAfter(skill.buff.duration, () => targetedUnit.DecreaseFieldValueBy(skill.buff.buffType, skill.buff.increaseValue));
+			});
 		}
 
 		if (skill.summon.enabled)
 		{
-			for (int i = 0; i < skill.summon.numOfUnits; i++)
+			this.RunAfter(skill.summon.delay, () =>
 			{
-				Unit minion = Instantiate(skill.summon.unitToSummon).GetComponent<Unit>();
-				minion.transform.position = Common.GetRandomVector(0.5f) + this.pos;
-				minion.transform.SetParent(GameObject.FindGameObjectWithTag("Generated").transform);
-				minion.team = this.team;
-				minion.GetComponent<NavMeshAgent>().enabled = true;
+				for (int i = 0; i < skill.summon.numOfUnits; i++)
+				{
+					Unit minion = Instantiate(skill.summon.unitToSummon).GetComponent<Unit>();
+					minion.transform.position = Common.GetRandomVector(0.5f) + this.pos;
+					minion.transform.SetParent(GameObject.FindGameObjectWithTag("Generated").transform);
+					minion.team = this.team;
+					minion.GetComponent<NavMeshAgent>().enabled = true;
 
-				// Create units at position
-				if (skill.main.path.Equals(Path.Range))
-				{
-					minion.transform.position = Common.GetRandomVector(0.5f) + command.pos;
-				}
-				// Follow parent command
-				else
-				{
-					var parentUnitCommand = GetCommand();
-					if (parentUnitCommand.type.Equals(CommandType.Attack) || parentUnitCommand.type.Equals(CommandType.Move))
+					// Create units at position
+					if (skill.main.path.Equals(Path.Range))
 					{
-						this.RunAfterOneFrame(() => minion.PerformCommand(parentUnitCommand));
+						minion.transform.position = Common.GetRandomVector(0.5f) + command.pos;
 					}
+					// Follow parent command
+					else
+					{
+						var parentUnitCommand = GetCommand();
+						if (parentUnitCommand.type.Equals(CommandType.Attack) || parentUnitCommand.type.Equals(CommandType.Move))
+						{
+							this.RunAfterOneFrame(() => minion.PerformCommand(parentUnitCommand));
+						}
+					}
+
+					//TODO: Lifetime UI (maybe use mana) (add to unit field temporary or sth that loses mana over time)
+					// After mana loses health and dies. Since it needs modify Unit class, lets do it later.
+					this.RunAfter(skill.summon.lifetime, () => minion.DealDamage(10000));
+
+					Data.GetInstance().AddUnit(minion);
 				}
-
-				//TODO: Lifetime UI (maybe use mana) (add to unit field temporary or sth that loses mana over time)
-				// After mana loses health and dies. Since it needs modify Unit class, lets do it later.
-				this.RunAfter(skill.summon.lifetime, () => minion.DealDamage(10000));
-
-				Data.GetInstance().AddUnit(minion);
-			}
+			});
 		}
 
 		if (skill.movement.enabled)
@@ -120,28 +127,31 @@ public class UnitHero : Unit
 					ps.transform.SetParent(GetPsUnitAttachment(p, skill, command));
 					ps.transform.position = GetPsStartPosition(p, skill, command);
 					ps.transform.position += p.positionOnUnit;
+					ps.transform.localRotation = Quaternion.Euler(-90, 0, 0);
 
-					//@TODO: Particles should be rotated 90 on x to look up
-
-					ps.transform.localRotation = Quaternion.identity;
+					// Everything for projectiles
 					if (p.startPosition.Equals(StartPosition.Projectile))
 					{
-						Vector3 postoLookAt = (command.unitToAttack) ? command.unitToAttack.pos : command.pos;
-						ps.transform.LookAt(postoLookAt);
+						Vector3 posToLookAt = (command.unitToAttack) ? command.unitToAttack.pos : command.pos;
+						ps.transform.LookAt(posToLookAt);
+
+						var pp = ps.GetComponent<ParticleProjectile>();
+						if (!pp) { Debug.LogWarning("Particle must have ParticleProjectile component attached"); return; }
+
+						pp.projectileLauncher = gameObject;
+						pp.friendlyFire = p.friendlyFire;
+						pp.oneShot = p.oneShot;
+						pp.team = team;
+						pp.Launch(posToLookAt, p.projecticleSpeed);
+					}
+					else
+					{
+						Particles.Instance.RunAfter(p.duration, () => Destroy(ps.gameObject));
 					}
 
 					ps.Play(true);
-
-					Particles.Instance.RunAfter(p.duration, () => Destroy(ps.gameObject));
 				});
 			}
-
-
-			/*
-			if (skill.particles.position != Vector3.zero)
-				skillParticleRef[index].SetPosition(skill.particles.position);
-			skillParticleRef[index].Play(skill.particles.duration);
-			*/
 		}
 
 		commandPending = Command.None;

@@ -49,6 +49,7 @@ public class Skill
 		public BuffType buffType;
 		public float increaseValue;
 		public float duration;
+		public float delay;
 	}
 
 	[System.Serializable]
@@ -83,9 +84,11 @@ public class Skill
 		public int id;
 		public float duration;
 		public StartPosition startPosition;
+		public float projecticleSpeed;
 		public UnitAttachment unitAttachment;
 		public Vector3 positionOnUnit;
-		public bool friendlyFire; // @TODO: 
+		public bool friendlyFire;
+		public bool oneShot;
 		public float delay;
 	}
 

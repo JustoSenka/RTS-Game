@@ -150,6 +150,7 @@ public class Unit : MonoBehaviour
         return hp <= 0;
     }
 
+	// Callback from animator
     public void AttackAnimationCallback()
     {
         if (command.unitToAttack != null)
@@ -158,7 +159,13 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void Destroy()
+	// Callback from projectile particle
+	public void ProjectileParticleCallback(Unit unitHit)
+	{
+		unitHit.DealDamage(damage);
+	}
+
+	public void Destroy()
     {
         Data.GetInstance().RemoveUnit(this);
         Destroy(gameObject);

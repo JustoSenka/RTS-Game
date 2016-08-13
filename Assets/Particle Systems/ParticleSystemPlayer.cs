@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ParticleSystemPlayer : MonoBehaviour
 {
-    private ParticleSystem[] ps;
+	private ParticleSystem ps;
+	private ParticleSystem[] pss;
 
 	private float stopAfter;
 	private bool shouldStop = false;
@@ -23,9 +25,10 @@ public class ParticleSystemPlayer : MonoBehaviour
 
     void Start()
     {
-        ps = GetComponentsInChildren<ParticleSystem>();
+		ps = GetComponent<ParticleSystem>();
+		pss = GetComponentsInChildren<ParticleSystem>();
 
-        if (ps[0].playOnAwake)
+        if (pss[0].playOnAwake)
         {
             Play();
         }
@@ -38,18 +41,29 @@ public class ParticleSystemPlayer : MonoBehaviour
 
     public void Play()
     {
-        foreach (var p in ps) p.Play();
+        foreach (var p in pss) p.Play();
     }
 
 	public void Play(float time)
 	{
 		stopAfter = time;
 		shouldStop = true;
-		foreach (var p in ps) p.Play();
+		foreach (var p in pss) p.Play();
 	}
 
 	public void Stop()
     {
-        foreach (var p in ps) p.Stop();
+        foreach (var p in pss) p.Stop();
     }
+
+	public void DestroyParticles()
+	{
+		ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ps.particleCount];
+		ps.GetParticles(particles);
+
+		for (int i = 0; i < particles.Length; i++)
+		{
+			particles[i].lifetime = 0;
+		}
+	}
 }
