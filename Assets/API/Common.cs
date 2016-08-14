@@ -52,6 +52,15 @@ public class Common
 
 public static class ExtensionMethods
 {
+	public static void SetLoop(this ParticleSystem ps, bool loop)
+	{
+		var pss = ps.GetComponentsInChildren<ParticleSystem>();
+		foreach (var p in pss)
+		{
+			p.loop = loop;
+		}
+	}
+
     public static bool Contains(this RectTransform[] rectTransforms, Vector3 point)
     {
         foreach (var rectTrans in rectTransforms)

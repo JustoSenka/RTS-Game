@@ -157,12 +157,13 @@ public class Unit : MonoBehaviour
         {
             command.unitToAttack.DealDamage(damage);
         }
-    }
+		//@TODO: give xp
+	}
 
 	// Callback from projectile particle
 	public void ProjectileParticleCallback(Unit unitHit)
 	{
-		unitHit.DealDamage(damage);
+		//@TODO: give xp
 	}
 
 	public void Destroy()
@@ -209,14 +210,14 @@ public class Unit : MonoBehaviour
 
 	// Virtual methods: ------------------------------------------------------------------------------------
 
-	public virtual void PerformCommand(Command command)
+	public virtual void PerformCommand(Command command, bool resetPendingCommand = true)
     {
         if (isDead)
             return;
 
-		// commandPending = Command.None;
-		// @TODO: this must be extracted to input control or somewhere here. Direct command should remove
-		//  Pending one from queue. From skill callbacks here to move accordingly. 
+		if (resetPendingCommand)
+			commandPending = Command.None;
+
 		switch (command.type)
         {
             case CommandType.Hold:

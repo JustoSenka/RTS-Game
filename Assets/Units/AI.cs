@@ -65,14 +65,11 @@ public class AI : MonoBehaviourSlowUpdates
 
 	private void CheckIfUnitIsCloseToPerformSkill()
 	{
-		// @TODO: add method  that follows target if it moves
-		// @TODO: Skill on ground became broken
-
 		if (command.type.Equals(CommandType.Move) && !unit.commandPending.IsNone())
 		{
 			// If on spceific unit and it's dead, cancel everything
 			Skill skill = unit.GetSkill(unit.commandPending);
-			if (skill && skill.main.path.isRangeUsed())
+			if (skill && skill.main.path.Equals(Path.OnUnit))
 			{
 				if (!unit.commandPending.unitToAttack || unit.commandPending.unitToAttack.IsDead())
 				{
@@ -84,10 +81,16 @@ public class AI : MonoBehaviourSlowUpdates
 
 			// Close enough, perform skill
 			var distance = Vector3.Distance(unit.pos, unit.commandPending.pos);
-			if (distance < unit.GetSkill(unit.commandPending).main.range)
+			if (distance < skill.main.range)
 			{
 				StopAgentFromDoingCurrentCommand();
 				unit.PerformPendingSkill();
+			}
+			// Follow unit
+			else if (skill.main.path.Equals(Path.OnUnit))
+			{
+				if (agent && agent.isOnNavMesh) agent.SetDestination(unit.commandPending.unitToAttack.pos);
+				unit.commandPending.pos = unit.commandPending.unitToAttack.pos;
 			}
 		}
 	}

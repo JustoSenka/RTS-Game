@@ -152,12 +152,9 @@ public class InputControlTool : MonoBehaviour
         }
 
 		// Enable range projector on top units
-		if (skillPhase && hash.IsSkill())
+		if (skillPhase && hash.IsSkill() && topUnit.skills[hash % 4].main.path.isRangeUsed())
 		{
-			if (hash.IsSkill())
-			{
-				selectRectangle.GetSelectedUnits().ForEachOnHighestTier((u) => u.GetComponent<RangeProjector>().Enable(u.skills[hash].main.range));
-			}
+			selectRectangle.GetSelectedUnits().ForEachOnHighestTier((u) => u.GetComponent<RangeProjector>().Enable(u.skills[hash].main.range));
 		}
     }
 

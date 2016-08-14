@@ -9,11 +9,11 @@ public class UnitSkeleton : UnitHero
         base.Start();
     }
 
-    public override void PerformCommand(Command command)
+    public override void PerformCommand(Command command, bool resetPendingCommand = true)
     {
         if (isDead)
             return;
 
-        base.PerformCommand(command);
+        base.PerformCommand(command, resetPendingCommand);
     }
 }

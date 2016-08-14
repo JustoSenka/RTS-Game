@@ -124,6 +124,7 @@ public class UIController : MonoBehaviour {
     {
         bool highlightIconEnabled = true;
 
+		// For this to work, UIController must execute before InputControlTool
         if (!inputControlTool.IsInSkillPhase())
         {
             if (Input.GetButton("Skill0") && isEnabled[0])
@@ -164,7 +165,7 @@ public class UIController : MonoBehaviour {
             }
         }
 
-        highlighter.SetImageEnabled(highlightIconEnabled);
+		highlighter.SetImageEnabled(highlightIconEnabled);
     }
 
     private void PutHighlightsOnDirectClick()

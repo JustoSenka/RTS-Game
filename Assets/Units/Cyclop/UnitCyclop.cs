@@ -14,11 +14,11 @@ public class UnitCyclop : UnitHero
         animator.SetFloat("RandomAttack", (animator.GetFloat("RandomAttack") + 1) % 2);
     }
 
-    public override void PerformCommand(Command command)
+    public override void PerformCommand(Command command, bool resetPendingCommand = true)
     {
         if (isDead)
             return;
 
-        base.PerformCommand(command);
+        base.PerformCommand(command, resetPendingCommand);
     }
 }

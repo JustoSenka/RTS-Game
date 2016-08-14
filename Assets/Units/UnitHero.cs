@@ -1,8 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
-using System.Reflection;
-
 public class UnitHero : Unit
 {
 	protected override void PerformSkill(Command command)
@@ -15,7 +11,7 @@ public class UnitHero : Unit
 		if (hash.IsSkill() && cooldowns[hash % cooldowns.Length] <= 0 && mp >= skill.main.manaCost)
 		{
 			// Is close in range, perform skill
-			if (!skill.main.path.requireSecondClick() || Common.GetRawDistance2D(pos, command.pos) < skill.main.range * skill.main.range)
+			if (!skill.main.path.isRangeUsed() || Common.GetRawDistance2D(pos, command.pos) < skill.main.range * skill.main.range)
 			{
 				mp -= skill.main.manaCost;
 				cooldowns[hash] = skill.main.cooldown;
@@ -24,9 +20,8 @@ public class UnitHero : Unit
 			// Too far in range, move closer
 			else
 			{
-				// @TODO: Fix this, cannot cancel pending command
 				commandPending = command;
-				PerformCommand(new Command(CommandType.Move, command.pos));
+				PerformCommand(new Command(CommandType.Move, command.pos), false);
 			}
 		}
 	}
@@ -133,23 +128,36 @@ public class UnitHero : Unit
 					if (p.startPosition.Equals(StartPosition.Projectile))
 					{
 						Vector3 posToLookAt = (command.unitToAttack) ? command.unitToAttack.pos : command.pos;
+						posToLookAt += p.positionOnUnit;
 						ps.transform.LookAt(posToLookAt);
 
 						var pp = ps.GetComponent<ParticleProjectile>();
 						if (!pp) { Debug.LogWarning("Particle must have ParticleProjectile component attached"); return; }
 
+						// General stats
 						pp.projectileLauncher = gameObject;
 						pp.friendlyFire = p.friendlyFire;
 						pp.oneShot = p.oneShot;
 						pp.team = team;
 						pp.Launch(posToLookAt, p.projecticleSpeed);
+
+						// Ofensive stats
+						pp.damage = (skill.offensive.enabled) ? skill.offensive.damage : 0;
+						pp.areaOfEffect = (skill.offensive.enabled) ? skill.offensive.areaOfEffect : 0;
+
+						// Play and destroy afterwards
+						pp.RunAfter(p.duration, () => pp.DestroyParticles());
+						pp.Play(false);
 					}
+					// Simple particle effect, buff or any
 					else
 					{
-						Particles.Instance.RunAfter(p.duration, () => Destroy(ps.gameObject));
-					}
+						float duration = (p.oneShot) ? ps.duration : p.duration;
+						Particles.Instance.RunAfter(duration, () => { if (ps) Destroy(ps.gameObject); });
 
-					ps.Play(true);
+						ps.SetLoop(!p.oneShot);
+						ps.Play(true);
+					}
 				});
 			}
 		}

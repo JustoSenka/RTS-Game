@@ -12,6 +12,10 @@ public class ParticleProjectile : MonoBehaviour
 	public bool friendlyFire;
 	[System.NonSerialized]
 	public bool oneShot;
+	[System.NonSerialized]
+	public float damage;
+	[System.NonSerialized]
+	public float areaOfEffect;
 
 	[SerializeField]
 	private bool showHitParticle;
@@ -27,46 +31,111 @@ public class ParticleProjectile : MonoBehaviour
 		rb = GetComponent<Rigidbody>();
 	}
 
-	public void Launch(Vector3 pos, float speed)
+	public void Launch(Vector3 pos, float speed, bool lockVerticalPosition = false)
 	{
-		this.RunAfterOneFrame(() => rb.velocity = Vector3.Scale((pos - transform.position), new Vector3(1, 0, 1)).normalized * speed);
+		Vector3 mask = (lockVerticalPosition) ? new Vector3(1, 0, 1) : new Vector3(1, 1, 1);
+		this.RunAfterOneFrame(() => rb.velocity = Vector3.Scale((pos - transform.position), mask).normalized * speed);
+	}
+
+	/// <summary>
+	/// Plays all particle systems in children, ignoring the one with prefix "HIT[_*]"
+	/// </summary>
+	public void Play(bool playHitParticle = false)
+	{
+		var pss = GetComponentsInChildren<ParticleSystem>();
+		foreach (var p in pss)
+		{
+			if (!playHitParticle && !p.gameObject.name.StartsWith("HIT_", System.StringComparison.CurrentCultureIgnoreCase))
+				p.Play(false);
+		}
 	}
 
 	public void DestroyParticles()
 	{
-		ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ps.particleCount];
-		ps.GetParticles(particles);
+		if (!ps)
+			return;
 
-		for (int i = 0; i < particles.Length; i++)
+		// Destroying procedure has already started, return
+		var emission = ps.emission;
+		if (!emission.enabled)
+			return;
+
+		emission.enabled = false;
+		rb.velocity = Vector3.zero;
+
+		// Show hit explosion and destroy whole object
+		if (showHitParticle)
 		{
-			particles[i].lifetime = 0;
+			hitParticle.Emit(1);
+			Particles.Instance.RunAfter(hitParticle.duration, () => Destroy(gameObject));
+		}
+		else
+		{
+			Destroy(gameObject);
 		}
 	}
 
-	public void OnCollisionEnter(Collision collision)
+	public void OnTriggerEnter(Collider other)
 	{
-		Unit target = collision.collider.gameObject.GetComponent<Unit>();
+		// Particles don't collide with each other
+		if (other.gameObject.layer == LayerMask.NameToLayer("Particles"))
+			return;
+
+		Unit target = other.gameObject.GetComponent<Unit>();
 		if (target)
 		{
 			// Do nothing to same team units
 			if (!friendlyFire && target.team.Equals(team))
 				return;
 
-			projectileLauncher.SendMessage("ProjectileParticleCallback", target);
-		}
+			// Do nothing on self
+			if (target.gameObject.GetInstanceID() == projectileLauncher.GetInstanceID())
+				return;
 
-		if (showHitParticle)
-		{
-			hitParticle.Emit(1);
+			// Do nothing on dead unit
+			if (target.IsDead())
+				return;
+			
+			// If projectile launcher still alive, send message to give xp
+			if (projectileLauncher)
+				projectileLauncher.SendMessage("ProjectileParticleCallback", target);
+
+			// Deal Damage
+			if (areaOfEffect == 0)
+				target.DealDamage(damage);
+			else
+				DealDamageToAllTargetsInArea(areaOfEffect, damage);
+
+			// Show particles on unit
 			if (oneShot)
-				Particles.Instance.RunAfter(hitParticle.duration, () => Destroy(this));
+				DestroyParticles();
+			else if (showHitParticle)
+				hitParticle.Emit(1);
 		}
-		else if (oneShot)
+		// If hit ground, one shot does not matter anymore, just destroy
+		else
 		{
-			DestroyParticles();
-			Destroy(this);
-		}
+			if (areaOfEffect > 0)
+				DealDamageToAllTargetsInArea(areaOfEffect, damage);
 
-		//@TODO Destroy after some duration went out?
+			DestroyParticles();
+		}
+	}
+
+	private void DealDamageToAllTargetsInArea(float area, float damage)
+	{
+		Collider[] colls = Physics.OverlapSphere(transform.position, area / 2, LayerMask.GetMask("Selectable"));
+		foreach (var col in colls)
+		{
+			Unit unit = col.gameObject.GetComponent<Unit>();
+
+			// Do nothing for dead units, and same team units with friendly fire off
+			if (!unit || unit.IsDead())
+				continue;
+			if (unit.team.Equals(team) && !friendlyFire)
+				continue;
+
+			unit.DealDamage(damage);
+		}
 	}
 }
