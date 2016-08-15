@@ -15,6 +15,14 @@ public class UIController : MonoBehaviour {
 	private bool[] isEnabled = new bool[4];
 	private Unit lastUnitSelected;
 
+	void Start()
+	{
+		if (!selectRectangle)
+			selectRectangle = GameObject.FindGameObjectWithTag("GameController").GetComponent<SelectRectangle>();
+		if (!inputControlTool)
+			inputControlTool = GameObject.FindGameObjectWithTag("GameController").GetComponent<InputControlTool>();
+	}
+
 	void Update ()
     {
         if (selectRectangle.GetSelectedUnits().Count > 0)

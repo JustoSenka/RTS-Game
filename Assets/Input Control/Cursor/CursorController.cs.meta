@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: de9949565899b794fb26456f6714b590
+timeCreated: 1471294548
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - defaultCursor: {fileID: 2800000, guid: fb0215c706c4e0d418948ececbce8ff0, type: 3}
+  - attackCursor: {fileID: 2800000, guid: be226ec3712cf1b4a9b2d74580d1cd69, type: 3}
+  - attackCursorHighlight: {fileID: 2800000, guid: fd9c72bb984a90f47bd9ed5b96d99b3f,
+      type: 3}
+  - magicCursor: {fileID: 2800000, guid: 478a6366354455343b5f9f95c13b905c, type: 3}
+  - magicCursorHighlight: {fileID: 2800000, guid: b80b58433e69041478c20f3b4fd85283,
+      type: 3}
+  - inputControlTool: {instanceID: 0}
+  - selectRectangle: {instanceID: 0}
+  executionOrder: -85
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

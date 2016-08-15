@@ -23,6 +23,21 @@ public struct Command {
 	{
 		return type.Equals(CommandType.None);
 	}
+
+	public bool IsSkill()
+	{
+		return type.GetHashCode().IsSkill();
+	}
+
+	public bool IsAttack()
+	{
+		return type.Equals(CommandType.Attack);
+	}
+
+	public bool IsMove()
+	{
+		return type.Equals(CommandType.Move);
+	}
 }
 
 public enum CommandType

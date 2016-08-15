@@ -71,19 +71,20 @@ public class InputControlTool : MonoBehaviour
 						// play sound or do smth..
 					}
 				}
-				// Skill on ground or attack on unit, or move
 				else 
 				{
+					// Attack on unit
 					if (unitClickedOn && currentCommand.type.Equals(CommandType.Attack))
 					{
 						selectedUnits.PerformCommand(new Command(currentCommand.type, unitClickedOn.transform.position, unitClickedOn, true), true);
 						moveCross.ShowAt(unitClickedOn.transform.position, true);
 					}
+					// Skill on ground (maybe unit, but not strict), or move
 					else
 					{
-						var mousePos = Common.GetWorldMousePoint(groundLayer);
-						moveCross.ShowAt(mousePos, !currentCommand.type.Equals(CommandType.Move));
-						currentCommand.pos = mousePos;
+						var commandPos = (unitClickedOn) ? unitClickedOn.pos : Common.GetWorldMousePoint(groundLayer);
+						moveCross.ShowAt(commandPos, !currentCommand.type.Equals(CommandType.Move));
+						currentCommand.pos = commandPos;
 						selectedUnits.PerformCommand(currentCommand, true);
 					}
 				}
@@ -182,6 +183,11 @@ public class InputControlTool : MonoBehaviour
     {
         return skillPhase;
     }
+
+	public Command GetCurrentCommand()
+	{
+		return currentCommand;
+	}
 
     private enum MouseButton { Left, Right, Midle }
 }

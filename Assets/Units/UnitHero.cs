@@ -43,7 +43,10 @@ public class UnitHero : Unit
 
 		if (skill.offensive.enabled)
 		{
+			this.RunAfter(skill.offensive.delay, () =>
+			{
 
+			});
 		}
 
 		if (skill.buff.enabled)
@@ -113,22 +116,23 @@ public class UnitHero : Unit
 
 		if (skill.particles.enabled)
 		{
-			foreach (var p in skill.particles.array)
+			foreach (var particle in skill.particles.array)
 			{
-				this.RunAfter(p.delay, () =>
+				// Should pass particle as argument, because it changes afterwards in foreach operation
+				this.RunAfter(particle.delay, particle, (p) =>
 				{
 					var ps = Instantiate(Particles.Instance[p.id]);
 
 					ps.transform.SetParent(GetPsUnitAttachment(p, skill, command));
 					ps.transform.position = GetPsStartPosition(p, skill, command);
-					ps.transform.position += p.positionOnUnit;
+					ps.transform.position += p.startPosOffset;
 					ps.transform.localRotation = Quaternion.Euler(-90, 0, 0);
 
 					// Everything for projectiles
-					if (p.startPosition.Equals(StartPosition.Projectile))
+					if (p.particleType.Equals(ParticleType.Projectile))
 					{
 						Vector3 posToLookAt = (command.unitToAttack) ? command.unitToAttack.pos : command.pos;
-						posToLookAt += p.positionOnUnit;
+						posToLookAt += p.targetPosOffset;
 						ps.transform.LookAt(posToLookAt);
 
 						var pp = ps.GetComponent<ParticleProjectile>();
@@ -190,7 +194,6 @@ public class UnitHero : Unit
 		switch (p.startPosition)
 		{
 			case StartPosition.Self:
-			case StartPosition.Projectile:
 				return pos;
 			case StartPosition.Enemy:
 				if (!command.unitToAttack)

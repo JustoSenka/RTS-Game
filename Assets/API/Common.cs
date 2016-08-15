@@ -23,17 +23,22 @@ public class Common
         return null;
     }
 
-    public static Vector3 GetWorldMousePoint(LayerMask layerMask)
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100f, layerMask))
-        {
-            return hit.point;
-        }
+	public static Vector3 GetWorldMousePoint(LayerMask layerMask)
+	{
+		return GetWorldMousePoint(layerMask, Input.mousePosition);
+	}
 
-        Debug.LogWarning("Did not clicked on the layer.");
-        return Vector3.zero;
-    }
+	public static Vector3 GetWorldMousePoint(LayerMask layerMask, Vector3 customMousePosition)
+	{
+		RaycastHit hit;
+		if (Physics.Raycast(Camera.main.ScreenPointToRay(customMousePosition), out hit, 100f, layerMask))
+		{
+			return hit.point;
+		}
+
+		Debug.LogWarning("Did not clicked on the layer.");
+		return Vector3.zero;
+	}
 
     public static float GetRawDistance2D(Vector3 vec, Vector3 other)
     {
@@ -182,6 +187,7 @@ public static class ExtensionMethods
         }
     }
 
+	// No arguments
     public static void RunAfter(this MonoBehaviour mono, float sec, Action ac)
     {
 		if (sec > 0)
@@ -211,6 +217,37 @@ public static class ExtensionMethods
 		}
         ac.Invoke();
     }
+
+	// One argument
+	public static void RunAfter<T>(this MonoBehaviour mono, float sec, T t, Action<T> ac)
+	{
+		if (sec > 0)
+		{
+			mono.StartCoroutine(RunAfterEnum(sec, t, ac));
+		}
+		else
+		{
+			ac.Invoke(t);
+		}
+	}
+
+	public static void RunAfterOneFrame<T>(this MonoBehaviour mono, T t, Action<T> ac)
+	{
+		mono.StartCoroutine(RunAfterEnum(-1, t, ac));
+	}
+
+	public static IEnumerator RunAfterEnum<T>(float sec, T t, Action<T> ac)
+	{
+		if (sec == -1)
+		{
+			yield return null;
+		}
+		else
+		{
+			yield return new WaitForSeconds(sec);
+		}
+		ac.Invoke(t);
+	}
 }
 
 

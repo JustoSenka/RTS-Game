@@ -40,6 +40,7 @@ public class Skill
 		public bool enabled;
 		public float damage;
 		public float areaOfEffect;
+		public float delay;
 	}
 
 	[System.Serializable]
@@ -83,12 +84,16 @@ public class Skill
 	{
 		public int id;
 		public float duration;
-		public StartPosition startPosition;
-		public float projecticleSpeed;
 		public UnitAttachment unitAttachment;
-		public Vector3 positionOnUnit;
-		public bool friendlyFire;
+		public StartPosition startPosition;
+		public Vector3 startPosOffset;
+		public ParticleType particleType;
 		public bool oneShot;
+		[Header("Valid only for Projectiles")]
+		public Vector3 targetPosOffset;
+		public float projecticleSpeed;
+		public bool friendlyFire;
+		[Space(5)]
 		public float delay;
 	}
 
@@ -118,9 +123,14 @@ public enum Path
 	None, Range, OnUnit, OnlyDirection
 }
 
+public enum ParticleType
+{
+	Buff, Projectile
+}
+
 public enum StartPosition
 {
-	Self, Enemy, Mouse, Projectile
+	Self, Enemy, Mouse
 }
 
 public enum UnitAttachment

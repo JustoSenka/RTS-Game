@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 [RequireComponent(typeof(Camera))]
 public class RtsCamera : MonoBehaviour
@@ -22,14 +23,20 @@ public class RtsCamera : MonoBehaviour
 
     private float cameraZoom = 10;
 
-    void Update()
+	private bool moveToDesiredPosition = false;
+	private Vector3 desiredCameraPosition;
+	private Vector3 oldMousePosition;
+	private Vector3 oldCameraPosition;
+
+	void Update()
     {
         ComputeSpeeds();
-        ApplyCameraMovement();
+		ApplyCameraMovement();
         ApplyFancyRotationWhenCameraIsNearGround();
-    }
+		ApplyMidleMouseButtonMovementSpeed();
+	}
 
-    private void ApplyCameraMovement()
+	private void ApplyCameraMovement()
     {
         transform.position += new Vector3(computedSpeedHorizontal, 0, computedSpeedVertical);
         Vector3 zoomedPosition = Vector3.Lerp(transform.position, new Vector3(transform.position.x, cameraZoom, transform.position.z), 10 * Time.deltaTime);
@@ -47,7 +54,7 @@ public class RtsCamera : MonoBehaviour
     {
         computedSpeedVertical = Input.GetAxis("Vertical") * moveSpeedVertical * Time.deltaTime;
         computedSpeedHorizontal = Input.GetAxis("Horizontal") * moveSpeedHorizontal * Time.deltaTime;
-        computedZoomSpeed = -Input.GetAxis("MouseScrollWheel") * zoomSpeed * Time.deltaTime;
+        computedZoomSpeed = -Input.GetAxis("MouseScrollWheel") * zoomSpeed * 0.015f;
 
 #if !UNITY_EDITOR
         if (Input.mousePosition.x > Screen.width - 10) computedSpeedHorizontal = moveSpeedHorizontal * Time.deltaTime;
@@ -59,4 +66,33 @@ public class RtsCamera : MonoBehaviour
         cameraZoom = (cameraZoom > cameraMaxHeigh) ? cameraMaxHeigh : cameraZoom;
         cameraZoom = (cameraZoom < cameraMinHeigh) ? cameraMinHeigh : cameraZoom;
     }
+
+	private void ApplyMidleMouseButtonMovementSpeed()
+	{
+		if (Input.GetKeyDown(KeyCode.Mouse2))
+		{
+			oldMousePosition = Input.mousePosition;
+			oldCameraPosition = transform.position;
+			desiredCameraPosition = Common.GetWorldMousePoint(LayerMask.GetMask("Ground For Scrolling"))
+				+ new Vector3(0, cameraZoom, -cameraZoom * Mathf.Tan((90 - transform.rotation.eulerAngles.x) * Mathf.Deg2Rad) - 2);
+		}
+
+		// Middle Mouse Click
+		if (Input.GetKeyUp(KeyCode.Mouse2) && Vector3.Distance(Input.mousePosition, oldMousePosition) < 3f)
+			moveToDesiredPosition = true;
+
+		// Mouse drag
+		if (Input.GetKey(KeyCode.Mouse2) && Vector3.Distance(Input.mousePosition, oldMousePosition) > 3f)
+		{
+			var mask = LayerMask.GetMask("Ground For Scrolling");
+			transform.position = oldCameraPosition - Common.GetWorldMousePoint(mask) + Common.GetWorldMousePoint(mask, oldMousePosition);
+		}
+
+		if (moveToDesiredPosition)
+			transform.position = Vector3.Lerp(transform.position, desiredCameraPosition, 12 * Time.deltaTime);
+
+		// Check if arrived at desired position
+		if (Vector3.Distance(transform.position, desiredCameraPosition) < 0.5f)
+			moveToDesiredPosition = false;
+	}
 }
