@@ -63,7 +63,7 @@ public class ParticleSystemPlayer : MonoBehaviour
 
 		for (int i = 0; i < particles.Length; i++)
 		{
-			particles[i].lifetime = 0;
+			particles[i].remainingLifetime = 0;
 		}
 	}
 }

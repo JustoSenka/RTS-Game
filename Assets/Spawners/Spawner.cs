@@ -36,7 +36,7 @@ public class Spawner : MonoBehaviour {
         unit.transform.localPosition = transform.position;
         unit.transform.SetParent(container);
         unit.team = team;
-        unit.GetComponent<NavMeshAgent>().enabled = true;
+        unit.GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = true;
 
         Data.GetInstance().AddUnit(unit);
 

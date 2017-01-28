@@ -71,7 +71,7 @@ public class UnitHero : Unit
 					minion.transform.position = Common.GetRandomVector(0.5f) + this.pos;
 					minion.transform.SetParent(GameObject.FindGameObjectWithTag("Generated").transform);
 					minion.team = this.team;
-					minion.GetComponent<NavMeshAgent>().enabled = true;
+					minion.GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = true;
 
 					// Create units at position
 					if (skill.main.path.Equals(Path.Range))

@@ -7,8 +7,8 @@ using System;
 public class AI : MonoBehaviourSlowUpdates
 {
     private Unit unit;
-    private NavMeshAgent agent;
-    private NavMeshObstacle obstacle;
+    private UnityEngine.AI.NavMeshAgent agent;
+    private UnityEngine.AI.NavMeshObstacle obstacle;
     private Command command;
 
     private bool isAttacking = false;
@@ -24,8 +24,8 @@ public class AI : MonoBehaviourSlowUpdates
     void Start()
     {
         unit = GetComponent<Unit>();
-        agent = GetComponent<NavMeshAgent>();
-        obstacle = GetComponent<NavMeshObstacle>();
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        obstacle = GetComponent<UnityEngine.AI.NavMeshObstacle>();
 
         lastPos = transform.position;
     }

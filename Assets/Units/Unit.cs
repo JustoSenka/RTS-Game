@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
 public class Unit : MonoBehaviour
 {
     public Team team = Team.T1;
@@ -46,8 +46,8 @@ public class Unit : MonoBehaviour
 	[Space(5)]
 
 	protected AI ai;
-	protected NavMeshAgent agent;
-    protected NavMeshObstacle obstacle;
+	protected UnityEngine.AI.NavMeshAgent agent;
+    protected UnityEngine.AI.NavMeshObstacle obstacle;
     protected Animator animator;
     protected bool isDead = false;
     protected bool isHold = false;
@@ -66,8 +66,8 @@ public class Unit : MonoBehaviour
 
 	protected virtual void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        obstacle = GetComponent<NavMeshObstacle>();
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        obstacle = GetComponent<UnityEngine.AI.NavMeshObstacle>();
         animator = GetComponent<Animator>();
         ai = GetComponent<AI>();
 
@@ -88,7 +88,7 @@ public class Unit : MonoBehaviour
 
         if (obstacle)
         {
-            obstacle.shape = NavMeshObstacleShape.Capsule;
+            obstacle.shape = UnityEngine.AI.NavMeshObstacleShape.Capsule;
             obstacle.center = new Vector3(0, (height / 2) - (radius / 2), 0);
             obstacle.radius = radius - 0.2f;
             obstacle.height = height;
