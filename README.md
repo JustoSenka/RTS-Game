@@ -1,5 +1,7 @@
 # RTS-Game
-Real Time Strategy - Unity Game
+Real Time Strategy Warcraft-like Game created in Unity Engine
+
+Features top-down RTS controls, unit movement with animations, pathfinding, hero skills and particle systems, enemy AI.
 
 Hello, thank you for your time looking at this project :)
 
