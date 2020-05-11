@@ -4,8 +4,11 @@
 /[Bb]uild/
 /[Bb]uilds/
 /[Ii]gnore/
+/[Ll]ogs/
+
 /[Pp]ackages/[Ii]gnore/
 /Assets/AssetStoreTools*
+.vs/
 
 # Win Standalone Build
 /*_[Dd]ata/
