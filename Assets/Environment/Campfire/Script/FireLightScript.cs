@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Light))]
 public class FireLightScript : MonoBehaviour
 {
 	public float minIntensity = 0.25f;
@@ -7,12 +8,12 @@ public class FireLightScript : MonoBehaviour
 
 	public Light fireLight;
 
-	float random;
+    float random;
 
 	void Update()
 	{
 		random = Random.Range(0.0f, 150.0f);
 		float noise = Mathf.PerlinNoise(random, Time.time);
-		fireLight.GetComponent<Light>().intensity = Mathf.Lerp(minIntensity, maxIntensity, noise);
+		fireLight.intensity = Mathf.Lerp(minIntensity, maxIntensity, noise);
 	}
 }
